@@ -62,7 +62,7 @@ _CUE = re.compile(
 _INTEREST_VERB = re.compile(
     r"\b(quero|queria|gostaria|pretendo|procuro|procurando|tenho interesse|interesse|interessa|me interesso|sonho|vontade|pensando|penso|preciso)\b"
 )
-_COURSE_NOUN = re.compile(r"\b(curso|cursos|capacitacao|formacao|qualificacao|trabalhar com|trabalhar na area|estudar|carreira|profissao|faculdade|graduacao)\b")
+_COURSE_NOUN = re.compile(r"\b(curso|cursos|capacitacao|formacao|qualificacao|trabalhar com|trabalhar na area|estudar|aprender|conhecer|entender de|carreira|profissao|faculdade|graduacao)\b")
 _GENERIC_COURSE = re.compile(
     r"(eu )?(quero|queria|gostaria de|preciso de|pretendo|procuro|estou procurando|tenho interesse em)( fazer| de| um| uma| algum| alguma| outro)*"
     r"( curso| cursos| capacitacao| formacao| qualificacao)( no senac| do senac| agora| ai| ainda)?( por favor)?"
