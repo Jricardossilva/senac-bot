@@ -1,5 +1,5 @@
-"""Copia os eventos de events/ (arquivos) para o MySQL configurado no .env. Uso:
-    .\.venv\Scripts\python.exe scripts\migrar_eventos_mysql.py [--sobrescrever]
+r"""Copia os eventos de events/ (arquivos) para o MySQL configurado no .env. Uso:
+    ..venv\Scripts\python.exe scripts\migrar_eventos_mysql.py [--sobrescrever]
 Não apaga nada na origem. Documentos já existentes no banco são preservados, a menos que --sobrescrever."""
 import sys
 from pathlib import Path
