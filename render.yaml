@@ -1,0 +1,38 @@
+# Blueprint do Render. Segredos (sync: false) são preenchidos no painel, nunca aqui.
+services:
+  - type: web
+    name: senac-bot
+    runtime: python
+    region: virginia
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: APP_ENV
+        value: production
+      - key: ROBOT_MODE
+        value: simulation
+      - key: SENAC_LOG_LEVEL
+        value: INFO
+      - key: GEMINI_MODEL
+        value: gemini-3.5-flash-lite
+      - key: DB_PORT
+        value: "3306"
+      - key: DB_CHARSET
+        value: utf8mb4
+      - key: DB_SSL
+        value: "false"
+      - key: DB_HOST
+        sync: false
+      - key: DB_NAME
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
