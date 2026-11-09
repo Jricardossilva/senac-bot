@@ -1,0 +1,45 @@
+{
+  "description": "Coordenadas geográficas das unidades do Senac Paraíba, usadas só para calcular a unidade mais próxima do visitante (distância em linha reta, método de Haversine, calculada em Python; nunca pelo Gemini). Entram aqui apenas unidades cujo endereço já está confirmado em knowledge/units.json. As coordenadas vêm de geocodificação (OpenStreetMap/Nominatim) desse endereço oficial, no nível da via (não do número exato do prédio): 'precision' deixa isso explícito e a resposta ao visitante sempre avisa que é distância em linha reta. Unidades sem endereço confirmado (Gastronomia e Hotelaria, Zona Sul, Cajazeiras, Tadros, Patos, Unidades Móveis) ficam fora até terem endereço validado.",
+  "units": [
+    {
+      "unit": "CEP-JP",
+      "municipio": "João Pessoa",
+      "uf": "PB",
+      "lat": -7.1189707,
+      "lon": -34.8742768,
+      "precision": "via (geocodificação da Avenida Dom Pedro I; não é o número exato do prédio)",
+      "source_id": "pb-unidades",
+      "note": "Avenida Dom Pedro I, 389, Centro, João Pessoa."
+    },
+    {
+      "unit": "CENDEGE",
+      "municipio": "João Pessoa",
+      "uf": "PB",
+      "lat": -7.1189707,
+      "lon": -34.8742768,
+      "precision": "via (usa as mesmas coordenadas do CEP-JP)",
+      "source_id": "pb-joao-pessoa",
+      "note": "A própria base institucional registra que o CENDEGE está em reforma e funciona provisoriamente no CEP João Pessoa; por isso usa a mesma coordenada, não o endereço original da Rua Desembargador Souto Maior."
+    },
+    {
+      "unit": "DOM-ULRICO",
+      "municipio": "João Pessoa",
+      "uf": "PB",
+      "lat": -7.1263326,
+      "lon": -34.8748736,
+      "precision": "via (geocodificação da Avenida João Machado; não é o número exato do prédio)",
+      "source_id": "pb-unidades",
+      "note": "Avenida João Machado, 1214, Centro, João Pessoa."
+    },
+    {
+      "unit": "CEP-CG",
+      "municipio": "Campina Grande",
+      "uf": "PB",
+      "lat": -7.2048361,
+      "lon": -35.8747606,
+      "precision": "endereço completo geocodificado (Avenida Manoel Tavares, 300, Alto Branco)",
+      "source_id": "pb-unidades",
+      "note": "Avenida Manoel Tavares, 300, Alto Branco, Campina Grande."
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "category": "permanent",
+  "description": "Informações institucionais permanentes: Senac Brasil e Senac Paraíba (história, missão, modelo pedagógico, tipos de curso, números).",
+  "entries": [
+    {
+      "id": "br-senac-o-que-e",
+      "title": "O que é o Senac",
+      "content": "O Senac é o Serviço Nacional de Aprendizagem Comercial, a principal instituição de educação profissional voltada ao comércio de bens, serviços e turismo. Oferece qualificação, inclusão e formação do nível inicial ao superior, para jovens e adultos, e está presente nos 26 estados e no Distrito Federal.",
+      "category": "permanent", "level": "brasil", "unit": null, "kind": "institutional",
+      "keywords": ["senac", "o que e", "servico nacional de aprendizagem comercial", "educacao profissional", "instituicao"],
+      "questions": ["O que é o Senac?", "Quem é o Senac?", "O que o Senac faz?"],
+      "source_ids": ["br-sobre"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "permanent", "status": "verified"
+    },
+    {
+      "id": "br-historia",
+      "title": "História e administração do Senac",
+      "content": "O site oficial do Senac nacional cita 1946 como marco: desde então a instituição se atualiza para acompanhar as inovações e as transformações da sociedade. O Senac é administrado pela Confederação Nacional do Comércio de Bens, Serviços e Turismo, a CNC.",
+      "category": "permanent", "level": "brasil", "unit": null, "kind": "institutional",
+      "keywords": ["historia", "1946", "fundacao", "criacao", "cnc", "confederacao nacional do comercio", "administrado"],
+      "questions": ["Qual é a história do Senac?", "Quando o Senac foi criado?", "Quem administra o Senac?"],
+      "source_ids": ["br-sobre"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "permanent", "status": "verified",
+      "notes": "A página nacional não informa a data de fundação; só cita 1946 como referência. Não afirmar além disso."
+    },
+    {
+      "id": "br-missao-visao-valores",
+      "title": "Missão, visão e valores do Senac nacional",
+      "content": "A missão do Senac é educar para o trabalho, de forma inovadora e inclusiva, em atividades do comércio de bens, serviços e turismo. A visão é transformar vidas e fortalecer esse setor. Os valores são ética e transparência, diversidade, inovação, sustentabilidade e transformação social.",
+      "category": "permanent", "level": "brasil", "unit": null, "kind": "institutional",
+      "keywords": ["missao", "visao", "valores", "proposito", "etica", "diversidade", "inovacao", "sustentabilidade"],
+      "questions": ["Qual é a missão do Senac?", "Quais são os valores do Senac?"],
+      "source_ids": ["br-sobre"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "permanent", "status": "verified"
+    },
+    {
+      "id": "br-atuacao-comercio",
+      "title": "Atuação junto ao comércio de bens, serviços e turismo",
+      "content": "O Senac atua nos setores de comércio de bens, serviços e turismo e é administrado pela CNC, que, segundo o site, representa cinco milhões de empresas e 25,5 milhões de empregos diretos e formais. O site afirma que o setor responde por cerca de dois terços do PIB brasileiro.",
+      "category": "permanent", "level": "brasil", "unit": null, "kind": "institutional",
+      "keywords": ["comercio", "bens", "servicos", "turismo", "setor", "cnc", "empresas", "pib", "empregos"],
+      "questions": ["Em quais setores o Senac atua?", "O Senac atende o comércio?"],
+      "source_ids": ["br-sobre"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified"
+    },
+    {
+      "id": "br-numeros",
+      "title": "O Senac em números",
+      "content": "O Senac nacional divulga mais de 600 unidades operativas, 1.089 títulos de cursos e 78 milhões de atendimentos desde 1946, sendo 2,1 milhões em 2024. Desde 2008, o Programa Senac de Gratuidade atendeu 4,7 milhões de alunos.",
+      "category": "permanent", "level": "brasil", "unit": null, "kind": "institutional",
+      "keywords": ["numeros", "unidades operativas", "titulos de cursos", "atendimentos", "alunos", "quantos", "estatisticas"],
+      "questions": ["Quantas unidades o Senac tem?", "Quantos alunos o Senac atende?"],
+      "source_ids": ["br-sobre"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "review",
+      "notes": "A própria página traz dois totais de unidades operativas (617 e 689) em seções diferentes; por isso o texto usa 'mais de 600'. Confirmar o número exato antes de citar."
+    },
+    {
+      "id": "br-estrutura-unidades",
+      "title": "Tipos de unidades do Senac",
+      "content": "O Senac tem centros de educação profissional, unidades de ensino superior, centros especializados e empresas pedagógicas, como hotéis, restaurantes, cafés e lanchonetes-escola, onde o aluno vive a profissão na prática. Há ainda unidades móveis: 86 carretas-escola e 1 balsa-escola.",
+      "category": "permanent", "level": "brasil", "unit": null, "kind": "institutional",
+      "keywords": ["estrutura", "tipos de unidades", "empresas pedagogicas", "carretas escola", "balsa escola", "centros de educacao profissional"],
+      "questions": ["Que tipos de unidade o Senac tem?", "O que são empresas pedagógicas?"],
+      "source_ids": ["br-sobre"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified"
+    },
+    {
+      "id": "br-modelo-pedagogico",
+      "title": "Modelo pedagógico do Senac nacional",
+      "content": "O jeito Senac de educar coloca o aluno como protagonista e busca uma educação transformadora, com impacto na vida do aluno, na comunidade e na sociedade. As marcas formativas são domínio técnico-científico, colaboração e comunicação, atitude sustentável, visão crítica, autonomia digital, criatividade e atitude empreendedora.",
+      "category": "permanent", "level": "brasil", "unit": null, "kind": "institutional",
+      "keywords": ["modelo pedagogico", "jeito senac de educar", "marcas formativas", "protagonista", "metodologia", "competencias"],
+      "questions": ["Qual é o modelo pedagógico do Senac?", "Como o Senac ensina?"],
+      "source_ids": ["br-modelo-pedagogico"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "permanent", "status": "verified"
+    },
+    {
+      "id": "pb-modelo-pedagogico",
+      "title": "Modelo pedagógico Senac (visão do Senac Paraíba)",
+      "content": "O Modelo Pedagógico Senac foi concebido em 2013 pelo Departamento Nacional com os regionais. Nele a competência é a própria unidade curricular, aprende-se fazendo e refletindo sobre o fazer, e os projetos integradores conectam a sala de aula ao mundo do trabalho. A avaliação acompanha todo o processo de aprendizagem.",
+      "category": "permanent", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["modelo pedagogico", "projeto integrador", "competencia", "acao reflexao acao", "avaliacao", "2013", "aprende fazendo"],
+      "questions": ["O que é o projeto integrador?", "Como funciona o modelo pedagógico do Senac?"],
+      "source_ids": ["pb-modelo-pedagogico"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "permanent", "status": "verified"
+    },
+    {
+      "id": "br-tipos-de-cursos",
+      "title": "Tipos de cursos do Senac",
+      "content": "O Senac oferece qualificação profissional (cursos livres), educação continuada (aperfeiçoamentos, especializações técnicas, certificações e pós-graduações), ensino técnico de nível médio, ensino superior em cursos de tecnologia, programas de aprendizagem para jovens e educação a distância pela Rede EAD.",
+      "category": "permanent", "level": "brasil", "unit": null, "kind": "institutional",
+      "keywords": ["tipos de cursos", "qualificacao profissional", "cursos livres", "educacao continuada", "tecnico", "superior", "tecnologo", "pos graduacao", "aprendizagem", "ead", "formacao inicial e continuada"],
+      "questions": ["Que tipos de cursos o Senac oferece?", "O Senac tem curso superior?", "O Senac tem pós-graduação?"],
+      "source_ids": ["br-cursos"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified"
+    },
+    {
+      "id": "br-fic-tecnico-superior",
+      "title": "Formação inicial e continuada, técnico e superior",
+      "content": "Os níveis de formação do Senac são: Formação Inicial e Continuada (aprendizagem, qualificação profissional e aperfeiçoamento), Educação Profissional Técnica de Nível Médio (qualificação e habilitação técnica) e Educação Superior, incluindo pós-graduação, segundo o site do Senac Paraíba.",
+      "category": "permanent", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["formacao inicial e continuada", "fic", "tecnico", "nivel medio", "educacao superior", "pos graduacao", "habilitacao tecnica", "niveis"],
+      "questions": ["O que é formação inicial e continuada?", "Quais níveis de ensino o Senac Paraíba oferece?"],
+      "source_ids": ["pb-quem-somos"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified"
+    },
+    {
+      "id": "br-ead",
+      "title": "Educação a distância (Rede EAD Senac)",
+      "content": "A Rede EAD Senac oferece cursos técnicos, livres, graduações e pós-graduações a distância, que, segundo o site, têm a mesma validade dos cursos presenciais. O Senac Paraíba destaca a flexibilidade de tempo, espaço e dinheiro dos cursos a distância.",
+      "category": "permanent", "level": "brasil", "unit": null, "kind": "institutional",
+      "keywords": ["ead", "educacao a distancia", "a distancia", "online", "rede ead", "validade"],
+      "questions": ["O Senac tem cursos a distância?", "O curso EAD do Senac vale o mesmo que o presencial?"],
+      "source_ids": ["br-cursos", "pb-home"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified"
+    },
+    {
+      "id": "pb-historia",
+      "title": "História do Senac na Paraíba",
+      "content": "O Senac foi instalado na Paraíba em 28 de dezembro de 1949, por empresários do comércio de bens, serviços e turismo, com a finalidade de valorizar o trabalhador por meio da capacitação profissional e de atividades educativas.",
+      "category": "permanent", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["historia", "1949", "fundacao", "criacao", "instalado", "paraiba", "origem"],
+      "questions": ["Qual é a história do Senac Paraíba?", "Quando o Senac chegou à Paraíba?"],
+      "source_ids": ["pb-quem-somos"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "permanent", "status": "verified"
+    },
+    {
+      "id": "pb-missao-visao-valores",
+      "title": "Missão, visão e valores do Senac Paraíba",
+      "content": "A missão do Senac Paraíba é educar para o trabalho em atividades do comércio de bens, serviços e turismo. A visão é ser a instituição brasileira que oferece as melhores soluções em educação profissional, reconhecida pelas empresas. Os valores são transparência, inclusão social, excelência, inovação, atitude empreendedora, desenvolvimento sustentável e educação para autonomia.",
+      "category": "permanent", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["missao", "visao", "valores", "transparencia", "inclusao social", "excelencia", "atitude empreendedora"],
+      "questions": ["Qual é a missão do Senac Paraíba?", "Quais são os valores do Senac PB?"],
+      "source_ids": ["pb-missao"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "permanent", "status": "verified"
+    },
+    {
+      "id": "pb-estrutura",
+      "title": "Estrutura do Senac Paraíba",
+      "content": "O Senac Paraíba atua em todo o estado por unidades fixas e móveis: centros de educação profissional e unidades de ensino em João Pessoa, que é a sede regional, Campina Grande, Cajazeiras e Patos, além das Unidades Móveis. A administração regional fica na Rua Desembargador Souto Maior, 291, 2º andar, Centro, em João Pessoa.",
+      "category": "permanent", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["estrutura", "unidades", "sede regional", "administracao regional", "atuacao", "estado", "paraiba", "onde atua"],
+      "questions": ["Onde o Senac Paraíba atua?", "Quais cidades têm unidades do Senac na Paraíba?"],
+      "source_ids": ["pb-quem-somos", "pb-home"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified"
+    }
+  ]
+}

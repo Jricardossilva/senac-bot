@@ -1,0 +1,64 @@
+{
+  "category": "programs",
+  "description": "Programas institucionais: Programa Senac de Gratuidade, aprendizagem, banco de oportunidades e outros.",
+  "entries": [
+    {
+      "id": "program-psg",
+      "title": "Programa Senac de Gratuidade (PSG)",
+      "content": "O Programa Senac de Gratuidade oferece cursos gratuitos de qualificação profissional. Nasceu de um protocolo firmado em 22 de julho de 2008 entre MEC, MTE, MF, CNC e Senac. Podem participar pessoas de baixa renda, estudantes ou egressos da educação básica e trabalhadores, com renda familiar mensal de até dois salários mínimos por pessoa, comprovada por autodeclaração.",
+      "short": "Podem participar pessoas de baixa renda, com renda familiar mensal de até dois salários mínimos por pessoa.",
+      "category": "programs", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["psg", "programa senac de gratuidade", "gratuidade", "gratuito", "cursos gratuitos", "baixa renda", "dois salarios minimos", "renda per capita", "autodeclaracao", "decreto", "2008", "quem pode"],
+      "questions": ["O que é o Programa Senac de Gratuidade?", "Quem pode fazer curso gratuito no Senac?", "Qual a renda exigida no PSG?"],
+      "source_ids": ["pb-psg"], "consulted_at": "2026-11-07", "valid_until": "2026-12-31", "freshness": "volatile", "status": "verified",
+      "notes": "Base legal citada: Decretos 6.633/2008 e 9.364/2018 (a página cita também '6.333/2008', provável erro de digitação). Também atende usuários de programas de proteção a pessoas ameaçadas (Lei 9.807/1999). Grupo familiar: o candidato e quem mora com ele e divide a renda, como pais, cônjuge, filhos e irmãos."
+    },
+    {
+      "id": "program-psg-como-participar",
+      "title": "PSG: como participar e o que falta confirmar",
+      "content": "As normas e procedimentos de inscrição e matrícula do Programa Senac de Gratuidade são publicadas por unidade e por município, em arquivos PDF numerados, 89 em 2026, segundo a página. Não tenho confirmados os documentos exigidos, os prazos, as vagas e os valores: consulte a norma da unidade desejada ou o atendimento do Senac.",
+      "category": "programs", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["psg", "como participar", "inscricao", "matricula", "normas e procedimentos", "documentos", "prazos", "vagas", "gratuidade", "como me inscrevo"],
+      "questions": ["Como me inscrevo no curso gratuito?", "Quais documentos o PSG exige?", "Quais os prazos de inscrição do PSG?"],
+      "source_ids": ["pb-psg"], "consulted_at": "2026-11-07", "valid_until": "2026-12-31", "freshness": "volatile", "status": "pending"
+    },
+    {
+      "id": "program-aprendizagem-pb",
+      "title": "Aprendizagem profissional / Jovem Aprendiz",
+      "content": "Os Programas de Aprendizagem do Senac combinam formação nas unidades do Senac com prática profissional na empresa contratante, para jovens de 14 a 24 anos. O Senac Paraíba apresenta o Jovem Aprendiz como um programa que desenvolve pessoas e organizações por meio da educação e da responsabilidade social.",
+      "category": "programs", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["jovem aprendiz", "aprendizagem", "aprendizagem profissional", "14 a 24 anos", "jovens", "primeiro emprego", "estagio", "pratica na empresa"],
+      "questions": ["O que é o Jovem Aprendiz do Senac?", "Como funciona a aprendizagem profissional?", "Qual a idade para ser aprendiz?"],
+      "source_ids": ["br-aprendizagem", "pb-home"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified",
+      "notes": "Duração, base legal e processo de inscrição não constam nas páginas consultadas."
+    },
+    {
+      "id": "program-banco-oportunidades",
+      "title": "Banco de Oportunidade de Trabalho",
+      "content": "O Banco de Oportunidade de Trabalho do Senac Paraíba facilita a troca de informações entre empresas e alunos egressos: o aluno informa sua disponibilidade e as empresas divulgam vagas. Currículos compatíveis com a vaga são encaminhados às empresas. Contatos informados: (83) 99416-2988 e (83) 99971-3710.",
+      "category": "programs", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["banco de oportunidades", "banco de oportunidade de trabalho", "vagas de emprego", "emprego", "egressos", "curriculo", "empresas", "oportunidades de trabalho"],
+      "questions": ["O Senac ajuda a conseguir emprego?", "Como funciona o Banco de Oportunidades?", "Como cadastro meu currículo no Senac?"],
+      "source_ids": ["pb-banco-oportunidades"], "consulted_at": "2026-11-07", "valid_until": "2027-02-07", "freshness": "periodic", "status": "verified",
+      "notes": "A página não descreve um formulário específico para cadastrar currículo; o aluno ou egresso informa a disponibilidade. Empresas devem procurar a unidade mais próxima por telefone ou e-mail."
+    },
+    {
+      "id": "program-diversidade-inclusao",
+      "title": "Programa Senac de Diversidade e Inclusão",
+      "content": "O Programa Senac de Diversidade e Inclusão, chamado Multitude Edu, busca fortalecer a cultura de diversidade e promover o respeito às diferentes identidades culturais e sociais. Os públicos citados são mulheres, comunidade LGBTQIAP+, pessoas com deficiência, indígenas, quilombolas, negros e imigrantes.",
+      "category": "programs", "level": "brasil", "unit": null, "kind": "institutional",
+      "keywords": ["diversidade", "inclusao", "multitude edu", "mulheres", "lgbtqiap", "pessoas com deficiencia", "indigenas", "quilombolas", "negros", "imigrantes"],
+      "questions": ["O Senac tem programa de diversidade?", "O que é o Multitude Edu?"],
+      "source_ids": ["br-sobre"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified"
+    },
+    {
+      "id": "program-psg-numeros-brasil",
+      "title": "PSG no Brasil: alcance",
+      "content": "Segundo o site do Senac nacional, o Programa Senac de Gratuidade atendeu 4,7 milhões de alunos desde 2008 e o Senac aplica 66,67% da receita compulsória em cursos gratuitos.",
+      "category": "programs", "level": "brasil", "unit": null, "kind": "institutional",
+      "keywords": ["psg", "gratuidade", "numeros", "4,7 milhoes", "receita compulsoria", "matriculas", "alcance nacional"],
+      "questions": ["Quantas pessoas o PSG já atendeu?", "Quanto da receita do Senac vai para cursos gratuitos?"],
+      "source_ids": ["br-sobre"], "consulted_at": "2026-11-07", "valid_until": "2027-02-07", "freshness": "periodic", "status": "verified"
+    }
+  ]
+}

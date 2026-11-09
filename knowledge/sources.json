@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "description": "Registro das fontes oficiais usadas pela base de conhecimento. Somente domínios do Senac. O atualizador (backend/knowledge/updater.py) consulta apenas estas páginas.",
+  "allowed_domains": ["senac.br"],
+  "freshness_days": { "permanent": 365, "periodic": 120, "volatile": 30 },
+  "sources": [
+    {"id": "pb-home", "name": "Senac Paraíba - página inicial", "url": "https://pb.senac.br/", "level": "paraiba", "freshness": "volatile", "dynamic": false, "noisy": true, "expect": ["Senac"], "min_length": 400},
+    {"id": "pb-unidades", "name": "Senac Paraíba - Unidades Operativas", "url": "https://pb.senac.br/institucional/unidades-operativas/", "level": "paraiba", "freshness": "periodic", "dynamic": false, "expect": ["Renato Ribeiro Coutinho", "CENDEGE"], "min_length": 800},
+    {"id": "pb-joao-pessoa", "name": "Senac Paraíba - Unidades de João Pessoa", "url": "https://pb.senac.br/joao-pessoa/", "level": "paraiba", "freshness": "periodic", "dynamic": false, "expect": ["CENDEGE", "Dom Ulrico"], "min_length": 800},
+    {"id": "pb-quem-somos", "name": "Senac Paraíba - Quem Somos", "url": "https://pb.senac.br/quem-somos/", "level": "paraiba", "freshness": "permanent", "dynamic": false, "expect": ["1949"], "min_length": 500},
+    {"id": "pb-missao", "name": "Senac Paraíba - Missão, Visão e Valores", "url": "https://pb.senac.br/missao-visao-valores/", "level": "paraiba", "freshness": "permanent", "dynamic": false, "expect": ["Educar para o trabalho"], "min_length": 200},
+    {"id": "pb-modelo-pedagogico", "name": "Senac Paraíba - Modelo Pedagógico Senac", "url": "https://pb.senac.br/modelo-pedagogico-senac/", "level": "paraiba", "freshness": "permanent", "dynamic": false, "expect": ["Modelo Pedag"], "min_length": 500},
+    {"id": "pb-psg", "name": "Senac Paraíba - Programa Senac de Gratuidade", "url": "https://pb.senac.br/programa-senac-de-gratuidade/", "level": "paraiba", "freshness": "volatile", "dynamic": false, "expect": ["Gratuidade"], "min_length": 800},
+    {"id": "pb-educacao-ambiental", "name": "Senac Paraíba - Educação Ambiental e Ações Sociais", "url": "https://pb.senac.br/educacao-ambiental/", "level": "paraiba", "freshness": "periodic", "dynamic": false, "expect": ["4Rs"], "min_length": 800},
+    {"id": "pb-acessibilidade", "name": "Senac Paraíba - Programa Senac de Acessibilidade", "url": "https://pb.senac.br/programa-senac-de-acessibilidade/", "level": "paraiba", "freshness": "periodic", "dynamic": false, "expect": ["Acessibilidade"], "min_length": 400},
+    {"id": "pb-pas", "name": "Senac Paraíba - Programa Senac de Segurança Alimentar", "url": "https://pb.senac.br/programa-pas/", "level": "paraiba", "freshness": "periodic", "dynamic": false, "expect": ["Segurança Alimentar"], "min_length": 400},
+    {"id": "pb-banco-oportunidades", "name": "Senac Paraíba - Banco de Oportunidade de Trabalho", "url": "https://pb.senac.br/banco-de-oportunidades/", "level": "paraiba", "freshness": "periodic", "dynamic": false, "expect": ["egressos"], "min_length": 400},
+    {"id": "pb-tecnicos", "name": "Senac Paraíba - Página institucional de Cursos Técnicos (/tecnicos/)", "url": "https://pb.senac.br/tecnicos/", "level": "paraiba", "freshness": "volatile", "dynamic": false, "expect": ["Técnico em"], "min_length": 400, "category": "Cursos e matrículas", "institution": "Senac PB", "kind": "official"},
+    {"id": "pb-programacao-cursos", "name": "Cursos Técnicos — Senac Paraíba", "url": "https://pb.senac.br/matriculas/matricula/cursos-tecnicos/index.php", "level": "paraiba", "freshness": "volatile", "dynamic": true, "expect": [], "min_length": 100, "category": "Cursos e matrículas", "institution": "Senac PB", "kind": "official"},
+    {"id": "pb-atendimento-corporativo", "name": "Senac Paraíba - Atendimento Corporativo", "url": "https://pb.senac.br/atendimento-corporativo/", "level": "paraiba", "freshness": "periodic", "dynamic": false, "expect": ["Corporativo"], "min_length": 400},
+    {"id": "pb-noticias", "name": "Senac Paraíba - Notícias", "url": "https://pb.senac.br/noticias/", "level": "paraiba", "freshness": "volatile", "dynamic": false, "noisy": true, "expect": ["Senac"], "min_length": 400},
+    {"id": "empresas-home", "name": "Senac Empresas", "url": "https://empresas.senac.br/", "level": "brasil", "freshness": "periodic", "dynamic": false, "expect": ["Aprendizagem Profissional"], "min_length": 600},
+    {"id": "br-sobre", "name": "Senac Brasil - Sobre o Senac", "url": "https://www.senac.br/sobre/", "level": "brasil", "freshness": "periodic", "dynamic": false, "expect": ["Serviço Nacional de Aprendizagem Comercial"], "min_length": 800},
+    {"id": "br-modelo-pedagogico", "name": "Senac Brasil - Modelo Pedagógico", "url": "https://www.senac.br/modelo-pedagogico/", "level": "brasil", "freshness": "permanent", "dynamic": false, "expect": ["Marcas"], "min_length": 400},
+    {"id": "br-aprendizagem", "name": "Senac Brasil - Programa de Aprendizagem", "url": "https://www.senac.br/programa-de-aprendizagem/", "level": "brasil", "freshness": "periodic", "dynamic": false, "expect": ["Aprendizagem"], "min_length": 300},
+    {"id": "br-cursos", "name": "Senac Brasil - Cursos", "url": "https://www.senac.br/cursos/", "level": "brasil", "freshness": "periodic", "dynamic": false, "expect": ["Ensino"], "min_length": 500}
+  ]
+}

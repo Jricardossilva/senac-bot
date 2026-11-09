@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a4c93">
+  <meta name="description" content="SENAC BOT — assistente virtual do Senac Paraíba. Tecnologia que conversa com você.">
+  <title>SENAC BOT | Tecnologia que conversa com você</title>
+  <!-- Favicon: SVG como principal (nitidez em qualquer tamanho); PNG/.ico para navegadores sem suporte a SVG -->
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/brand/favicon-16.png">
+  <link rel="shortcut icon" href="/assets/brand/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/brand/favicon-180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/brand/favicon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/brand/favicon-512.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/app.css">
+</head>
+<body>
+  <!-- Gradientes compartilhados pelos avatares (precisam estar em um SVG sempre visível) -->
+  <svg class="svg-defs" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="sb-shell" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dfe9f4"/></linearGradient>
+      <linearGradient id="sb-torso" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d3e1f0"/></linearGradient>
+      <linearGradient id="sb-visor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b3468"/><stop offset="1" stop-color="#0a5aa8"/></linearGradient>
+      <linearGradient id="sb-blue" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1366bd"/><stop offset="1" stop-color="#083e7d"/></linearGradient>
+      <linearGradient id="sb-orange" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffb55a"/><stop offset="1" stop-color="#f27a12"/></linearGradient>
+      <radialGradient id="sb-eye" cx="0.5" cy="0.4" r="0.7"><stop offset="0" stop-color="#ffffff"/><stop offset="0.45" stop-color="#a6e3ff"/><stop offset="1" stop-color="#35b0ff"/></radialGradient>
+    </defs>
+  </svg>
+
+  <!-- Avatar do SENAC BOT: um único modelo, usado no visitante e no simulador -->
+  <template id="avatar-template">
+    <svg class="robot-svg" viewBox="0 0 300 390" role="img">
+      <ellipse class="shadow" cx="150" cy="369" rx="88" ry="11"/>
+      <g class="antenna"><path d="M150 48V31"/><path class="rays" d="M150 8V2M136 13l-4-4M164 13l4-4"/><circle cx="150" cy="22" r="9"/><circle class="antenna-shine" cx="147" cy="19" r="2.6"/></g>
+      <g class="head">
+        <g class="ears">
+          <rect class="ear" x="56" y="84" width="18" height="48" rx="9"/><rect class="ear" x="226" y="84" width="18" height="48" rx="9"/>
+          <path class="voice-waves" d="M46 96q-9 12 0 24M37 88q-15 20 0 40M254 96q9 12 0 24M263 88q15 20 0 40"/>
+        </g>
+        <rect class="head-shell" x="72" y="47" width="156" height="119" rx="46"/>
+        <path class="head-band" d="M100 60q50-16 100 0"/>
+        <rect class="face-screen" x="86" y="62" width="128" height="86" rx="32"/>
+        <path class="face-glow" d="M98 74q52-14 104 0"/>
+        <g class="brows"><path class="brow" d="M110 80q14-7 28 0"/><path class="brow" d="M162 80q14-7 28 0"/></g>
+        <g class="eyes"><ellipse class="eye" cx="124" cy="103" rx="10" ry="15"/><ellipse class="eye" cx="176" cy="103" rx="10" ry="15"/><circle class="eye-spark" cx="127" cy="98" r="3"/><circle class="eye-spark" cx="179" cy="98" r="3"/></g>
+        <circle class="cheek" cx="104" cy="124" r="6"/><circle class="cheek" cx="196" cy="124" r="6"/>
+        <path class="mouth" d="M137 126q13 9 26 0"/>
+      </g>
+      <g class="neck"><rect x="130" y="163" width="40" height="21" rx="9"/><path class="neck-ring" d="M132 172h36"/></g>
+      <g class="arms">
+        <g class="arm arm-left"><path class="limb" d="M100 213 77 236l-8 43"/><circle class="joint" cx="77" cy="236" r="9"/><circle class="hand" cx="69" cy="282" r="12"/><circle class="shoulder" cx="100" cy="213" r="13"/></g>
+        <g class="arm arm-right"><path class="limb" d="m200 213 23 23 8 43"/><circle class="joint" cx="223" cy="236" r="9"/><circle class="hand" cx="231" cy="282" r="12"/><circle class="shoulder" cx="200" cy="213" r="13"/></g>
+      </g>
+      <g class="body">
+        <path class="torso" d="M106 181q44-18 88 0l17 112q-61 25-122 0Z"/>
+        <rect class="chest-panel" x="117" y="195" width="66" height="62" rx="17"/>
+        <path class="chest-core" d="M150 203l2.8 6.9 6.9 2.8-6.9 2.8-2.8 6.9-2.8-6.9-6.9-2.8 6.9-2.8Z"/>
+        <path class="chest-book" d="M150 233q-10-7-22-3v15q12-4 22 3ZM150 233q10-7 22-3v15q-12-4-22 3Z"/>
+        <path class="chest-line" d="M127 265h46"/>
+        <text class="chest-label" x="150" y="283" text-anchor="middle">SENAC BOT</text>
+      </g>
+      <g class="base">
+        <path class="base-shell" d="M100 295h100l-12 30h-76Z"/>
+        <circle class="wheel" cx="112" cy="338" r="19"/><circle class="wheel" cx="188" cy="338" r="19"/>
+        <circle class="wheel-core" cx="112" cy="338" r="7"/><circle class="wheel-core" cx="188" cy="338" r="7"/>
+        <rect class="sensor" x="137" y="306" width="26" height="12" rx="6"/><circle class="sensor-dot" cx="150" cy="312" r="3"/>
+      </g>
+    </svg>
+  </template>
+
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#visitor" aria-label="SENAC BOT, Senac Paraíba">
+        <img class="brand-logo" src="/assets/brand/senac-logo.png" width="78" height="46" alt="Senac">
+        <span class="brand-copy"><strong>SENAC <span>BOT</span></strong><small>Senac Paraíba · CEP João Pessoa</small></span>
+      </a>
+      <nav class="mode-nav" aria-label="Ambientes">
+        <button class="nav-button active" data-view="visitor" type="button">Visitante</button>
+        <button class="nav-button" data-view="operator" type="button">Operador</button>
+        <button class="nav-button" data-view="simulator" type="button">Simulador</button>
+        <button class="nav-button" data-view="diagnostics" type="button">Diagnóstico</button>
+      </nav>
+      <div class="connection"><button id="fullscreen-button" class="icon-button fullscreen-button" type="button" aria-label="Alternar tela cheia" title="Tela cheia"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"></path></svg></button><span class="connection-dot"></span><span id="connection-label">Conectando</span></div>
+    </header>
+
+    <main>
+      <section id="visitor" class="view visitor-view active" aria-labelledby="visitor-title">
+        <div class="visitor-grid">
+          <aside class="robot-column" aria-label="SENAC BOT, assistente virtual do Senac Paraíba">
+            <div class="robot-stage">
+              <div class="stage-sun" aria-hidden="true"></div><div class="stage-dots" aria-hidden="true"></div>
+              <span class="stage-tag"><span class="live-dot"></span> Assistente virtual do Senac Paraíba</span>
+              <img class="stage-logo" src="/assets/brand/senac-logo.png" width="51" height="30" alt="Senac">
+              <div id="visitor-robot" class="robot visitor-robot" data-action="idle" data-avatar="SENAC BOT, androide branco e azul com olhos digitais, assistente virtual do Senac Paraíba"></div>
+              <div class="robot-caption"><span class="caption-name">SENAC BOT</span><span id="robot-caption-state">Pronto para conversar</span></div>
+            </div>
+          </aside>
+
+          <div class="conversation-column">
+            <div class="eyebrow"><span class="eyebrow-line"></span> <span id="visitor-eyebrow">SENAC PARAÍBA · CEP JOÃO PESSOA</span></div>
+            <h1 id="visitor-title">Olá!<br>Eu sou o <span>SENAC BOT.</span></h1>
+            <p class="tagline">Tecnologia que conversa com você.</p>
+            <p id="visitor-intro" class="intro">Sou o assistente virtual do Senac Paraíba. Toque no botão e converse comigo por voz: pergunte sobre educação profissional, cursos e tecnologia.</p>
+
+            <div class="chat-card">
+              <div class="chat-heading"><div><span class="live-dot"></span><strong>Converse com o SENAC BOT</strong></div></div>
+              <div id="messages" class="messages captions" aria-live="polite" aria-label="Legendas da conversa">
+                <div class="message bot-message"><span class="message-avatar" aria-hidden="true"></span><p>Olá! Eu sou o SENAC BOT. Toque em INICIAR CONVERSA e me pergunte o que quiser.</p></div>
+              </div>
+              <div id="visitor-state" class="visitor-state" data-state="Aguardando" role="status" aria-live="polite"><span class="state-pulse"></span><span id="visitor-state-label">Toque em INICIAR CONVERSA para falar comigo</span></div>
+              <div class="conversation-actions">
+                <button id="conversation-button" class="conversation-button" data-mode="start" type="button" aria-pressed="false">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2.5" width="6" height="12" rx="3"></rect><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3.5m-4 0h8"></path></svg>
+                  <span class="conversation-label">INICIAR CONVERSA</span>
+                </button>
+                <button id="stop-speech" class="chip-button" type="button" hidden>Interromper fala</button>
+                <button id="demo-skip" class="chip-button" type="button" hidden>Continuar demonstração</button>
+              </div>
+              <p id="voice-hint" class="voice-hint">Converse por voz: não precisa tocar de novo a cada pergunta. Sua voz não é gravada.</p>
+            </div>
+          </div>
+        </div>
+
+        <section class="try-asking" aria-label="Descubra o Senac">
+          <div class="try-heading"><span class="eyebrow"><span class="eyebrow-line"></span> <span id="try-eyebrow">DESCUBRA O SENAC</span></span><h2 id="try-title">Educação profissional para quem quer ir além.</h2><p>Toque em INICIAR CONVERSA e experimente perguntar:</p></div>
+          <ul id="try-list" class="try-list">
+            <li><q>Quem é você?</q></li>
+            <li><q>O que é o Senac?</q></li>
+            <li><q>Como posso conhecer os cursos do Senac?</q></li>
+            <li><q>Quais serviços o Senac oferece?</q></li>
+            <li><q>O que é robótica?</q></li>
+            <li><q>Quero um desafio!</q></li>
+          </ul>
+        </section>
+      </section>
+
+      <section id="operator" class="view dashboard-view" aria-labelledby="operator-title" hidden>
+        <div class="page-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> CONTROLE LOCAL</div><h1 id="operator-title">Painel do <span>operador.</span></h1><p>Acompanhe a aplicação e controle a sessão simulada.</p></div><span class="simulated-badge"><span></span> MODO SIMULADOR</span></div>
+        <div class="operator-layout">
+          <div class="operator-main">
+            <div class="metrics-grid">
+              <article class="metric-card panel"><span class="metric-label">APLICAÇÃO</span><strong id="application-state" class="metric-value"><i></i>Conectando</strong><small>API FastAPI local</small></article>
+              <article class="metric-card panel"><span class="metric-label">GEMINI</span><strong id="gemini-state" class="metric-value">Verificando</strong><small id="gemini-detail">Verificando disponibilidade</small></article>
+              <article class="metric-card panel"><span class="metric-label">MICROFONE</span><strong id="microphone-state" class="metric-value">Navegador</strong><small id="microphone-detail">Aguardando permissão</small></article>
+              <article class="metric-card panel"><span class="metric-label">SAÍDA DE ÁUDIO</span><strong id="audio-state" class="metric-value">Navegador</strong><small>Áudio não armazenado</small></article>
+              <article class="metric-card panel"><span class="metric-label">MODO DE HARDWARE</span><strong id="hardware-state" class="metric-value">Simulador</strong><small id="hardware-detail">Sem conexão física</small></article>
+              <article class="metric-card panel"><span class="metric-label">ESTADO DO ROBÔ</span><strong id="operator-robot-state" class="metric-value">Aguardando</strong><small id="operator-session-state">Sessão encerrada</small></article>
+            </div>
+            <article class="panel operator-controls">
+              <div><span class="metric-label">CONTROLES DA SESSÃO</span><p>Inicie o atendimento ou encerre-o com segurança.</p></div>
+              <div class="control-actions"><button id="start-demo" class="button-primary" type="button">Iniciar demonstração</button><button id="stop-demo" class="button-secondary" type="button" disabled>Encerrar demonstração</button><button id="start-session" class="button-secondary" type="button">Iniciar sessão</button><button id="stop-session" class="button-secondary" type="button">Encerrar sessão</button><button id="check-ai" class="button-secondary" type="button">Verificar Gemini</button><button id="emergency-button" class="button-danger" type="button">Parada de emergência</button></div>
+              <label class="toggle-row source-toggle"><input id="toggle-source" type="checkbox"> Exibir a origem das respostas na conversa (uso técnico do operador)</label>
+              <p id="operator-feedback" class="control-feedback" role="status" aria-live="polite"></p>
+            </article>
+            <article class="panel preflight-card">
+              <div class="card-heading"><div><span class="metric-label">PREPARAÇÃO DO EVENTO</span><h2>Verificação do sistema</h2></div><button id="run-preflight" class="button-secondary" type="button">Verificar sistema</button></div>
+              <p id="preflight-summary" class="preflight-summary" role="status" aria-live="polite">Ainda não verificado. Clique em Verificar sistema antes de abrir para o público.</p>
+              <ul id="preflight-list" class="preflight-list"></ul>
+              <div class="mode-switch"><span class="metric-label">MODO DE HARDWARE</span><div class="mode-buttons"><button class="chip-button" data-hardware-mode="simulation" type="button">Modo simulado</button><button class="chip-button" data-hardware-mode="physical" type="button">Modo físico</button></div><p id="hardware-feedback" class="control-feedback" role="status" aria-live="polite"></p></div>
+            </article>
+            <article class="panel voice-card" id="voice-card" aria-labelledby="voice-title">
+              <div class="card-heading"><div><span class="metric-label">VOZ DO SENAC BOT</span><h2 id="voice-title">Síntese de voz (masculina, pt-BR)</h2></div><button id="voice-test" class="button-secondary" type="button">Testar voz</button></div>
+              <p id="voice-summary" class="preflight-summary" role="status" aria-live="polite">Verificando vozes disponíveis...</p>
+              <div class="slider-row"><label for="voice-rate">Velocidade da fala</label><output id="voice-rate-value" for="voice-rate">1.15x</output></div>
+              <input id="voice-rate" type="range" min="0.75" max="2" step="0.05" value="1.15" aria-label="Velocidade da fala do SENAC BOT">
+              <p class="test-note">O SENAC BOT sempre usa uma voz masculina em português; vozes femininas não são oferecidas como opção.</p>
+            </article>
+            <article class="panel test-card">
+              <div class="card-heading"><div><span class="metric-label">TESTE DE MENSAGEM</span><h2>Testar respostas por texto</h2></div></div>
+              <p class="test-note">Uso do operador: confere as respostas sem usar o microfone. Esta área não aparece para o visitante.</p>
+              <form id="op-test-form" class="test-form"><label class="sr-only" for="op-test-message">Mensagem de teste</label><input id="op-test-message" placeholder="Digite uma pergunta de teste..." autocomplete="off" required><button class="button-secondary" type="submit">Enviar teste</button></form>
+              <p id="op-test-reply" class="test-reply" role="status" aria-live="polite"></p>
+            </article>
+            <article class="panel module-card module-knowledge" id="knowledge-card" aria-labelledby="knowledge-title">
+              <header class="module-head">
+                <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 48 48" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M24 12c-4-3-9-4-15-4v26c6 0 11 1 15 4 4-3 9-4 15-4V8c-6 0-11 1-15 4z"/><path d="M24 12v26"/><path d="M14 16.5c2.2.2 4.2.7 6 1.6M14 22c2.2.2 4.2.7 6 1.6M28 18.1c1.8-.9 3.8-1.4 6-1.6M28 23.6c1.8-.9 3.8-1.4 6-1.6"/></svg></span>
+                <div class="module-titles"><h2 id="knowledge-title">BASE DE CONHECIMENTO</h2><p class="module-desc">Informações oficiais do Senac</p></div>
+                <button id="refresh-knowledge" class="button-secondary" type="button">Atualizar status</button>
+              </header>
+              <ul id="knowledge-stats" class="stat-chips" aria-label="Situação das informações da base"></ul>
+              <p id="knowledge-summary" class="preflight-summary" role="status" aria-live="polite">Carregando...</p>
+              <ul id="knowledge-list" class="preflight-list"></ul>
+              <section id="portal-source" class="portal-source" aria-labelledby="portal-source-title" hidden>
+                <div class="portal-source-head">
+                  <div><span class="metric-label" id="portal-source-title">FONTE OFICIAL CADASTRADA</span><h3 id="portal-source-name"></h3></div>
+                  <div class="control-actions"><button id="portal-refresh" class="button-primary" type="button">Consultar fonte</button><button id="portal-toggle" class="button-secondary" type="button" aria-expanded="false" aria-controls="portal-records">Ver informações extraídas</button></div>
+                </div>
+                <ul id="portal-meta" class="stat-chips"></ul>
+                <p class="portal-url"><a id="portal-url" target="_blank" rel="noopener noreferrer"></a></p>
+                <p id="portal-status" class="event-meta" role="status" aria-live="polite"></p>
+                <p id="portal-security" class="portal-notice" hidden></p>
+                <div id="portal-records" class="portal-records" hidden></div>
+              </section>
+              <p class="test-note">Para atualizar os demais dados a partir das fontes oficiais, use scripts\atualizar-conhecimento.ps1 (detalhes em knowledge/README.md).</p>
+            </article>
+            <article class="panel pending-card" id="pending-card" aria-labelledby="pending-title">
+              <div class="pending-main">
+                <div class="pending-count" aria-hidden="true"><strong id="pending-number">–</strong><span>pendências</span></div>
+                <div class="pending-body">
+                  <div class="pending-title-row"><h3 id="pending-title"><span id="pending-number-text">–</span> pendências registradas</h3><span class="pending-pill" id="pending-pill"><i aria-hidden="true"></i><span>Em acompanhamento</span></span></div>
+                  <p class="pending-text">Informações que precisam de confirmação ou atualização.</p>
+                  <ul id="pending-chips" class="stat-chips" aria-label="Pendências por situação"></ul>
+                </div>
+                <button id="pending-toggle" class="button-secondary" type="button" aria-expanded="false" aria-controls="pending-list">Ver pendências</button>
+              </div>
+              <ol id="pending-list" class="pending-list" hidden></ol>
+            </article>
+            <article class="panel module-card module-events events-card" id="events-card" aria-labelledby="events-title">
+              <header class="module-head">
+                <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 48 48" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="10" width="34" height="31" rx="5"/><path d="M7 20h34M16 6v8M32 6v8"/><path d="M17 31l5 5 9-10"/></svg></span>
+                <div class="module-titles"><h2 id="events-title">GERENCIADOR DE EVENTOS</h2><p class="module-desc">Eventos e conhecimento do evento ativo</p></div>
+                <div class="control-actions"><button id="event-new" class="button-primary" type="button">Novo evento</button><button id="event-refresh" class="button-secondary" type="button">Atualizar lista</button></div>
+              </header>
+              <p id="events-active-banner" class="active-banner" role="status" aria-live="polite"><i aria-hidden="true"></i><span>Nenhum evento ativo</span></p>
+              <p id="events-summary" class="preflight-summary" role="status" aria-live="polite">Carregando...</p>
+              <ul id="events-list" class="events-list"></ul>
+              <section id="event-detail" class="event-detail" aria-live="polite" hidden></section>
+              <p class="test-note">Informações encontradas só chegam ao visitante depois de confirmadas. Este painel não aparece na tela do visitante.</p>
+            </article>
+            <dialog id="event-dialog" class="event-dialog" aria-labelledby="event-dialog-title">
+              <form id="event-form" class="event-form" method="dialog">
+                <h2 id="event-dialog-title">Novo evento</h2>
+                <p class="test-note">Só os campos marcados com * são obrigatórios. O restante pode ser preenchido depois.</p>
+                <div class="form-grid">
+                  <label>Nome do evento *<input name="name" required maxlength="120" autocomplete="off"></label>
+                  <label>Área ou segmento *<input name="area" required maxlength="120" placeholder="Ex.: Tecnologia, Gastronomia, Carreira"></label>
+                  <label class="wide">Breve descrição *<textarea name="description" required rows="2" maxlength="500"></textarea></label>
+                  <label>Início *<input name="start_date" type="date" required></label>
+                  <label>Término *<input name="end_date" type="date" required></label>
+                  <label>Organização responsável<input name="organization" maxlength="120"></label>
+                  <label>Local<input name="venue" maxlength="120"></label>
+                  <label>Cidade<input name="city" maxlength="80"></label>
+                  <label>Estado (UF)<input name="uf" maxlength="2" placeholder="PB"></label>
+                  <label class="wide">Site oficial<input name="website" type="url" placeholder="https://"></label>
+                  <label class="wide">Página de programação<input name="program_url" type="url" placeholder="https://"></label>
+                  <label class="wide">Redes sociais oficiais (uma por linha)<textarea name="social" rows="2"></textarea></label>
+                  <label class="wide">Documentos públicos de referência (um endereço por linha)<textarea name="reference_documents" rows="2"></textarea></label>
+                  <label class="wide">Objetivo do evento<textarea name="objective" rows="2" maxlength="400"></textarea></label>
+                  <label class="wide">Público esperado<input name="audience" maxlength="200"></label>
+                  <label class="wide">Palavras-chave (separadas por vírgula)<input name="keywords" maxlength="300"></label>
+                  <label class="wide">Mensagem de boas-vindas (opcional)<textarea name="welcome" rows="2" maxlength="300"></textarea></label>
+                  <label class="wide">Perguntas sugeridas ao visitante (uma por linha, opcional)<textarea name="suggested_questions" rows="2"></textarea></label>
+                  <label class="wide">Observações internas (não são faladas)<textarea name="notes" rows="2" maxlength="500"></textarea></label>
+                  <label>Atualização programada (horas; 0 = desligada)<input name="update_interval_hours" type="number" min="0" max="168" value="0"></label>
+                </div>
+                <p id="event-form-error" class="form-error" role="alert"></p>
+                <div class="control-actions"><button type="submit" class="button-primary">Salvar evento</button><button id="event-form-cancel" type="button" class="button-secondary">Cancelar</button></div>
+              </form>
+            </dialog>
+            <article class="panel event-card"><div class="card-heading"><div><span class="metric-label">ATIVIDADE</span><h2>Eventos recentes</h2></div><span class="event-live"><i></i> AO VIVO</span></div><ol id="event-list" class="event-list"><li class="empty-event">Aguardando eventos da aplicação.</li></ol></article>
+          </div>
+          <aside class="panel operator-aside"><div class="aside-orb" aria-hidden="true"></div><span class="metric-label">AMBIENTE ATIVO</span><h2>Simulador local</h2><p>No modo simulado, os comandos movimentam o avatar na tela. O modo físico (LEGO SPIKE Prime) ainda não está disponível.</p><button class="button-primary full-button" data-view="simulator" type="button">Acessar simulador <span>→</span></button><button id="emergency-release" class="button-secondary full-button" type="button" hidden>Liberar parada de emergência</button></aside>
+        </div>
+      </section>
+
+      <section id="simulator" class="view dashboard-view" aria-labelledby="simulator-title" hidden>
+        <div class="page-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> AMBIENTE DE TESTE</div><h1 id="simulator-title">Simulador do <span>robô.</span></h1><p>Experimente movimentos e observe o avatar responder.</p></div><span class="simulated-badge"><span></span> VIRTUAL · SEM HARDWARE</span></div>
+        <div class="simulator-layout">
+          <article class="simulator-stage"><div class="stage-sun" aria-hidden="true"></div><div class="stage-dots" aria-hidden="true"></div><span class="stage-tag"><span class="live-dot"></span> Simulação em tempo real</span>
+            <div id="simulator-robot" class="robot simulator-robot" data-action="idle" data-avatar="Simulador interativo: cabeça, olhos, tronco, braços, rodas e sensor frontal"></div>
+            <div class="simulator-caption"><div><span class="metric-label">ESTADO DO AVATAR</span><strong id="simulator-state-label">Aguardando</strong></div><span class="simulator-axis">Expressão <i id="simulator-expression-label">Neutro</i></span></div>
+          </article>
+          <aside class="simulator-controls">
+            <article class="panel action-panel"><span class="metric-label">EXPRESSÕES</span><div class="chip-grid"><button class="action-chip" data-action="neutral" type="button">Neutro</button><button class="action-chip" data-action="happy" type="button">Feliz</button><button class="action-chip" data-action="curious" type="button">Curioso</button><button class="action-chip" data-action="thinking" type="button">Pensando</button><button class="action-chip" data-action="speaking" type="button">Falando</button><button class="action-chip" data-action="surprised" type="button">Surpreso</button><button class="action-chip" data-action="sad" type="button">Triste</button><button class="action-chip" data-action="disconnected" type="button">Desconectado</button></div><span class="metric-label section-gap">MOVIMENTOS</span><div class="chip-grid"><button class="action-chip" data-action="look_left" type="button">Olhar à esquerda</button><button class="action-chip" data-action="look_right" type="button">Olhar à direita</button><button class="action-chip" data-action="tilt_head" type="button">Inclinar cabeça</button><button class="action-chip" data-action="left_arm" type="button">Braço esquerdo</button><button class="action-chip" data-action="right_arm" type="button">Braço direito</button><button class="action-chip" data-action="wave" type="button">Cumprimentar</button><button class="action-chip" data-action="celebrate" type="button">Comemorar</button><button class="action-chip" data-action="wheels_forward" type="button">Rodas para frente</button><button class="action-chip" data-action="wheels_backward" type="button">Rodas para trás</button><button class="action-chip" data-action="spin" type="button">Girar</button><button class="action-chip" data-action="idle" type="button">Aguardar</button><button class="action-chip" data-action="stop" type="button">Parar</button></div><p id="simulator-feedback" class="control-feedback" role="status" aria-live="polite"></p></article>
+            <article class="panel sensors-panel"><span class="metric-label">SENSORES SIMULADOS</span>
+              <label class="slider-row" for="sensor-distance"><span>Distância frontal</span><output id="sensor-distance-value">150 cm</output></label>
+              <input id="sensor-distance" type="range" min="0" max="200" step="5" value="150">
+              <label class="toggle-row"><input id="sensor-connected" type="checkbox" checked> Robô conectado</label>
+              <dl class="sensor-readouts">
+                <div><dt>Proximidade</dt><dd id="sensor-proximity">Longe</dd></div>
+                <div><dt>Obstáculo</dt><dd id="sensor-obstacle">Livre</dd></div>
+                <div><dt>Conexão</dt><dd id="sensor-connection">Conectado</dd></div>
+                <div><dt>Cabeça</dt><dd id="motor-head">Centralizada</dd></div>
+                <div><dt>Braços</dt><dd id="motor-arms">Parados</dd></div>
+                <div><dt>Rodas</dt><dd id="motor-wheels">Paradas</dd></div>
+              </dl>
+              <p id="sensor-feedback" class="control-feedback" role="status" aria-live="polite"></p>
+            </article>
+            <article class="panel components-panel"><span class="metric-label">COMPONENTES VISUAIS</span><div class="component-list"><span><i class="component-check">✓</i> Cabeça e olhos digitais</span><span><i class="component-check">✓</i> Tronco e braços articulados</span><span><i class="component-check">✓</i> Rodas e sensor frontal</span></div></article>
+            <div class="simulator-notice"><span>ⓘ</span><p>Este é um simulador visual. Os movimentos não representam nem controlam hardware real. Avançar é bloqueado com obstáculo a menos de 20 cm.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="diagnostics" class="view dashboard-view" aria-labelledby="diagnostics-title" hidden>
+        <div class="page-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> ÁUDIO</div><h1 id="diagnostics-title">Diagnóstico de <span>voz.</span></h1><p>Teste o microfone integrado e a voz sintetizada antes de atender os visitantes.</p></div><span class="simulated-badge"><span></span> NADA É GRAVADO</span></div>
+        <div class="diagnostics-layout">
+          <article class="panel diag-panel">
+            <span class="metric-label">ESTADO</span>
+            <dl class="diag-list">
+              <div><dt>Contexto seguro</dt><dd id="diag-secure">—</dd></div>
+              <div><dt>Permissão do microfone</dt><dd id="diag-permission">—</dd></div>
+              <div><dt>Dispositivo detectado</dt><dd id="diag-devices">—</dd></div>
+              <div><dt>Reconhecimento de fala</dt><dd id="diag-recognition">—</dd></div>
+              <div><dt>Síntese de voz</dt><dd id="diag-synthesis">—</dd></div>
+              <div><dt>Estado da captura</dt><dd id="diag-capture">Parado</dd></div>
+              <div><dt>Texto reconhecido (parcial e final)</dt><dd id="diag-text">—</dd></div>
+              <div><dt>Parâmetros de silêncio</dt><dd id="diag-silence-params">—</dd></div>
+              <div><dt>Velocidade de voz aplicada</dt><dd id="diag-rate">—</dd></div>
+              <div><dt>Localização do visitante (só para unidade mais próxima)</dt><dd id="diag-location">—</dd></div>
+            </dl>
+          </article>
+          <article class="panel diag-panel">
+            <span class="metric-label">CONVERSA EM ANDAMENTO</span>
+            <dl class="diag-list">
+              <div><dt>Estado da escuta/resposta</dt><dd id="diag-conv-state">—</dd></div>
+              <div><dt>Transcrição parcial (ao vivo)</dt><dd id="diag-conv-partial">—</dd></div>
+            </dl>
+            <p class="diag-note">Acompanha a conversa real do visitante, quando houver uma em andamento. Não aparece na tela do visitante.</p>
+          </article>
+          <article class="panel diag-panel">
+            <span class="metric-label">TESTES</span>
+            <div class="level-meter" role="img" aria-label="Nível de áudio do microfone"><span id="diag-level"></span></div>
+            <p class="diag-note">O teste de nível dura 5 segundos e encerra o microfone em seguida. O reconhecimento de fala do Chrome e do Edge envia o áudio ao serviço de voz do navegador, e por isso exige internet; este sistema não grava nem guarda áudio.</p>
+            <div class="control-actions">
+              <button id="diag-level-test" class="button-primary" type="button">Testar microfone</button>
+              <button id="diag-recognize" class="button-secondary" type="button">Testar reconhecimento</button>
+              <button id="diag-speak" class="button-secondary" type="button">Testar voz</button>
+              <button id="diag-stop-speak" class="button-secondary" type="button">Parar voz</button>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+    <footer class="footer"><span class="footer-brand"><img class="footer-logo" src="/assets/brand/senac-fecomercio-sesc-horizontal.png" width="110" height="36" alt="Senac, Fecomércio, Sesc"><span><strong>Senac Paraíba</strong> <span class="footer-separator">·</span> Centro de Educação Profissional de João Pessoa <span id="footer-event" class="footer-event-wrap"></span></span></span><span><i></i> Conversas e áudio não são armazenados</span></footer>
+  </div>
+  <script type="module" src="/assets/app.js"></script>
+</body>
+</html>

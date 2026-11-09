@@ -1,0 +1,95 @@
+{
+  "category": "faq",
+  "description": "Perguntas frequentes: canais oficiais, orientações e conteúdo educativo geral do projeto (kind general: não é fato institucional).",
+  "entries": [
+    {
+      "id": "faq-canais-oficiais",
+      "title": "Canais oficiais de atendimento do Senac Paraíba",
+      "content": "O Senac Paraíba atende pelo telefone (83) 3208-3100, pelo SAC e pela Ouvidoria no site pb.senac.br, pelo e-mail senac@pb.senac.br e pelas redes sociais Instagram e Facebook. A administração regional fica na Rua Desembargador Souto Maior, 291, 2º andar, Centro, em João Pessoa.",
+      "short": "o telefone (83) 3208-3100 ou o site pb.senac.br",
+      "category": "faq", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["canais oficiais", "contato", "telefone", "sac", "ouvidoria", "email", "redes sociais", "instagram", "facebook", "atendimento", "site", "falar com o senac", "endereco da administracao"],
+      "questions": ["Como falo com o Senac Paraíba?", "Qual o telefone do Senac?", "Onde fica a administração do Senac Paraíba?", "Qual o site do Senac Paraíba?"],
+      "source_ids": ["pb-home", "pb-unidades", "pb-tecnicos"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified"
+    },
+    {
+      "id": "faq-valores-vagas-datas",
+      "title": "Valores, vagas, datas e horários",
+      "content": "Valores, vagas, datas, turnos e horários mudam a cada turma e não constam como dados confirmados nas páginas que consultei. Para saber com segurança, consulte a programação de cursos no site do Senac Paraíba ou fale com o atendimento oficial.",
+      "short": "a programação de cursos no site pb.senac.br ou o telefone (83) 3208-3100",
+      "category": "faq", "level": "paraiba", "unit": null, "kind": "guidance",
+      "keywords": ["valor", "valores", "preco", "precos", "quanto custa", "mensalidade", "vagas", "datas", "horario", "horarios", "turno", "inicio das aulas", "duracao", "carga horaria", "custo", "pagamento"],
+      "questions": ["Quanto custa um curso do Senac?", "Qual o horário de atendimento?", "Quando começam as aulas?", "Ainda tem vagas?"],
+      "source_ids": ["pb-programacao-cursos", "pb-home"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "volatile", "status": "pending"
+    },
+    {
+      "id": "faq-senac-bot",
+      "title": "Sobre o SENAC BOT",
+      "content": "O SENAC BOT é um robô educacional criado para o evento Robótica 2026 do Senac PB. Hoje é uma versão virtual; no futuro será integrado ao LEGO SPIKE Prime. A inteligência artificial conversa, mas nunca comanda os motores diretamente: toda ação passa por um controlador com regras de segurança.",
+      "category": "faq", "level": "paraiba", "unit": null, "kind": "general",
+      "keywords": ["senac bot", "voce", "robo", "como voce funciona", "robotica 2026", "lego spike prime", "quem criou", "projeto"],
+      "questions": ["Como você funciona?", "O que é o SENAC BOT?", "Você é um robô de verdade?"],
+      "source_ids": [], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "permanent", "status": "verified",
+      "source_note": "Conteúdo do próprio projeto SENAC BOT (não é informação institucional do Senac)."
+    },
+    {
+      "id": "faq-robotica",
+      "title": "O que é robótica",
+      "content": "Robótica une mecânica, eletrônica e programação. Um robô percebe o ambiente com sensores, decide com um programa e age com motores.",
+      "category": "faq", "level": "brasil", "unit": null, "kind": "general",
+      "keywords": ["robotica", "robo", "sensores", "motores", "programacao", "como um robo percebe", "percebe o ambiente"],
+      "questions": ["O que é robótica?", "Como um robô percebe o ambiente?"],
+      "source_ids": [], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "permanent", "status": "verified",
+      "source_note": "Conteúdo educativo geral do projeto."
+    },
+    {
+      "id": "faq-lego",
+      "title": "LEGO Education SPIKE Prime",
+      "content": "O LEGO Education SPIKE Prime é um kit de robótica educacional com hub programável, motores e sensores, usado para aprender programação e robótica na prática.",
+      "category": "faq", "level": "brasil", "unit": null, "kind": "general",
+      "keywords": ["lego", "spike prime", "kit de robotica", "hub", "robotica educacional"],
+      "questions": ["O que é o LEGO SPIKE Prime?"],
+      "source_ids": [], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "permanent", "status": "verified",
+      "source_note": "Conteúdo educativo geral do projeto."
+    },
+    {
+      "id": "faq-inteligencia-artificial",
+      "title": "O que é inteligência artificial",
+      "content": "Inteligência artificial é um tipo de software que identifica padrões e produz resultados. Um robô é uma máquina; ele pode usar IA, mas muitos robôs seguem só instruções programadas.",
+      "category": "faq", "level": "brasil", "unit": null, "kind": "general",
+      "keywords": ["inteligencia artificial", "ia", "diferenca entre ia e robo", "robo", "aprendizado de maquina"],
+      "questions": ["O que é inteligência artificial?", "Qual é a diferença entre IA e robô?"],
+      "source_ids": [], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "permanent", "status": "verified",
+      "source_note": "Conteúdo educativo geral do projeto."
+    },
+    {
+      "id": "faq-tecnologia",
+      "title": "O que é tecnologia",
+      "content": "Tecnologia é o uso de conhecimentos e ferramentas para resolver problemas e atender necessidades, de uma simples roda a um robô.",
+      "category": "faq", "level": "brasil", "unit": null, "kind": "general",
+      "keywords": ["tecnologia", "ferramentas", "conhecimento", "problemas"],
+      "questions": ["O que é tecnologia?"],
+      "source_ids": [], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "permanent", "status": "verified",
+      "source_note": "Conteúdo educativo geral do projeto."
+    },
+    {
+      "id": "faq-programacao",
+      "title": "O que é programar",
+      "content": "Programar é escrever instruções passo a passo para o computador executar. Três ideias básicas são sequência, condição e repetição.",
+      "category": "faq", "level": "brasil", "unit": null, "kind": "general",
+      "keywords": ["programacao", "programar", "codigo", "algoritmo", "sequencia", "condicao", "repeticao"],
+      "questions": ["O que é programação?", "Como funciona um algoritmo?"],
+      "source_ids": [], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "permanent", "status": "verified",
+      "source_note": "Conteúdo educativo geral do projeto."
+    },
+    {
+      "id": "faq-educacao-profissional",
+      "title": "O que é educação profissional",
+      "content": "Educação profissional prepara pessoas para o mundo do trabalho, unindo conhecimento teórico e prática. No Senac, ela vai da qualificação inicial ao ensino técnico e superior, voltada ao comércio de bens, serviços e turismo.",
+      "category": "faq", "level": "brasil", "unit": null, "kind": "institutional",
+      "keywords": ["educacao profissional", "mundo do trabalho", "formacao profissional", "qualificacao"],
+      "questions": ["O que é educação profissional?"],
+      "source_ids": ["br-sobre", "br-cursos"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "permanent", "status": "verified"
+    }
+  ]
+}

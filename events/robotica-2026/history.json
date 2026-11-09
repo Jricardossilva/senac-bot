@@ -1,0 +1,111 @@
+{
+  "entries": [
+    {
+      "at": "2026-11-07T18:34:05+00:00",
+      "kind": "cadastro",
+      "summary": "Evento cadastrado.",
+      "details": {}
+    },
+    {
+      "at": "2026-11-07T18:34:06+00:00",
+      "kind": "pesquisa",
+      "summary": "0 fonte(s) consultada(s), 0 nova(s), 0 alterada(s), 0 desatualizada(s), 0 divergente(s), 0 proposta(s) de atualização.",
+      "details": {
+        "fontes": [],
+        "falhas": [],
+        "mensagens": [
+          "A pesquisa automática do site oficial não está disponível agora.",
+          "Nenhuma fonte disponível: informe o site oficial, a página de programação ou outra fonte pública."
+        ]
+      }
+    },
+    {
+      "at": "2026-11-08T00:12:51+00:00",
+      "kind": "ativacao",
+      "summary": "Evento ativado.",
+      "details": {}
+    },
+    {
+      "at": "2026-11-08T00:12:52+00:00",
+      "kind": "ativacao",
+      "summary": "Evento desativado (dados preservados).",
+      "details": {}
+    },
+    {
+      "at": "2026-11-08T00:13:31+00:00",
+      "kind": "edicao",
+      "summary": "Cadastro do evento editado.",
+      "details": {}
+    },
+    {
+      "at": "2026-11-08T00:13:32+00:00",
+      "kind": "pesquisa",
+      "summary": "0 fonte(s) consultada(s), 0 nova(s), 0 alterada(s), 0 desatualizada(s), 0 divergente(s), 0 proposta(s) de atualização, 1 fonte(s) com falha.",
+      "details": {
+        "fontes": [
+          "https://robotica2026.example.org/"
+        ],
+        "falhas": [
+          "https://robotica2026.example.org/: endereço não permitido: https://robotica2026.example.org/"
+        ],
+        "mensagens": []
+      }
+    },
+    {
+      "at": "2026-11-08T00:13:33+00:00",
+      "kind": "ativacao",
+      "summary": "Evento ativado.",
+      "details": {}
+    },
+    {
+      "at": "2026-11-08T00:13:34+00:00",
+      "kind": "ativacao",
+      "summary": "Evento desativado (dados preservados).",
+      "details": {}
+    },
+    {
+      "at": "2026-11-08T00:14:06+00:00",
+      "kind": "edicao",
+      "summary": "Cadastro do evento editado.",
+      "details": {}
+    },
+    {
+      "at": "2026-11-08T00:14:07+00:00",
+      "kind": "pesquisa",
+      "summary": "0 fonte(s) consultada(s), 0 nova(s), 0 alterada(s), 0 desatualizada(s), 0 divergente(s), 0 proposta(s) de atualização, 1 fonte(s) com falha.",
+      "details": {
+        "fontes": [
+          "https://robotica2026.example.org/"
+        ],
+        "falhas": [
+          "https://robotica2026.example.org/: endereço não permitido: https://robotica2026.example.org/"
+        ],
+        "mensagens": []
+      }
+    },
+    {
+      "at": "2026-11-08T00:14:08+00:00",
+      "kind": "ativacao",
+      "summary": "Evento ativado.",
+      "details": {}
+    },
+    {
+      "at": "2026-11-08T00:14:08+00:00",
+      "kind": "ativacao",
+      "summary": "Evento desativado (dados preservados).",
+      "details": {}
+    },
+    {
+      "at": "2026-11-08T17:40:11+00:00",
+      "kind": "edicao",
+      "summary": "Cadastro do evento editado.",
+      "details": {}
+    },
+    {
+      "at": "2026-11-08T17:45:46+00:00",
+      "kind": "ativacao",
+      "summary": "Evento ativado.",
+      "details": {}
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "items": [
+    {
+      "id": "it-13c7488593",
+      "category": "about",
+      "title": "Robótica 2026",
+      "content": "Robótica 2026 é um evento de Tecnologia e robótica. Evento do Senac Paraíba sobre tecnologia e robótica.",
+      "source_ids": [],
+      "status": "confirmed",
+      "approved_by": "operator",
+      "found_at": "2026-11-07T18:34:06+00:00",
+      "updated_at": "2026-11-07T18:34:06+00:00",
+      "valid_until": "2026-11-29",
+      "keywords": [],
+      "key_facts": {
+        "registry": "about"
+      },
+      "note": "Informado no cadastro do evento.",
+      "edited": false,
+      "history": []
+    },
+    {
+      "id": "it-2e2d11bc57",
+      "category": "dates",
+      "title": "Datas do evento",
+      "content": "Robótica 2026 acontece de 23 de novembro de 2026 a 29 de novembro de 2026.",
+      "source_ids": [],
+      "status": "confirmed",
+      "approved_by": "operator",
+      "found_at": "2026-11-07T18:34:06+00:00",
+      "updated_at": "2026-11-07T18:34:06+00:00",
+      "valid_until": "2026-11-29",
+      "keywords": [],
+      "key_facts": {
+        "dates": [
+          "2026-11-23",
+          "2026-11-29"
+        ],
+        "registry": "dates"
+      },
+      "note": "Informado no cadastro do evento.",
+      "edited": false,
+      "history": []
+    },
+    {
+      "id": "it-9cf86ec428",
+      "category": "location",
+      "title": "Local do evento",
+      "content": "Robótica 2026 acontece em João Pessoa/PB.",
+      "source_ids": [],
+      "status": "confirmed",
+      "approved_by": "operator",
+      "found_at": "2026-11-07T18:34:06+00:00",
+      "updated_at": "2026-11-07T18:34:06+00:00",
+      "valid_until": "2026-11-29",
+      "keywords": [],
+      "key_facts": {
+        "registry": "location"
+      },
+      "note": "Informado no cadastro do evento.",
+      "edited": false,
+      "history": []
+    },
+    {
+      "id": "it-1dd645ada0",
+      "category": "organization",
+      "title": "Organização",
+      "content": "A organização responsável pelo evento é Senac Paraíba.",
+      "source_ids": [],
+      "status": "confirmed",
+      "approved_by": "operator",
+      "found_at": "2026-11-07T18:34:06+00:00",
+      "updated_at": "2026-11-07T18:34:06+00:00",
+      "valid_until": "2026-11-29",
+      "keywords": [],
+      "key_facts": {
+        "registry": "organization"
+      },
+      "note": "Informado no cadastro do evento.",
+      "edited": false,
+      "history": []
+    }
+  ]
+}

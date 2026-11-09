@@ -1,0 +1,81 @@
+{
+  "category": "news_events",
+  "description": "Notícias e eventos publicados. São fatos datados: nunca apresentar como situação atual sem fonte e data que confirmem. Cada item tem validade; vencida a validade, o assistente avisa que pode ter mudado.",
+  "entries": [
+    {
+      "id": "news-2026-05-13-vagas-semana-s",
+      "nature": "historical",
+      "title": "Mais de mil vagas gratuitas durante a Semana S (maio de 2026)",
+      "content": "Em 13 de maio de 2026, o Senac Paraíba divulgou mais de mil vagas gratuitas em cursos de qualificação profissional durante as ações da Semana S. Essa é uma notícia datada: não tenho confirmação de que as vagas continuem abertas.",
+      "category": "news_events", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["semana s", "vagas gratuitas", "cursos profissionalizantes", "qualificacao profissional", "maio 2026", "noticia", "mil vagas"],
+      "questions": ["Tem vagas gratuitas na Semana S?", "O Senac Paraíba ofereceu vagas gratuitas?"],
+      "source_ids": ["pb-noticias"], "consulted_at": "2026-11-07", "valid_until": "2026-07-13", "freshness": "volatile", "status": "verified",
+      "url": "https://pb.senac.br/noticias/senac-paraiba-oferta-mais-de-mil-vagas-gratuitas-em-cursos-profissionalizantes-durante-acoes-da-semana-s/"
+    },
+    {
+      "id": "news-2026-05-11-innovation-day",
+      "nature": "historical",
+      "title": "Innovation Day e Semana S 2026 (maio de 2026)",
+      "content": "Em 11 de maio de 2026, o Sistema Comércio anunciou o Innovation Day e a Semana S 2026, com programação gratuita em toda a Paraíba. Essa é uma notícia datada: não tenho confirmação de datas ou programação atuais.",
+      "category": "news_events", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["innovation day", "semana s", "sistema comercio", "programacao gratuita", "evento", "maio 2026", "noticia"],
+      "questions": ["O que é o Innovation Day?", "O que é a Semana S?", "Tem evento gratuito do Sistema Comércio?"],
+      "source_ids": ["pb-noticias"], "consulted_at": "2026-11-07", "valid_until": "2026-07-11", "freshness": "volatile", "status": "verified",
+      "url": "https://pb.senac.br/noticias/sistema-comercio-realiza-innovation-day-e-semana-s-2026-com-programacao-gratuita-em-toda-a-paraiba/"
+    },
+    {
+      "id": "news-2026-04-14-pocinhos",
+      "nature": "historical",
+      "title": "Dia de serviços gratuitos em Pocinhos (abril de 2026)",
+      "content": "Em 14 de abril de 2026, Fecomércio, Sesc e Senac anunciaram um dia de serviços gratuitos em Pocinhos, com ações de saúde, lazer e qualificação profissional, previsto para 24 de abril. Esse evento já passou; não tenho confirmação de novas edições.",
+      "category": "news_events", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["pocinhos", "servicos gratuitos", "fecomercio", "sesc", "saude", "lazer", "qualificacao profissional", "24 de abril", "evento", "noticia"],
+      "questions": ["Teve dia de serviços gratuitos em Pocinhos?", "Quais ações o Sistema Comércio fez no interior?"],
+      "source_ids": ["pb-noticias"], "consulted_at": "2026-11-07", "valid_until": "2026-05-24", "freshness": "volatile", "status": "verified",
+      "url": "https://pb.senac.br/noticias/fecomercio-sesc-e-senac-promovem-dia-de-servicos-gratuitos-em-pocinhos-com-acoes-de-saude-lazer-e-qualificacao-profissional/"
+    },
+    {
+      "id": "news-2026-04-06-semana-s",
+      "nature": "historical",
+      "title": "Semana S do Comércio chega à Paraíba (abril de 2026)",
+      "content": "Em 6 de abril de 2026, o Senac Paraíba noticiou a chegada da Semana S do Comércio 2026, descrita como o maior evento integrado do Sistema Comércio no Brasil, com programação gratuita de serviços, cultura e entretenimento. Notícia datada: não tenho confirmação de programação atual.",
+      "category": "news_events", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["semana s", "semana s do comercio", "sistema comercio", "programacao gratuita", "cultura", "entretenimento", "servicos", "abril 2026", "evento"],
+      "questions": ["O que é a Semana S do Comércio?", "Quando é a Semana S?"],
+      "source_ids": ["pb-noticias"], "consulted_at": "2026-11-07", "valid_until": "2026-06-06", "freshness": "volatile", "status": "verified",
+      "url": "https://pb.senac.br/noticias/semana-s-do-comercio-chega-a-paraiba-com-grande-programacao-gratuita-de-servicos-cultura-e-entretenimento/"
+    },
+    {
+      "id": "news-2026-03-13-programacao",
+      "nature": "historical",
+      "title": "Programação com mais de 150 opções (março de 2026)",
+      "content": "Em 13 de março de 2026, o Senac divulgou uma programação com mais de 150 opções de cursos, workshops e palestras em toda a Paraíba, segundo o título da notícia. Não tenho o conteúdo dessa programação nem confirmação de que ela esteja vigente.",
+      "category": "news_events", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["programacao", "150 opcoes", "cursos", "workshops", "palestras", "paraiba", "marco 2026", "noticia"],
+      "questions": ["O Senac divulgou programação de workshops e palestras?", "Quais workshops o Senac tem?"],
+      "source_ids": ["pb-home"], "consulted_at": "2026-11-07", "valid_until": "2026-05-13", "freshness": "volatile", "status": "review",
+      "notes": "Só o título aparece na home; a URL da notícia não foi obtida."
+    },
+    {
+      "id": "events-vigentes",
+      "nature": "unconfirmed",
+      "title": "Eventos, workshops e palestras vigentes",
+      "content": "Não tenho confirmação de eventos, workshops ou palestras acontecendo agora. As notícias mais recentes que consultei são de março a maio de 2026. Para a programação atual, consulte a programação de cursos no site do Senac Paraíba ou o atendimento oficial.",
+      "category": "news_events", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["eventos", "evento", "workshops", "palestras", "programacao vigente", "acontecendo", "proximos eventos", "agenda", "esta semana", "hoje"],
+      "questions": ["Tem algum evento acontecendo?", "Quais são os próximos eventos do Senac?", "Tem palestra ou workshop esta semana?"],
+      "source_ids": ["pb-noticias", "pb-programacao-cursos"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "volatile", "status": "pending"
+    },
+    {
+      "id": "events-cep-jp",
+      "nature": "unconfirmed",
+      "title": "Eventos, palestras e workshops do CEP João Pessoa",
+      "content": "O CEP João Pessoa realiza ações extensivas, como palestras, seminários, conferências, feiras, webconferências e simpósios, segundo a descrição oficial da unidade. Não tenho confirmação de qual evento, oficina ou workshop está na programação vigente do CEP-JP.",
+      "category": "news_events", "level": "cep-jp", "unit": "CEP-JP", "kind": "institutional",
+      "keywords": ["cep joao pessoa", "cep jp", "eventos", "palestras", "workshops", "oficinas", "seminarios", "conferencias", "feiras", "acoes extensivas", "programacao vigente"],
+      "questions": ["O CEP-JP tem eventos?", "Tem palestra no CEP João Pessoa?", "Quais oficinas o CEP João Pessoa oferece?"],
+      "source_ids": ["pb-joao-pessoa", "pb-unidades"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "volatile", "status": "pending"
+    }
+  ]
+}

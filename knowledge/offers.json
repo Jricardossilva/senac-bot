@@ -1,0 +1,221 @@
+{
+  "description": "Catálogo de ofertas para a orientação de cursos (regra de prioridade: 1) CEP-JP, 2) outras unidades do Senac PB, 3) Senac EAD). Só entram aqui ofertas que uma página oficial cita; 'unit' é a unidade que a página confirma (null = o Senac Paraíba cita o curso, mas não diz em qual unidade; 'EAD' = educação a distância). Cada oferta traz 'evidence': trechos literais da página oficial conferidos por teste. Nada aqui informa preço, carga horária, data, horário, vagas ou requisitos: isso só existe na programação oficial. Hoje nenhuma página oficial confirma ofertas específicas do CEP-JP (ver pending.json).",
+  "generic_prompt": "Em qual área você tem mais interesse: tecnologia, saúde, beleza, gastronomia, turismo ou gestão?",
+  "areas": [
+    {
+      "id": "tecnologia",
+      "keywords": ["informatica", "tecnologia", "computador", "computadores", "computacao", "tecnologia da informacao"],
+      "opener": "A área de tecnologia oferece muitas possibilidades.",
+      "clarify": "Você tem mais interesse em programação, manutenção de computadores ou ferramentas digitais?"
+    }
+  ],
+  "offers": [
+    {
+      "id": "off-tec-informatica", "kind": "curso", "unit": null, "modality": "nao_informada",
+      "phrase": "O Senac Paraíba cita o Técnico em Informática.",
+      "pitch": "Esse técnico instala, configura e mantém sistemas, redes e equipamentos e dá suporte aos usuários.",
+      "keywords": ["informatica", "computador", "computadores", "computacao", "tecnologia", "tecnologia da informacao", "redes", "suporte tecnico", "hardware", "software"],
+      "refine": ["manutencao", "manutencao de computadores", "consertar", "redes", "suporte", "hardware", "instalar"],
+      "source_ids": ["pb-tecnicos"], "evidence": ["instalar, configurar e manter sistemas computacionais, redes e equipamentos"],
+      "consulted_at": "2026-11-07", "valid_until": "2026-12-07", "freshness": "volatile", "status": "verified"
+    },
+    {
+      "id": "off-tec-jogos", "kind": "curso", "unit": null, "modality": "nao_informada",
+      "phrase": "O Senac Paraíba cita o Técnico em Jogos Digitais.",
+      "pitch": "Esse técnico projeta, desenvolve e testa jogos eletrônicos, do design de personagens à programação das mecânicas.",
+      "keywords": ["jogos", "jogo", "games", "game", "jogos digitais", "videogame", "programacao", "programar", "desenvolvimento de jogos"],
+      "refine": ["programacao", "programar", "jogos", "games", "game", "desenvolver"],
+      "source_ids": ["pb-tecnicos"], "evidence": ["projeta, desenvolve e testa jogos eletrônicos", "design de personagens e ambientes até a programação"],
+      "consulted_at": "2026-11-07", "valid_until": "2026-12-07", "freshness": "volatile", "status": "verified"
+    },
+    {
+      "id": "off-tec-estetica", "kind": "curso", "unit": null, "modality": "nao_informada",
+      "phrase": "O Senac Paraíba cita o Técnico em Estética.",
+      "pitch": "Esse técnico realiza procedimentos de saúde estética, como tratamentos faciais e corporais, depilação e massagens.",
+      "keywords": ["estetica", "estetica facial", "pele", "massagem", "massagens", "depilacao", "cosmeticos", "tratamento facial"],
+      "refine": [],
+      "source_ids": ["pb-tecnicos"], "evidence": ["procedimentos de saúde estética", "tratamentos faciais, corporais, depilação, massagens"],
+      "consulted_at": "2026-11-07", "valid_until": "2026-12-07", "freshness": "volatile", "status": "verified"
+    },
+    {
+      "id": "off-tec-enfermagem", "kind": "curso", "unit": null, "modality": "nao_informada",
+      "phrase": "O Senac Paraíba cita o Técnico em Enfermagem.",
+      "pitch": "Esse técnico presta assistência a pacientes em hospitais, clínicas e unidades de saúde.",
+      "keywords": ["enfermagem", "enfermeiro", "enfermeira", "hospital", "pacientes", "cuidar de pessoas", "saude", "area da saude"],
+      "refine": ["enfermagem", "enfermeiro", "enfermeira"],
+      "source_ids": ["pb-tecnicos"], "evidence": ["presta assistência a pacientes em diversos ambientes de saúde"],
+      "consulted_at": "2026-11-07", "valid_until": "2026-12-07", "freshness": "volatile", "status": "verified"
+    },
+    {
+      "id": "off-tec-guia-turismo", "kind": "curso", "unit": null, "modality": "nao_informada",
+      "phrase": "O Senac Paraíba cita o Técnico em Guia de Turismo.",
+      "pitch": "Esse técnico conduz e orienta grupos de turistas em passeios e visitas, com informações históricas e culturais.",
+      "keywords": ["guia de turismo", "guia turistico", "turismo", "turista", "turistas", "passeios", "viagem", "viagens", "viajar"],
+      "refine": ["guia"],
+      "source_ids": ["pb-tecnicos"], "evidence": ["conduzir e orientar grupos de turistas"],
+      "consulted_at": "2026-11-07", "valid_until": "2026-12-07", "freshness": "volatile", "status": "verified"
+    },
+    {
+      "id": "off-tec-imobiliarias", "kind": "curso", "unit": null, "modality": "nao_informada",
+      "phrase": "O Senac Paraíba cita o Técnico em Transações Imobiliárias.",
+      "pitch": "Esse técnico intermedeia a compra, a venda, a locação e a administração de imóveis.",
+      "keywords": ["imoveis", "imovel", "imobiliaria", "imobiliarias", "corretor", "corretor de imoveis", "transacoes imobiliarias", "aluguel", "locacao"],
+      "refine": [],
+      "source_ids": ["pb-tecnicos"], "evidence": ["intermediando a compra, venda, locação e administração de imóveis"],
+      "consulted_at": "2026-11-07", "valid_until": "2026-12-07", "freshness": "volatile", "status": "verified"
+    },
+    {
+      "id": "off-tec-logistica", "kind": "curso", "unit": null, "modality": "nao_informada",
+      "phrase": "O Senac Paraíba cita o Técnico em Logística.",
+      "pitch": "Esse técnico planeja e controla o transporte, o armazenamento e a distribuição de produtos.",
+      "keywords": ["logistica", "transporte", "estoque", "armazenamento", "distribuicao", "entregas", "armazem"],
+      "refine": [],
+      "source_ids": ["pb-tecnicos"], "evidence": ["planejar, coordenar e controlar o transporte, armazenamento e distribuição de produtos"],
+      "consulted_at": "2026-11-07", "valid_until": "2026-12-07", "freshness": "volatile", "status": "verified"
+    },
+    {
+      "id": "off-tec-administracao", "kind": "curso", "unit": null, "modality": "nao_informada",
+      "phrase": "O Senac Paraíba cita o Técnico em Administração.",
+      "pitch": "Esse técnico apoia as rotinas administrativas de uma organização, como relatórios, documentos e atendimento ao cliente.",
+      "keywords": ["administracao", "administrativo", "administrativa", "escritorio", "secretariado", "rotinas administrativas"],
+      "refine": [],
+      "source_ids": ["pb-tecnicos"], "evidence": ["auxilia em diversas atividades administrativas de uma organização"],
+      "consulted_at": "2026-11-07", "valid_until": "2026-12-07", "freshness": "volatile", "status": "verified"
+    },
+    {
+      "id": "off-tec-design-interiores", "kind": "curso", "unit": null, "modality": "nao_informada",
+      "phrase": "O Senac Paraíba cita o Técnico em Design de Interiores.",
+      "pitch": "Esse técnico planeja e executa projetos de espaços internos, escolhendo móveis, cores, texturas e acessórios.",
+      "keywords": ["design de interiores", "interiores", "decoracao", "decorar"],
+      "refine": [],
+      "source_ids": ["pb-tecnicos"], "evidence": ["planeja e executa projetos para espaços internos"],
+      "consulted_at": "2026-11-07", "valid_until": "2026-12-07", "freshness": "volatile", "status": "verified"
+    },
+    {
+      "id": "off-ead-contabilidade", "kind": "curso", "unit": "EAD", "modality": "ead",
+      "phrase": "O Senac Paraíba cita, a distância, o Técnico em Contabilidade em EaD.",
+      "pitch": "Esse técnico registra, analisa e organiza informações financeiras de uma empresa e ajuda nos relatórios contábeis e fiscais.",
+      "keywords": ["contabilidade", "contador", "contabil", "financas", "financeiro"],
+      "refine": [],
+      "source_ids": ["pb-tecnicos"], "evidence": ["Contabilidade (EaD)", "registra, analisa e organiza informações financeiras de uma empresa"],
+      "consulted_at": "2026-11-07", "valid_until": "2026-12-07", "freshness": "volatile", "status": "verified"
+    },
+    {
+      "id": "off-ead-seguranca-trabalho", "kind": "curso", "unit": "EAD", "modality": "ead",
+      "phrase": "O Senac Paraíba cita, a distância, a Especialização Técnica em Segurança do Trabalho em Meio Ambiente.",
+      "pitch": "Esse profissional cuida da segurança dos trabalhadores aliada ao desenvolvimento sustentável e à gestão ambiental.",
+      "keywords": ["seguranca do trabalho", "meio ambiente", "ambiental", "sustentabilidade"],
+      "refine": [],
+      "source_ids": ["pb-tecnicos"], "evidence": ["Segurança do Trabalho em Meio Ambiente (EaD)", "alinhando a segurança e o desenvolvimento sustentável"],
+      "consulted_at": "2026-11-07", "valid_until": "2026-12-07", "freshness": "volatile", "status": "verified"
+    },
+    {
+      "id": "off-senac-ead", "kind": "ead", "unit": "EAD", "modality": "ead",
+      "phrase": "O Senac tem a educação a distância, o Senac EAD.",
+      "pitch": "Segundo o site oficial, é uma das maiores redes de cursos a distância de formação de tecnólogos do Brasil, com cursos técnicos, livres, graduações e pós-graduações.",
+      "keywords": ["ead", "a distancia", "ensino a distancia", "curso a distancia", "cursos a distancia", "curso online", "cursos online", "tecnologo", "graduacao", "pos graduacao", "faculdade"],
+      "refine": [],
+      "source_ids": ["br-cursos"], "evidence": ["uma das maiores redes de cursos a distância de formação de tecnólogos do Brasil", "Há cursos técnicos, livres, graduações e pós-graduações"],
+      "consulted_at": "2026-11-07", "valid_until": "2026-12-07", "freshness": "volatile", "status": "verified"
+    },
+    {
+      "id": "off-dom-ulrico-informatica", "kind": "area", "unit": "DOM-ULRICO", "modality": "nao_informada",
+      "phrase": "A Escola Senac Dom Ulrico, em João Pessoa, tem cursos de informática.",
+      "pitch": "A escola é voltada principalmente à inclusão social e também tem cursos de gestão, comércio e saúde.",
+      "keywords": ["informatica", "computador", "computadores", "computacao", "tecnologia", "tecnologia da informacao"],
+      "refine": ["ferramentas digitais", "digital", "digitais", "office", "basico"],
+      "source_ids": ["pb-joao-pessoa"], "evidence": ["Dom Ulrico", "Gestão, comércio, saúde, informática, entre outros"],
+      "consulted_at": "2026-11-07", "valid_until": "2026-12-07", "freshness": "volatile", "status": "verified"
+    },
+    {
+      "id": "off-dom-ulrico-gestao", "kind": "area", "unit": "DOM-ULRICO", "modality": "nao_informada",
+      "phrase": "A Escola Senac Dom Ulrico, em João Pessoa, tem cursos de gestão.",
+      "pitch": "A escola é voltada principalmente à inclusão social e também tem cursos de comércio, saúde e informática.",
+      "keywords": ["gestao", "gerenciar", "gerente", "lideranca", "administrar"],
+      "refine": [],
+      "source_ids": ["pb-joao-pessoa"], "evidence": ["Gestão, comércio, saúde, informática, entre outros"],
+      "consulted_at": "2026-11-07", "valid_until": "2026-12-07", "freshness": "volatile", "status": "verified"
+    },
+    {
+      "id": "off-dom-ulrico-comercio", "kind": "area", "unit": "DOM-ULRICO", "modality": "nao_informada",
+      "phrase": "A Escola Senac Dom Ulrico, em João Pessoa, tem cursos de comércio.",
+      "pitch": "A escola é voltada principalmente à inclusão social e também tem cursos de gestão, saúde e informática.",
+      "keywords": ["comercio", "vendas", "vendedor", "varejo", "loja", "atendimento"],
+      "refine": [],
+      "source_ids": ["pb-joao-pessoa"], "evidence": ["Gestão, comércio, saúde, informática, entre outros"],
+      "consulted_at": "2026-11-07", "valid_until": "2026-12-07", "freshness": "volatile", "status": "verified"
+    },
+    {
+      "id": "off-dom-ulrico-saude", "kind": "area", "unit": "DOM-ULRICO", "modality": "nao_informada",
+      "phrase": "A Escola Senac Dom Ulrico, em João Pessoa, tem cursos de saúde.",
+      "pitch": "A escola é voltada principalmente à inclusão social e também tem cursos de gestão, comércio e informática.",
+      "keywords": ["saude", "area da saude", "cuidar de pessoas", "cuidador"],
+      "refine": [],
+      "source_ids": ["pb-joao-pessoa"], "evidence": ["Gestão, comércio, saúde, informática, entre outros"],
+      "consulted_at": "2026-11-07", "valid_until": "2026-12-07", "freshness": "volatile", "status": "verified"
+    },
+    {
+      "id": "off-gastro-gastronomia", "kind": "area", "unit": "GASTRO-HOTELARIA", "modality": "nao_informada",
+      "phrase": "A Escola Senac de Gastronomia e Hotelaria, em João Pessoa, atende gastronomia.",
+      "pitch": "A escola tem laboratórios de cozinha, além de garçom, camareira e recepção.",
+      "keywords": ["gastronomia", "cozinha", "cozinhar", "culinaria", "chef", "cozinheiro", "alimentos", "garcom"],
+      "refine": [],
+      "source_ids": ["pb-joao-pessoa"], "evidence": ["garçom", "camareira", "recepção"],
+      "consulted_at": "2026-11-07", "valid_until": "2026-12-07", "freshness": "volatile", "status": "verified"
+    },
+    {
+      "id": "off-gastro-hotelaria", "kind": "area", "unit": "GASTRO-HOTELARIA", "modality": "nao_informada",
+      "phrase": "A Escola Senac de Gastronomia e Hotelaria, em João Pessoa, atende turismo e hotelaria.",
+      "pitch": "A escola tem laboratórios de recepção, camareira, garçom e cozinha.",
+      "keywords": ["hotelaria", "hotel", "hospedagem", "recepcao", "recepcionista", "camareira", "hospitalidade", "turismo"],
+      "refine": ["hotelaria", "hotel", "hospedagem", "recepcao", "camareira"],
+      "source_ids": ["pb-joao-pessoa"], "evidence": ["garçom", "camareira", "recepção"],
+      "consulted_at": "2026-11-07", "valid_until": "2026-12-07", "freshness": "volatile", "status": "verified"
+    },
+    {
+      "id": "off-moveis-informatica", "kind": "area", "unit": "MOVEIS", "modality": "movel",
+      "phrase": "As Unidades Móveis do Senac Paraíba atuam com informática.",
+      "pitch": "São carretas que levam qualificação profissional a comunidades das grandes cidades e do interior.",
+      "keywords": ["informatica", "computador", "computadores", "computacao", "tecnologia", "tecnologia da informacao"],
+      "refine": [],
+      "source_ids": ["pb-unidades"], "evidence": ["Informática", "Imagem Pessoal", "Turismo e Hospitalidade"],
+      "consulted_at": "2026-11-07", "valid_until": "2026-12-07", "freshness": "volatile", "status": "verified"
+    },
+    {
+      "id": "off-moveis-imagem-pessoal", "kind": "area", "unit": "MOVEIS", "modality": "movel",
+      "phrase": "As Unidades Móveis do Senac Paraíba atuam com imagem pessoal.",
+      "pitch": "São carretas que levam qualificação profissional a comunidades das grandes cidades e do interior.",
+      "keywords": ["imagem pessoal", "beleza", "cabelo", "cabeleireiro", "maquiagem", "estetica"],
+      "refine": [],
+      "source_ids": ["pb-unidades"], "evidence": ["Informática", "Imagem Pessoal", "Turismo e Hospitalidade"],
+      "consulted_at": "2026-11-07", "valid_until": "2026-12-07", "freshness": "volatile", "status": "verified"
+    },
+    {
+      "id": "off-moveis-turismo", "kind": "area", "unit": "MOVEIS", "modality": "movel",
+      "phrase": "As Unidades Móveis do Senac Paraíba atuam com turismo e hospitalidade.",
+      "pitch": "São carretas que levam qualificação profissional a comunidades das grandes cidades e do interior.",
+      "keywords": ["turismo", "hospitalidade", "turista", "viagem"],
+      "refine": [],
+      "source_ids": ["pb-unidades"], "evidence": ["Informática", "Imagem Pessoal", "Turismo e Hospitalidade"],
+      "consulted_at": "2026-11-07", "valid_until": "2026-12-07", "freshness": "volatile", "status": "verified"
+    },
+    {
+      "id": "off-cep-cg-beleza", "kind": "area", "unit": "CEP-CG", "modality": "nao_informada",
+      "phrase": "O CEP Campina Grande tem uma empresa pedagógica de beleza.",
+      "pitch": "A unidade fica em Campina Grande e também oferece formação inicial e continuada e ensino técnico de nível médio.",
+      "keywords": ["beleza", "cabelo", "cabeleireiro", "maquiagem", "estetica", "salao", "manicure"],
+      "refine": [],
+      "source_ids": ["pb-unidades"], "evidence": ["empresa pedagógica", "beleza"],
+      "consulted_at": "2026-11-07", "valid_until": "2026-12-07", "freshness": "volatile", "status": "verified"
+    },
+    {
+      "id": "off-cendege-capacitacao", "kind": "area", "unit": "CENDEGE", "modality": "nao_informada",
+      "phrase": "O CENDEGE, em João Pessoa, atua com capacitação e consultoria para organizações.",
+      "pitch": "É voltado a organizações públicas, privadas e do terceiro setor e é polo regional da Rede EAD.",
+      "keywords": ["capacitacao", "consultoria", "capacitar equipe", "gestao", "gerencial", "lideranca", "treinamento"],
+      "refine": [],
+      "source_ids": ["pb-unidades"], "evidence": ["CENDEGE", "polo regional da Rede EAD"],
+      "consulted_at": "2026-11-07", "valid_until": "2026-12-07", "freshness": "volatile", "status": "verified"
+    }
+  ]
+}

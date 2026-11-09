@@ -1,0 +1,9 @@
+LOGOTIPOS OFICIAIS (fornecidos pelo Senac)
+
+senac-logo.png                          Senac (usado no cabeçalho e, em branco, sobre o palco azul)
+senac-fecomercio-sesc-horizontal.png    Senac Fecomércio Sesc (usado no rodapé)
+senac-fecomercio-sesc-vertical.png      Senac Fecomércio Sesc, versão vertical (disponível; ainda sem uso)
+
+Não edite, recolora nem redimensione os arquivos: eles são exibidos como vieram, com altura fixa e
+largura automática (sem distorcer) e com margem de proteção. A versão branca é obtida apenas por CSS
+(silhueta branca da mesma imagem), sem criar um novo arquivo de marca.

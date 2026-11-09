@@ -1,0 +1,18 @@
+{
+  "sources": [
+    {
+      "id": "src-b0bd694b3f",
+      "url": "https://robotica2026.example.org/",
+      "kind": "site",
+      "trust": "official",
+      "origin": "operator",
+      "title": "",
+      "last_checked": "2026-11-08T00:14:07+00:00",
+      "last_ok": null,
+      "error": "endereço não permitido: https://robotica2026.example.org/",
+      "hash": null,
+      "failures": 2,
+      "note": ""
+    }
+  ]
+}

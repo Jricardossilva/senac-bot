@@ -1,0 +1,90 @@
+{
+  "category": "social",
+  "description": "Ações sociais, educação ambiental e inclusão. Descrições institucionais NÃO são prova de que uma ação esteja acontecendo agora: só afirmar edições vigentes com fonte e data.",
+  "entries": [
+    {
+      "id": "social-visao-geral",
+      "nature": "permanent",
+      "title": "Ações sociais do Senac Paraíba",
+      "content": "O Senac Paraíba busca a melhoria da qualidade de vida dos cidadãos, a valorização do potencial humano, o equilíbrio ecológico e a equidade social. Suas ações sociais identificam e priorizam problemas sociais emergentes e segmentos em situação de risco e vulnerabilidade. Elas incluem ações educativas, ações voluntárias e o programa de educação ambiental.",
+      "category": "social", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["acoes sociais", "social", "qualidade de vida", "vulnerabilidade", "equidade social", "equilibrio ecologico", "responsabilidade social"],
+      "questions": ["Quais ações sociais o Senac Paraíba faz?", "O Senac tem projetos sociais?", "Quero participar de projetos sociais", "Quero conhecer os projetos sociais do Senac", "Tenho interesse em projetos sociais", "Quero saber das ações sociais do Senac"],
+      "source_ids": ["pb-educacao-ambiental"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified",
+      "notes": "Descrição institucional permanente; a página não informa datas, locais nem edições."
+    },
+    {
+      "id": "social-acao-educativa",
+      "nature": "permanent",
+      "title": "Ação Social Educativa",
+      "content": "A Ação Social Educativa reúne palestras e oficinas ligadas à educação profissional, orientadas por um Portfólio de Ações Sociais Educativas. Os objetivos citados são geração de conhecimento, qualidade de vida, consciência ecológica, geração de renda e inserção no mercado de trabalho.",
+      "category": "social", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["acao social educativa", "palestras", "oficinas", "portfolio", "geracao de renda", "mercado de trabalho", "consciencia ecologica"],
+      "questions": ["O que é a Ação Social Educativa?", "O Senac faz palestras e oficinas sociais?"],
+      "source_ids": ["pb-educacao-ambiental"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified",
+      "notes": "Sem datas, locais ou inscrições na página."
+    },
+    {
+      "id": "social-acao-voluntaria",
+      "nature": "permanent",
+      "title": "Ação Social Voluntária",
+      "content": "A Ação Social Voluntária inclui campanhas de arrecadação e doação de alimentos, agasalhos e brinquedos, atendimentos gratuitos nas áreas de beleza e saúde e visitas sociais a asilos, creches e abrigos. A página descreve essas ações, mas não informa datas nem locais.",
+      "category": "social", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["acao social voluntaria", "voluntariado", "doacao", "arrecadacao", "alimentos", "agasalhos", "brinquedos", "atendimento gratuito", "beleza", "saude", "asilos", "creches", "abrigos", "campanha"],
+      "questions": ["O Senac faz campanhas de doação?", "Tem atendimento gratuito de beleza e saúde?", "Como ser voluntário no Senac?", "Quero ajudar em projetos sociais e voluntariado", "O Senac tem projetos de voluntariado?"],
+      "source_ids": ["pb-educacao-ambiental"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified",
+      "notes": "Não há datas, locais ou inscrições: não afirmar que uma campanha ou atendimento está acontecendo agora."
+    },
+    {
+      "id": "social-4rs",
+      "nature": "permanent",
+      "title": "Programa de Conscientização Ambiental 4Rs",
+      "content": "O Programa 4Rs significa Reeducar, Reduzir, Reutilizar e Reciclar. Propõe ações práticas para reduzir, reciclar e reaproveitar água, energia elétrica, papel, copos plásticos, embalagens e outros materiais, buscando mais consciência social e ambiental e menos poluição do solo, da água e do ar. A metodologia também está presente nas atividades pedagógicas.",
+      "category": "social", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["4rs", "educacao ambiental", "reeducar", "reduzir", "reutilizar", "reciclar", "meio ambiente", "sustentabilidade", "reciclagem", "consciencia ambiental"],
+      "questions": ["O que é o Programa 4Rs?", "O Senac tem educação ambiental?", "O que significam os 4 Rs?"],
+      "source_ids": ["pb-educacao-ambiental"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified"
+    },
+    {
+      "id": "social-calendario-socioambiental",
+      "nature": "permanent",
+      "title": "Calendário socioambiental",
+      "content": "O Senac Paraíba comemora datas socioambientais com palestras, oficinas e atividades de conscientização: 22 de março, Dia Mundial da Água; 5 de junho, Dia Mundial do Meio Ambiente; 28 de agosto, Dia Nacional do Voluntariado; 21 de setembro, Dia da Árvore; e 10 de dezembro, Dia da Inclusão Social.",
+      "category": "social", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["calendario socioambiental", "dia da agua", "dia do meio ambiente", "dia do voluntariado", "dia da arvore", "dia da inclusao social", "datas comemorativas", "22 de marco", "5 de junho", "28 de agosto", "21 de setembro", "10 de dezembro"],
+      "questions": ["Quais datas ambientais o Senac comemora?", "O Senac comemora o Dia da Árvore?"],
+      "source_ids": ["pb-educacao-ambiental"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified",
+      "notes": "A página lista as datas, mas não confirma programação, local ou edição deste ano."
+    },
+    {
+      "id": "social-acessibilidade",
+      "nature": "permanent",
+      "title": "Programa Senac de Acessibilidade",
+      "content": "O Programa Senac de Acessibilidade promove o acesso e a inclusão de pessoas com deficiência no mercado de trabalho por meio da educação profissional. Inclui capacitação das equipes, tecnologia e infraestrutura adaptadas, profissionalização, palestras, seminários e divulgação de vagas. O Programa Deficiência e Competência existe desde 2002.",
+      "category": "social", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["acessibilidade", "pessoas com deficiencia", "inclusao", "deficiencia e competencia", "2002", "mercado de trabalho", "profissionalizacao", "programa senac de acessibilidade", "acoes sociais"],
+      "questions": ["O Senac tem programa para pessoas com deficiência?", "O que é o Programa Senac de Acessibilidade?"],
+      "source_ids": ["pb-acessibilidade"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified"
+    },
+    {
+      "id": "social-geracao-renda-inclusao",
+      "nature": "permanent",
+      "title": "Geração de renda e inclusão no mercado de trabalho",
+      "content": "As ações educativas do Senac Paraíba citam a geração de renda e a inserção no mercado de trabalho como objetivos. O Banco de Oportunidade de Trabalho conecta egressos e empresas, e o Programa de Acessibilidade promove a inclusão de pessoas com deficiência no mercado de trabalho.",
+      "category": "social", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["geracao de renda", "inclusao no mercado de trabalho", "emprego", "renda", "inclusao", "banco de oportunidades", "acessibilidade"],
+      "questions": ["O Senac tem projetos de geração de renda?", "O Senac ajuda na inclusão no mercado de trabalho?"],
+      "source_ids": ["pb-educacao-ambiental", "pb-banco-oportunidades", "pb-acessibilidade"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified"
+    },
+    {
+      "id": "social-acoes-vigentes",
+      "nature": "unconfirmed",
+      "title": "Ações sociais acontecendo agora",
+      "content": "Não tenho confirmação de ações sociais, campanhas ou atendimentos gratuitos acontecendo agora: as páginas consultadas descrevem os programas, mas não trazem datas, locais ou inscrições abertas. Para saber da programação atual, procure o Senac Paraíba pelos canais oficiais.",
+      "category": "social", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["acontecendo agora", "vigente", "programacao social", "inscricoes abertas", "campanha atual", "hoje", "esta semana", "proximas acoes"],
+      "questions": ["Tem alguma ação social acontecendo agora?", "Tem campanha de doação este mês?"],
+      "source_ids": ["pb-educacao-ambiental", "pb-noticias"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "volatile", "status": "pending"
+    }
+  ]
+}

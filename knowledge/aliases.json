@@ -1,0 +1,424 @@
+{
+  "description": "Aliases de unidades e sinônimos usados pela busca. Editar aqui não exige mudar a lógica do sistema. Todos os termos em minúsculas e sem acentos. 'demote_unless': entradas de nicho que só devem liderar a busca quando a pergunta cita um dos termos (ex.: o programa de alimentos seguros não responde a 'sou dono de uma loja').",
+  "units": {
+    "CEP-JP": {
+      "name": "CEP João Pessoa (Centro de Educação Profissional Renato Ribeiro Coutinho)",
+      "aliases": [
+        "cep jp",
+        "cepjp",
+        "cep joao pessoa",
+        "centro de educacao profissional de joao pessoa",
+        "centro de educacao profissional joao pessoa",
+        "renato ribeiro coutinho",
+        "dom pedro i",
+        "cep da capital"
+      ]
+    },
+    "CENDEGE": {
+      "name": "CENDEGE (Centro de Desenvolvimento Gerencial)",
+      "aliases": [
+        "cendege",
+        "desenvolvimento gerencial"
+      ]
+    },
+    "GASTRO-HOTELARIA": {
+      "name": "Escola Senac de Gastronomia e Hotelaria",
+      "aliases": [
+        "escola de gastronomia e hotelaria",
+        "gastronomia e hotelaria",
+        "escola senac de gastronomia",
+        "escola de gastronomia"
+      ]
+    },
+    "TADROS": {
+      "name": "Centro de Tecnologia e Formação Profissional José Roberto Tadros",
+      "aliases": [
+        "jose roberto tadros",
+        "roberto tadros",
+        "tadros",
+        "centro de tecnologia e formacao profissional"
+      ]
+    },
+    "DOM-ULRICO": {
+      "name": "Escola Senac Dom Ulrico",
+      "aliases": [
+        "dom ulrico"
+      ]
+    },
+    "ZONA-SUL": {
+      "name": "Escola Senac Zona Sul",
+      "aliases": [
+        "zona sul",
+        "gramame"
+      ]
+    },
+    "MOVEIS": {
+      "name": "Unidades Móveis",
+      "aliases": [
+        "unidade movel",
+        "unidades moveis",
+        "carreta escola",
+        "carretas"
+      ]
+    },
+    "CEP-CG": {
+      "name": "CEP Campina Grande (Rui Bezerra Cavalcanti)",
+      "aliases": [
+        "campina grande",
+        "rui bezerra cavalcanti"
+      ]
+    },
+    "CEP-CZ": {
+      "name": "CEP Cajazeiras (Antônio Dutra Sobrinho)",
+      "aliases": [
+        "cajazeiras",
+        "antonio dutra sobrinho"
+      ]
+    },
+    "PATOS": {
+      "name": "Unidade de Patos",
+      "aliases": [
+        "patos"
+      ]
+    }
+  },
+  "institutional_triggers": [
+    "senac",
+    "curso",
+    "cursos",
+    "matricula",
+    "matriculas",
+    "matricular",
+    "matriculo",
+    "matriculei",
+    "inscrevo",
+    "inscricao",
+    "inscricoes",
+    "inscrever",
+    "unidade",
+    "unidades",
+    "cep",
+    "cendege",
+    "gratuidade",
+    "psg",
+    "gratuito",
+    "gratuitos",
+    "empresa",
+    "empresas",
+    "sindicato",
+    "aprendiz",
+    "aprendizagem",
+    "vaga",
+    "vagas",
+    "bolsa",
+    "mensalidade",
+    "valor",
+    "valores",
+    "preco",
+    "precos",
+    "horario",
+    "horarios",
+    "endereco",
+    "telefone",
+    "contato",
+    "fecomercio",
+    "sesc",
+    "semana s",
+    "programacao",
+    "evento",
+    "eventos",
+    "palestra",
+    "palestras",
+    "workshop",
+    "oficina",
+    "oficinas",
+    "ensino tecnico",
+    "tecnico em",
+    "graduacao",
+    "pos graduacao",
+    "ead",
+    "social",
+    "sociais",
+    "voluntariado",
+    "voluntario",
+    "ambiental",
+    "educacao ambiental",
+    "sustentabilidade",
+    "distancia",
+    "acao social",
+    "projeto social",
+    "projetos sociais",
+    "empreendedorismo"
+  ],
+  "corporate_triggers": [
+    "minha empresa",
+    "nossa empresa",
+    "empresario",
+    "empresaria",
+    "sou dono",
+    "sou gerente",
+    "sou do rh",
+    "recursos humanos",
+    "colaboradores",
+    "funcionarios",
+    "capacitar minha equipe",
+    "treinar minha equipe",
+    "treinamento corporativo",
+    "sindicato",
+    "contratar aprendiz",
+    "contratar o senac",
+    "para empresas",
+    "capacitacao corporativa",
+    "atendimento corporativo",
+    "senac empresas"
+  ],
+  "synonyms": {
+    "preco": [
+      "valor",
+      "custo",
+      "mensalidade",
+      "quanto custa",
+      "pagar"
+    ],
+    "valor": [
+      "preco",
+      "custo",
+      "mensalidade"
+    ],
+    "matricula": [
+      "inscricao",
+      "inscrever",
+      "matricular",
+      "matriculas",
+      "matriculo",
+      "matriculei",
+      "matriculada",
+      "inscrevo"
+    ],
+    "gratuito": [
+      "gratuidade",
+      "psg",
+      "gratis",
+      "sem custo"
+    ],
+    "gratuidade": [
+      "gratuito",
+      "psg"
+    ],
+    "endereco": [
+      "onde fica",
+      "localizacao",
+      "como chegar",
+      "local"
+    ],
+    "telefone": [
+      "contato",
+      "ligar",
+      "whatsapp",
+      "fone"
+    ],
+    "empresa": [
+      "empresas",
+      "corporativo",
+      "empresarial",
+      "organizacao",
+      "senac empresas"
+    ],
+    "tecnico": [
+      "tecnicos",
+      "tecnica"
+    ],
+    "curso": [
+      "cursos",
+      "formacao",
+      "qualificacao",
+      "capacitacao"
+    ],
+    "evento": [
+      "eventos",
+      "semana s",
+      "palestra",
+      "workshop",
+      "programacao"
+    ],
+    "ambiental": [
+      "meio ambiente",
+      "sustentabilidade",
+      "4rs",
+      "reciclagem"
+    ],
+    "social": [
+      "sociais",
+      "voluntariado",
+      "doacao",
+      "solidariedade",
+      "inclusao"
+    ],
+    "jovem": [
+      "aprendiz",
+      "aprendizagem",
+      "menor aprendiz"
+    ],
+    "ead": [
+      "distancia",
+      "online",
+      "a distancia"
+    ],
+    "treinar": [
+      "treinamento",
+      "capacitacao",
+      "capacitar"
+    ],
+    "capacitar": [
+      "capacitacao",
+      "treinamento"
+    ],
+    "dono": [
+      "empresa",
+      "empresario"
+    ],
+    "empresario": [
+      "empresas",
+      "senac empresas"
+    ],
+    "empresaria": [
+      "empresas",
+      "senac empresas"
+    ],
+    "colaborador": [
+      "capacitacao",
+      "equipe",
+      "empresas"
+    ],
+    "funcionario": [
+      "capacitacao",
+      "equipe",
+      "empresas"
+    ],
+    "historia": [
+      "fundacao",
+      "criacao",
+      "quando foi criado",
+      "origem"
+    ],
+    "criou": [
+      "historia",
+      "fundacao",
+      "criacao",
+      "origem"
+    ],
+    "criado": [
+      "historia",
+      "fundacao",
+      "criacao",
+      "origem"
+    ],
+    "fundou": [
+      "historia",
+      "fundacao",
+      "criacao",
+      "origem"
+    ],
+    "fundado": [
+      "historia",
+      "fundacao",
+      "criacao",
+      "origem"
+    ],
+    "missao": [
+      "visao",
+      "valores",
+      "proposito"
+    ]
+  },
+  "stopwords": [
+    "a",
+    "o",
+    "as",
+    "os",
+    "um",
+    "uma",
+    "de",
+    "da",
+    "do",
+    "das",
+    "dos",
+    "e",
+    "em",
+    "no",
+    "na",
+    "nos",
+    "nas",
+    "para",
+    "pra",
+    "por",
+    "com",
+    "que",
+    "qual",
+    "quais",
+    "quem",
+    "como",
+    "onde",
+    "quando",
+    "voce",
+    "vc",
+    "me",
+    "meu",
+    "minha",
+    "fale",
+    "diga",
+    "sobre",
+    "tem",
+    "ha",
+    "existe",
+    "eh",
+    "e",
+    "ser",
+    "sao",
+    "foi",
+    "tambem",
+    "mais",
+    "muito",
+    "ao",
+    "aos",
+    "se",
+    "ou",
+    "seu",
+    "sua",
+    "isso",
+    "esse",
+    "essa",
+    "aqui",
+    "la",
+    "gostaria",
+    "saber",
+    "queria",
+    "pode",
+    "poderia",
+    "voces",
+    "ajudar",
+    "apoiar",
+    "sou",
+    "oferece",
+    "oferecer",
+    "oferecem",
+    "oferta",
+    "ofereco"
+  ],
+  "demote_unless": {
+    "empresas-pas": [
+      "alimento",
+      "alimentos",
+      "alimentar",
+      "bebida",
+      "bebidas",
+      "comida",
+      "restaurante",
+      "lanchonete",
+      "manipulacao",
+      "boas praticas",
+      "seguranca alimentar",
+      "pas"
+    ]
+  }
+}

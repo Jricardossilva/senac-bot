@@ -1,0 +1,58 @@
+{
+  "category": "courses",
+  "description": "Cursos e programação. Dados voláteis: têm data de validade curta e exigem conferência na programação oficial.",
+  "entries": [
+    {
+      "id": "courses-tecnicos-lista-pb",
+      "title": "Cursos técnicos citados pelo Senac Paraíba",
+      "content": "A página de cursos técnicos do Senac Paraíba cita: Técnico em Estética, Enfermagem, Guia de Turismo, Informática, Jogos Digitais, Transações Imobiliárias, Logística, Administração e Design de Interiores. Em educação a distância, cita Contabilidade e a Especialização Técnica em Segurança do Trabalho em Meio Ambiente. A página não diz em quais unidades cada curso é oferecido.",
+      "category": "courses", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["cursos tecnicos", "tecnico", "estetica", "enfermagem", "guia de turismo", "informatica", "jogos digitais", "transacoes imobiliarias", "logistica", "administracao", "design de interiores", "contabilidade", "seguranca do trabalho", "lista de cursos"],
+      "questions": ["Quais cursos técnicos o Senac Paraíba oferece?", "Quais cursos técnicos tem?", "Que cursos técnicos existem?", "O Senac tem técnico em enfermagem?", "Tem curso técnico de informática?"],
+      "source_ids": ["pb-tecnicos"], "consulted_at": "2026-11-07", "valid_until": "2026-12-07", "freshness": "volatile", "status": "verified",
+      "unit_note": "Não atribuir esses cursos a nenhuma unidade específica: a página não informa onde cada um é oferecido.",
+      "notes": "Alguns links de curso apontavam para PDFs com nomes de outros cursos; confirmar na programação."
+    },
+    {
+      "id": "courses-areas-formacao-pb",
+      "title": "Áreas de formação na programação do Senac Paraíba",
+      "content": "A programação de cursos do Senac Paraíba permite filtrar por segmentos como artes, beleza, comunicação, comércio, design, eventos, games, gastronomia, gestão, hospedagem, idiomas, moda, saúde, tecnologia da informação, turismo, meio ambiente, segurança e transporte. As modalidades são formação inicial e continuada, técnico de nível médio e educação superior.",
+      "category": "courses", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["areas de formacao", "segmentos", "areas", "beleza", "gastronomia", "gestao", "saude", "tecnologia da informacao", "turismo", "moda", "idiomas", "games", "modalidade", "filtros"],
+      "questions": ["Quais áreas de formação o Senac Paraíba tem?", "O Senac tem curso de beleza?", "Quais segmentos de cursos existem?"],
+      "source_ids": ["pb-programacao-cursos"], "consulted_at": "2026-11-07", "valid_until": "2026-12-07", "freshness": "volatile", "status": "verified",
+      "unit_note": "Lista de filtros do estado inteiro: não indica quais áreas existem em cada unidade.",
+      "notes": "Segmentos completos: Artes; Asseio/conservação/zeladoria; Beleza; Comunicação; Comércio; Construção e reforma; Design; Educacional; Eventos; Games; Gastronomia; Gestão; Hospedagem; Idiomas; Instalação/manutenção/reparação; Lazer; Meio ambiente; Moda; Processos químicos e industriais; Produção de alimentos e de bebidas; Saúde; Segurança; Social; TI; Telecomunicações; Transporte e armazenagem; Turismo."
+    },
+    {
+      "id": "courses-como-consultar-programacao",
+      "title": "Como consultar a programação de cursos",
+      "content": "A programação de cursos do Senac Paraíba fica no site oficial, na seção Programação de Cursos, e pode ser filtrada por cidade, unidade, segmento, modalidade, tipo de formação, turno e período. Os resultados são carregados na própria página. Para ver os cursos de uma unidade específica, basta escolher a unidade no filtro.",
+      "category": "courses", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["programacao de cursos", "programacao", "consultar", "filtros", "site", "cursos disponiveis", "calendario", "turno", "periodo"],
+      "questions": ["Onde vejo a programação de cursos?", "Como consultar os cursos do Senac?", "Como saber os cursos abertos?"],
+      "source_ids": ["pb-programacao-cursos", "pb-home"], "consulted_at": "2026-11-07", "valid_until": "2026-12-07", "freshness": "volatile", "status": "verified",
+      "notes": "O site oficial também publica a programação por PDF; a página /programacao-de-cursos/ exibia, na consulta, a programação de janeiro/fevereiro de 2025, que está desatualizada."
+    },
+    {
+      "id": "courses-matricula",
+      "title": "Como fazer matrícula",
+      "content": "A matrícula é feita on-line no site do Senac Paraíba, na seção Matrículas On-Line. Para dúvidas sobre cursos técnicos ou matrícula, a página de cursos técnicos indica contato por WhatsApp, telefone e redes sociais. Há também a página de Processo Seletivo para quem busca vagas por seleção.",
+      "category": "courses", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["matricula", "matricular", "inscricao", "inscrever", "como me matricular", "matricula online", "processo seletivo", "whatsapp", "cursos tecnicos"],
+      "questions": ["Como faço matrícula?", "Como me inscrevo em um curso do Senac?", "Tem matrícula online?"],
+      "source_ids": ["pb-tecnicos", "pb-home"], "consulted_at": "2026-11-07", "valid_until": "2026-12-07", "freshness": "volatile", "status": "verified",
+      "notes": "Os passos detalhados, documentos, prazos e valores não constam nas páginas consultadas."
+    },
+    {
+      "id": "courses-cep-jp-oferta",
+      "title": "Cursos do CEP João Pessoa",
+      "content": "Não tenho a lista de cursos do CEP João Pessoa confirmada. Sei que o CEP oferece formação inicial e continuada, ensino técnico de nível médio e ações extensivas, mas a lista de cursos por unidade só aparece na programação do site, filtrando pela unidade Centro de Educação Profissional de João Pessoa.",
+      "category": "courses", "level": "cep-jp", "unit": "CEP-JP", "kind": "institutional",
+      "keywords": ["cep joao pessoa", "cep jp", "cursos do cep", "cursos", "qualificacao", "oficinas", "palestras", "workshops", "tecnico", "areas de formacao", "programacao vigente", "que cursos tem"],
+      "questions": ["Quais cursos o CEP João Pessoa oferece?", "O CEP-JP tem curso técnico?", "O CEP João Pessoa tem oficinas e workshops?", "Quais são as áreas de formação do CEP-JP?"],
+      "source_ids": ["pb-unidades", "pb-programacao-cursos"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "volatile", "status": "pending",
+      "notes": "A programação por unidade é carregada dinamicamente (JavaScript) e não pôde ser lida automaticamente. Ver pending.json."
+    }
+  ]
+}

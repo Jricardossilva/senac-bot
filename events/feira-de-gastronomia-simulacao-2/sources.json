@@ -1,0 +1,18 @@
+{
+  "sources": [
+    {
+      "id": "src-e787bc926a",
+      "url": "https://feira-gastronomia.example.org/",
+      "kind": "site",
+      "trust": "official",
+      "origin": "operator",
+      "title": "",
+      "last_checked": "2026-11-08T00:13:48+00:00",
+      "last_ok": null,
+      "error": "endereço não permitido: https://feira-gastronomia.example.org/",
+      "hash": null,
+      "failures": 1,
+      "note": ""
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "category": "units",
+  "description": "Unidades educacionais do Senac Paraíba. Cada unidade tem entradas próprias: nunca atribuir uma informação de uma unidade a outra.",
+  "entries": [
+    {
+      "id": "units-joao-pessoa-visao-geral",
+      "title": "Unidades do Senac em João Pessoa",
+      "content": "Em João Pessoa o Senac Paraíba tem o CEP João Pessoa, o CENDEGE, a Escola Senac de Gastronomia e Hotelaria, a Escola Senac Dom Ulrico, a Escola Senac Zona Sul e as Unidades Móveis. A programação de cursos também lista o Centro de Tecnologia e Formação Profissional José Roberto Tadros. Cada unidade tem atuação própria.",
+      "category": "units", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["unidades", "joao pessoa", "quais unidades", "capital", "cep", "cendege", "dom ulrico", "zona sul", "gastronomia e hotelaria", "tadros"],
+      "questions": ["Quais são as unidades do Senac em João Pessoa?", "Quais unidades existem na capital?"],
+      "source_ids": ["pb-unidades", "pb-joao-pessoa", "pb-programacao-cursos"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified"
+    },
+    {
+      "id": "unit-cep-jp-perfil",
+      "title": "CEP João Pessoa: perfil e atuação",
+      "content": "O CEP João Pessoa, Centro de Educação Profissional Renato Ribeiro Coutinho, foi inaugurado em 26 de setembro de 1974. Oferece formação inicial e continuada, educação profissional técnica de nível médio e ações extensivas, como palestras, seminários, conferências e feiras. Tem salas de aula, laboratórios pedagógicos, biblioteca e espaço de apoio pedagógico.",
+      "category": "units", "level": "cep-jp", "unit": "CEP-JP", "kind": "institutional",
+      "keywords": ["cep joao pessoa", "cep jp", "centro de educacao profissional", "renato ribeiro coutinho", "1974", "inaugurado", "perfil", "estrutura", "laboratorios", "biblioteca", "acoes extensivas", "sete eixos tecnologicos"],
+      "questions": ["O que é o CEP João Pessoa?", "Quando o CEP-JP foi inaugurado?", "Que estrutura tem o CEP João Pessoa?"],
+      "source_ids": ["pb-unidades", "pb-joao-pessoa"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified",
+      "notes": "A página de unidades diz que o CEP-JP atua em sete eixos tecnológicos, mas não nomeia os eixos. Ver pending.json."
+    },
+    {
+      "id": "unit-cep-jp-localizacao",
+      "title": "CEP João Pessoa: endereço e contatos",
+      "content": "O CEP João Pessoa fica na Avenida Dom Pedro I, 389, no Centro de João Pessoa, CEP 58013-020. Telefone fixo: (83) 3214-2330. A página das unidades de João Pessoa informa também os WhatsApps (83) 99849-0407 e (83) 99985-1588. E-mail: senac@pb.senac.br.",
+      "category": "units", "level": "cep-jp", "unit": "CEP-JP", "kind": "institutional",
+      "keywords": ["cep joao pessoa", "cep jp", "endereco", "onde fica", "localizacao", "telefone", "whatsapp", "email", "avenida dom pedro i", "contato", "como chegar"],
+      "questions": ["Onde fica o CEP João Pessoa?", "Qual é o telefone do CEP-JP?", "Qual o endereço do Centro de Educação Profissional de João Pessoa?"],
+      "source_ids": ["pb-unidades", "pb-joao-pessoa"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified",
+      "notes": "Telefone fixo vem da página de unidades operativas; os WhatsApps vêm da página de João Pessoa. Horário de atendimento não consta."
+    },
+    {
+      "id": "unit-cendege",
+      "title": "CENDEGE (Centro de Desenvolvimento Gerencial)",
+      "content": "O CENDEGE funciona desde agosto de 2006 e atua com capacitação e consultoria para organizações públicas, privadas e do terceiro setor, além de ser polo regional da Rede EAD. Fica na Rua Desembargador Souto Maior, 115, Centro. A página de João Pessoa informa que a unidade está em reforma e funciona provisoriamente no CEP João Pessoa.",
+      "category": "units", "level": "paraiba", "unit": "CENDEGE", "kind": "institutional",
+      "keywords": ["cendege", "desenvolvimento gerencial", "capacitacao", "consultoria", "organizacoes", "polo ead", "reforma", "2006", "souto maior"],
+      "questions": ["O que é o CENDEGE?", "Onde fica o CENDEGE?", "O CENDEGE atende empresas?"],
+      "source_ids": ["pb-unidades", "pb-joao-pessoa"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "review",
+      "notes": "Telefone (83) 3214-2340 na página de unidades e WhatsApp (83) 98106-9220 na página de João Pessoa. A situação de reforma pode ter mudado: confirmar."
+    },
+    {
+      "id": "unit-gastronomia-hotelaria",
+      "title": "Escola Senac de Gastronomia e Hotelaria",
+      "content": "A Escola Senac de Gastronomia e Hotelaria nasceu de um convênio entre Sesc e Senac firmado em 28 de maio de 2002 e atende principalmente gastronomia, turismo e hotelaria, com laboratórios de garçom, camareira, recepção e cozinha. As páginas oficiais divergem sobre o endereço: confirme antes de ir.",
+      "category": "units", "level": "paraiba", "unit": "GASTRO-HOTELARIA", "kind": "institutional",
+      "keywords": ["escola de gastronomia e hotelaria", "gastronomia", "hotelaria", "turismo", "cozinha", "garcom", "camareira", "recepcao", "convenio sesc senac", "2002", "endereco", "piramide shopping", "cabo branco", "tambau"],
+      "questions": ["Onde fica a Escola Senac de Gastronomia e Hotelaria?", "O que a Escola de Gastronomia e Hotelaria oferece?"],
+      "source_ids": ["pb-unidades", "pb-joao-pessoa"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "review",
+      "notes": "Divergência: página de unidades operativas = Av. Cabo Branco, 2788, Praia do Cabo Branco, tel. (83) 3031-3547. Página de João Pessoa = Av. Antônio Lira, 300, Tambaú (Pirâmide Shopping), WhatsApp (83) 99414-1576, 'em reforma, funcionando provisoriamente'. Não escolher um endereço sem confirmação."
+    },
+    {
+      "id": "unit-tadros",
+      "title": "Centro de Tecnologia e Formação Profissional José Roberto Tadros",
+      "content": "O Centro de Tecnologia e Formação Profissional José Roberto Tadros aparece como unidade na programação de cursos do Senac Paraíba, mas as páginas oficiais consultadas não trazem endereço, contatos nem a lista de cursos dessa unidade. Não tenho confirmação desses dados.",
+      "category": "units", "level": "paraiba", "unit": "TADROS", "kind": "institutional",
+      "keywords": ["jose roberto tadros", "tadros", "centro de tecnologia e formacao profissional", "tecnologia"],
+      "questions": ["O que é o Centro de Tecnologia José Roberto Tadros?", "Onde fica o Centro Tadros?"],
+      "source_ids": ["pb-programacao-cursos", "pb-unidades"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "pending"
+    },
+    {
+      "id": "unit-dom-ulrico",
+      "title": "Escola Senac Dom Ulrico",
+      "content": "A Escola Senac Dom Ulrico foi criada em 2 de janeiro de 2012 e é voltada principalmente à inclusão social, com cursos de gestão, comércio, saúde e informática, entre outros. Fica na Avenida João Machado, 1214, Centro de João Pessoa. WhatsApp: (83) 99413-9341.",
+      "category": "units", "level": "paraiba", "unit": "DOM-ULRICO", "kind": "institutional",
+      "keywords": ["dom ulrico", "escola dom ulrico", "inclusao social", "gestao", "comercio", "saude", "informatica", "2012", "joao machado"],
+      "questions": ["O que é a Escola Senac Dom Ulrico?", "Onde fica a Escola Dom Ulrico?"],
+      "source_ids": ["pb-unidades", "pb-joao-pessoa"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified",
+      "notes": "Telefones na página de unidades: (83) 3133-1162, 3133-1166, 3133-1169."
+    },
+    {
+      "id": "unit-zona-sul",
+      "title": "Escola Senac Zona Sul",
+      "content": "A página de João Pessoa descreve a Escola Senac Zona Sul, na Avenida Embaixador Sérgio Vieira de Melo, 553, Gramame, como em fase final de construção, com laboratórios previstos de beleza, gastronomia, saúde e tecnologia. Não tenho confirmação de que ela já esteja funcionando.",
+      "category": "units", "level": "paraiba", "unit": "ZONA-SUL", "kind": "institutional",
+      "keywords": ["zona sul", "escola zona sul", "gramame", "construcao", "beleza", "gastronomia", "saude", "tecnologia"],
+      "questions": ["O que é a Escola Senac Zona Sul?", "A Escola Zona Sul já funciona?"],
+      "source_ids": ["pb-joao-pessoa"], "consulted_at": "2026-11-07", "valid_until": "2027-02-07", "freshness": "volatile", "status": "review",
+      "notes": "A página não traz data da informação de obra; WhatsApp (83) 99416-2988."
+    },
+    {
+      "id": "unit-moveis",
+      "title": "Unidades Móveis do Senac Paraíba",
+      "content": "As Unidades Móveis atuam desde 1973 e levam qualificação profissional a comunidades das grandes cidades e do interior. Operam com três carretas, nas áreas de informática, imagem pessoal e turismo e hospitalidade, e oferecem também programas socioprofissionais e culturais.",
+      "category": "units", "level": "paraiba", "unit": "MOVEIS", "kind": "institutional",
+      "keywords": ["unidades moveis", "unidade movel", "carretas", "carreta escola", "interior", "informatica", "imagem pessoal", "turismo e hospitalidade", "1973"],
+      "questions": ["O que são as Unidades Móveis do Senac?", "O Senac vai ao interior?"],
+      "source_ids": ["pb-unidades"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified",
+      "notes": "Telefones na página de unidades: (83) 3214-5616 e (83) 3214-5417."
+    },
+    {
+      "id": "unit-campina-grande",
+      "title": "CEP Campina Grande",
+      "content": "O CEP Campina Grande, Rui Bezerra Cavalcanti, foi inaugurado em 1º de maio de 1990 e fica na Avenida Manoel Tavares, 300, Alto Branco. Oferece formação inicial e continuada, educação profissional técnica de nível médio e ações extensivas, e inclui uma empresa pedagógica de beleza. Telefones: (83) 3341-5711 e 3341-5722.",
+      "category": "units", "level": "paraiba", "unit": "CEP-CG", "kind": "institutional",
+      "keywords": ["campina grande", "cep campina grande", "rui bezerra cavalcanti", "alto branco", "1990", "beleza"],
+      "questions": ["Onde fica o Senac em Campina Grande?", "O que o CEP Campina Grande oferece?"],
+      "source_ids": ["pb-unidades"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified"
+    },
+    {
+      "id": "unit-cajazeiras",
+      "title": "CEP Cajazeiras",
+      "content": "O CEP Cajazeiras, Antônio Dutra Sobrinho, foi criado em 22 de agosto de 1996 e oferece formação inicial e continuada, educação profissional técnica de nível médio e ações extensivas. Telefones: (83) 3531-3552 e 3531-3553. A página traz dois endereços diferentes, então confirme o local antes de ir.",
+      "category": "units", "level": "paraiba", "unit": "CEP-CZ", "kind": "institutional",
+      "keywords": ["cajazeiras", "cep cajazeiras", "antonio dutra sobrinho", "1996", "manoel pedrosa", "cocode"],
+      "questions": ["Onde fica o Senac em Cajazeiras?", "O que o CEP Cajazeiras oferece?"],
+      "source_ids": ["pb-unidades"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "review",
+      "notes": "Divergência dentro da própria página: 'Rua Manoel G. Pedrosa, s/n, Cocodé' no texto e 'Avenida Manoel G. Pedrosa, 705, Centro, CEP 58900-000' no bloco de endereço."
+    },
+    {
+      "id": "unit-patos",
+      "title": "Unidade do Senac em Patos",
+      "content": "Patos aparece como unidade do Senac Paraíba no menu e nos filtros da programação, mas as páginas oficiais consultadas não trazem endereço, contatos nem a oferta de cursos dessa unidade. Não tenho confirmação desses dados.",
+      "category": "units", "level": "paraiba", "unit": "PATOS", "kind": "institutional",
+      "keywords": ["patos", "unidade patos", "cep patos"],
+      "questions": ["Onde fica o Senac em Patos?"],
+      "source_ids": ["pb-home", "pb-programacao-cursos"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "pending"
+    },
+    {
+      "id": "units-paraiba-lista-completa",
+      "title": "Onde ficam as unidades do Senac na Paraíba",
+      "content": "O Senac Paraíba tem unidades em João Pessoa (CEP João Pessoa, CENDEGE, Escola Senac de Gastronomia e Hotelaria, Escola Senac Dom Ulrico, Escola Senac Zona Sul e o Centro de Tecnologia e Formação Profissional José Roberto Tadros), em Campina Grande (CEP Campina Grande), em Cajazeiras (CEP Cajazeiras) e em Patos, além das Unidades Móveis, que levam qualificação a comunidades do interior. Posso detalhar endereço, telefone e atuação de qualquer uma dessas unidades.",
+      "category": "units", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["unidades", "unidade", "ficam", "possui", "existem", "localizacao", "localizacao das unidades", "onde fica o senac", "onde ficam as unidades", "quais unidades", "cidades", "municipios", "joao pessoa", "campina grande", "cajazeiras", "patos", "interior"],
+      "questions": ["Onde ficam as unidades do Senac?", "Quais unidades o Senac possui na Paraíba?", "Quais unidades o Senac tem na Paraíba?", "Em quais cidades o Senac Paraíba tem unidade?", "Onde tem Senac na Paraíba?"],
+      "source_ids": ["pb-unidades"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified"
+    }
+  ]
+}

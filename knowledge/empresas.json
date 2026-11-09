@@ -1,0 +1,72 @@
+{
+  "category": "empresas",
+  "description": "Senac Empresas e atendimento corporativo. Não há valores, propostas nem condições comerciais nas fontes: nunca inventar.",
+  "entries": [
+    {
+      "id": "empresas-o-que-e",
+      "title": "O que é o Senac Empresas",
+      "content": "O Senac Empresas é o portal que reúne as soluções do Senac para o setor empresarial, com programas, especialistas e a experiência da instituição. Seu lema é que cada desafio tem uma resposta. O portal cita o comércio, os serviços e o turismo, e diz: se tem comércio, serviço, turismo ou negócio, tem Senac.",
+      "category": "empresas", "level": "brasil", "unit": null, "kind": "institutional",
+      "keywords": ["senac empresas", "empresas", "empresarial", "solucoes para empresas", "setor empresarial", "corporativo", "o que e senac empresas", "organizacoes"],
+      "questions": ["O que é o Senac Empresas?", "Como o Senac pode apoiar minha empresa?", "Como o Senac pode ajudar minha empresa?", "O Senac atende empresas?"],
+      "source_ids": ["empresas-home"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified"
+    },
+    {
+      "id": "empresas-solucoes",
+      "title": "Soluções do Senac Empresas",
+      "content": "As soluções do Senac Empresas são: Plataforma Educacional, com cursos online e gratuitos para caber na rotina da equipe, abertos e exclusivos; Aprendizagem Profissional; Fórum Setorial; Atendimento Corporativo, com soluções personalizadas e capacitação de equipes; Rede de Inovação; e o Programa Alimentos Seguros.",
+      "category": "empresas", "level": "brasil", "unit": null, "kind": "institutional",
+      "keywords": ["solucoes", "plataforma educacional", "cursos online", "aprendizagem profissional", "forum setorial", "atendimento corporativo", "rede de inovacao", "alimentos seguros", "capacitar equipe", "capacitacao de colaboradores", "desenvolvimento de equipes", "cursos para empresas"],
+      "questions": ["Quais soluções o Senac oferece para empresas?", "O Senac capacita colaboradores?", "Como desenvolver minha equipe com o Senac?"],
+      "source_ids": ["empresas-home"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified"
+    },
+    {
+      "id": "empresas-atendimento-corporativo-pb",
+      "title": "Atendimento Corporativo do Senac Paraíba",
+      "content": "O Atendimento Corporativo do Senac Paraíba oferece soluções personalizadas para organizações públicas, privadas e do terceiro setor, com consultorias, capacitação, palestras, workshops, eventos, treinamentos e cursos, na instituição ou em local sugerido pelo cliente, por uma equipe multidisciplinar. Telefone geral: (83) 3208-3100.",
+      "category": "empresas", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["atendimento corporativo", "consultoria", "capacitacao", "treinamento", "palestras", "workshops", "organizacoes publicas", "terceiro setor", "personalizado", "equipe multidisciplinar", "cendege"],
+      "questions": ["O Senac Paraíba faz treinamento para empresas?", "Como contrato um treinamento para minha empresa?", "O Senac faz consultoria?", "Como funciona o atendimento corporativo?"],
+      "source_ids": ["pb-atendimento-corporativo", "pb-unidades"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified",
+      "notes": "A página não indica e-mail, formulário ou contato exclusivo; apenas o telefone geral. Valores e condições não constam. O CENDEGE atua com capacitação e consultoria para organizações."
+    },
+    {
+      "id": "empresas-como-contratar",
+      "title": "Como falar com o Senac Empresas",
+      "content": "No portal Senac Empresas há os botões Fale com um especialista e Cadastre sua empresa, além do formulário Quer falar com a gente. Para a Paraíba, o telefone geral do Senac é (83) 3208-3100. Não tenho valores, propostas nem condições comerciais confirmados: elas devem ser tratadas diretamente com o atendimento.",
+      "category": "empresas", "level": "brasil", "unit": null, "kind": "institutional",
+      "keywords": ["contratar", "proposta", "orcamento", "falar com especialista", "cadastre sua empresa", "contato empresas", "como contratar", "valores", "preco", "condicoes comerciais"],
+      "questions": ["Como contrato o Senac Empresas?", "Quanto custa um treinamento para empresas?", "Como peço uma proposta?"],
+      "source_ids": ["empresas-home", "pb-atendimento-corporativo"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified",
+      "notes": "O portal não informa telefone nem e-mail do Senac Empresas; só botões e formulário."
+    },
+    {
+      "id": "empresas-aprendizagem",
+      "title": "Aprendizagem profissional para empresas",
+      "content": "Na aprendizagem profissional, as empresas recebem jovens talentos preparados para o ambiente de trabalho. O jovem, de 14 a 24 anos, faz a formação no Senac e a prática profissional na empresa contratante. Os programas são voltados a empresas do comércio de bens, serviços e turismo.",
+      "category": "empresas", "level": "brasil", "unit": null, "kind": "institutional",
+      "keywords": ["aprendizagem profissional", "jovem aprendiz", "contratar aprendiz", "jovens talentos", "empresas", "14 a 24 anos", "pratica profissional"],
+      "questions": ["Como minha empresa pode contratar jovens aprendizes pelo Senac?", "O Senac tem programa de aprendizagem para empresas?"],
+      "source_ids": ["empresas-home", "br-aprendizagem"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified"
+    },
+    {
+      "id": "empresas-pas",
+      "title": "Programa Senac de Segurança Alimentar (PAS)",
+      "content": "O Programa Senac de Segurança Alimentar orienta e capacita empresários e colaboradores de empresas do setor de alimentos e bebidas da Paraíba, com treinamentos de boas práticas na manipulação de alimentos, educação alimentar e nutricional e material didático. No portal Senac Empresas ele aparece como Programa Alimentos Seguros.",
+      "category": "empresas", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["pas", "seguranca alimentar", "alimentos seguros", "boas praticas", "manipulacao de alimentos", "restaurantes", "alimentos e bebidas", "empresas de alimentos"],
+      "questions": ["O Senac tem treinamento de boas práticas para restaurantes?", "O que é o Programa de Segurança Alimentar?"],
+      "source_ids": ["pb-pas", "empresas-home"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "verified",
+      "notes": "A página não informa como contratar nem e-mail específico; telefone geral (83) 3208-3100."
+    },
+    {
+      "id": "empresas-sindicatos",
+      "title": "Atendimento a sindicatos",
+      "content": "As páginas oficiais consultadas falam em atendimento a organizações públicas, privadas e do terceiro setor, mas não citam sindicatos especificamente. Não tenho confirmação de um atendimento específico para sindicatos: vale perguntar ao Atendimento Corporativo do Senac Paraíba, pelo telefone (83) 3208-3100.",
+      "category": "empresas", "level": "paraiba", "unit": null, "kind": "institutional",
+      "keywords": ["sindicato", "sindicatos", "entidades", "associacoes", "federacao", "atendimento a sindicatos", "organizacoes"],
+      "questions": ["O Senac atende sindicatos?", "O Senac tem atendimento para sindicatos?"],
+      "source_ids": ["pb-atendimento-corporativo", "empresas-home"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "periodic", "status": "pending"
+    }
+  ]
+}
