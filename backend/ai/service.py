@@ -123,7 +123,7 @@ class ChatService:
         self._contexts = contexts or SessionContexts()
         self._knowledge = knowledge
         self._status = "configured" if provider.is_configured() else "not_configured"
-        self._guidance = Guidance(knowledge) if knowledge is not None else None
+        self._guidance = Guidance(knowledge, portal=portal) if knowledge is not None else None
         self._subjects: OrderedDict[str, _Subject] = OrderedDict()  # assunto da conversa atual (só em memória)
         self._variants: dict[str, int] = {}  # quantas vezes cada tipo de resposta padrão já foi usado na sessão
         emails, numbers = knowledge.public_contact_data() if knowledge is not None else (frozenset(), frozenset())
@@ -206,6 +206,10 @@ class ChatService:
             guided = self._guidance.handle(session_id, self._with_unit(session_id, message))
             if guided is not None:
                 portal_override = None
+                if guided.intent == "no_turma":
+                    # Sem turma aberta do assunto (portal consultado antes): orienta a procurar a unidade mais próxima.
+                    near = self._nearest_hint(message, lat, lon)
+                    return ChatReply(f"{guided.text} {near}", "guidance", None, "info", guided.offer_ids, guided.links)
                 if guided.intent == "no_match":
                     # A orientação não achou nada no catálogo curado: antes de desistir, tenta o cache do
                     # portal oficial de matrículas (dados reais de turmas, atualizados automaticamente).
@@ -257,6 +261,25 @@ class ChatService:
             if city_tokens and contains_sequence(tokens, city_tokens):
                 return geo_unit.municipio
         return None
+
+    def _nearest_hint(self, message: str, lat: float | None, lon: float | None) -> str:
+        """Frase com a unidade mais próxima (pela localização autorizada ou pela cidade citada); sem nenhuma das duas, pede a cidade."""
+        kb = self._knowledge
+        ask = "Se me disser sua cidade ou autorizar a localização, eu indico a unidade mais próxima."
+        if kb is None:
+            return ask
+        if lat is not None and lon is not None:
+            ranked = kb.nearest_units(lat, lon, limit=1)
+            if ranked:
+                unit, distance = ranked[0]
+                return (f"A unidade mais próxima da sua localização é {kb.unit_name(unit.unit) or unit.unit}, em {unit.municipio}, "
+                        f"a cerca de {distance:.1f} km em linha reta.")
+            return ask
+        municipio = self._municipio_in_message(message)
+        geo_unit = kb.geo_unit_for_municipio(municipio) if municipio else None
+        if geo_unit is not None:
+            return f"Em {geo_unit.municipio} a unidade do Senac que tenho confirmada é {kb.unit_name(geo_unit.unit) or geo_unit.unit}."
+        return ask
 
     def _nearest_unit_reply(self, message: str, lat: float | None, lon: float | None) -> ChatReply | None:
         kb = self._knowledge
@@ -311,7 +334,8 @@ class ChatService:
         if self._portal is None:
             return None
         top = result.hits[0].entry if result.hits else None
-        top_unconfirmed = bool(top and top.category == "courses" and self._knowledge.effective(top) == "pending")
+        # Pergunta sobre os cursos de uma unidade: a programação real (portal) vale mais que o texto curado.
+        top_unconfirmed = bool(top and top.category == "courses" and (top.unit or self._knowledge.effective(top) == "pending"))
         if result.hits and result.confident and not top_unconfirmed:
             return None  # a base já responde com segurança
         return self._portal_text_reply(message)

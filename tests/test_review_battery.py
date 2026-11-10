@@ -96,7 +96,7 @@ def test_priority_order_is_respected_for_every_catalog_interest() -> None:
     assert KB.catalog.get(offline().reply("s", "Quero um curso de contabilidade").knowledge[0]).tier == 3
     assert not any(o.tier == 1 for o in KB.catalog.offers)  # sem página oficial do CEP-JP, nenhuma oferta é atribuída a ele
     first = offline().reply("s", "Tenho interesse em gastronomia").text
-    assert "Procurei primeiro no CEP João Pessoa, mas não tenho a programação vigente dele confirmada." in first
+    assert "Procurei" not in first and "CEP João Pessoa" not in first  # a busca começa pelo CEP-JP, sem ser anunciada
 
 
 # ---------------------------------------------------------------- 6. segurança
@@ -161,11 +161,11 @@ def test_bare_yes_no_without_a_pending_question_gets_a_friendly_reply() -> None:
     assert len({svc.reply("v", "ok").text for _ in range(3)}) >= 2
 
 
-def test_opening_phrases_and_priority_notice_are_not_repeated_in_a_session() -> None:
+def test_opening_phrases_are_not_repeated_and_the_cep_jp_search_is_never_announced() -> None:
     svc = offline()
     texts = [svc.reply("n", m).text for m in ("Tenho interesse em gastronomia", "Quero um curso de turismo", "Quero um curso de beleza")]
     assert sum(t.startswith("Que legal!") for t in texts) == 1
-    assert sum("Procurei primeiro no CEP João Pessoa" in t for t in texts) == 1
+    assert not any("Procurei" in t for t in texts)
 
 
 def test_no_random_recommendations_in_a_long_unrelated_conversation() -> None:

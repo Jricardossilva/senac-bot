@@ -27,6 +27,11 @@ if (-not (Test-Path $envFile)) {
     Write-Host "Criado .env a partir de .env.example (sem chave do Gemini: respostas locais)." -ForegroundColor Yellow
 }
 
+# 2b. Programação de cursos do dia (portal oficial): consulta só se a última não foi hoje. Falha não impede o robô de abrir:
+#     a última programação salva continua valendo, sempre falada com a data da consulta.
+try { & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'atualizar-cursos.ps1') } catch { }
+$global:LASTEXITCODE = 0
+
 # 3. Host e porta (padrões, depois .env, depois parâmetro)
 $hostAddr = '127.0.0.1'; $portValue = '8000'; $hasKey = $false
 foreach ($line in Get-Content $envFile) {

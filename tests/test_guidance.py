@@ -118,7 +118,8 @@ def test_unit_known_offers_come_before_unit_unknown_within_the_paraiba_priority(
 def test_ead_is_the_last_resort_and_says_so() -> None:
     reply = guidance().handle("s", "Quero fazer um curso de contabilidade")
     assert reply.offer_ids == ("off-ead-contabilidade",)
-    assert "Procurei nas unidades da Paraíba, começando pelo CEP João Pessoa" in reply.text
+    assert "Não encontrei oferta confirmada para esse assunto nas unidades da Paraíba" in reply.text
+    assert "CEP João Pessoa" not in reply.text  # a busca começa pelo CEP-JP, mas isso não é dito ao visitante
 
 
 def test_explicit_ead_request_goes_straight_to_ead() -> None:
@@ -129,15 +130,13 @@ def test_explicit_ead_request_goes_straight_to_ead() -> None:
     assert specific.offer_ids == ("off-ead-contabilidade",)
 
 
-def test_first_recommendation_explains_the_cep_jp_search_without_inventing_an_offer() -> None:
+def test_recommendation_never_announces_the_cep_jp_search_and_does_not_invent_an_offer() -> None:
     reply = guidance().handle("s", "Tenho interesse em gastronomia")
-    assert "Procurei primeiro no CEP João Pessoa, mas não tenho a programação vigente dele confirmada." in reply.text
+    assert "Procurei" not in reply.text and "CEP João Pessoa" not in reply.text  # busca pelo CEP-JP primeiro, sem anunciar
     assert "Escola Senac de Gastronomia e Hotelaria" in reply.text  # unidade mencionada
     assert reply.offer_ids == ("off-gastro-gastronomia",)
-    again = guidance().handle("s-other", "Tenho interesse em gastronomia")
-    assert "Procurei primeiro" in again.text  # sessão nova repete o aviso
     follow = say(guidance(), "Tenho interesse em gastronomia", "Quero um curso de turismo")[1]
-    assert "Procurei primeiro" not in follow.text  # na mesma sessão o aviso não se repete
+    assert "Procurei" not in follow.text
 
 
 # ------------------------------------------------------------------------------------------------ fluxo da conversa
@@ -145,7 +144,7 @@ def test_informatica_asks_the_goal_then_recommends() -> None:
     g = guidance()
     first, second = say(g, "Eu gostaria de trabalhar com informática.", "manutenção de computadores")
     assert first.offer_ids == () and first.text.startswith("Que legal!")
-    assert "Centro de Educação Profissional de João Pessoa" in first.text
+    assert "Centro de Educação Profissional" not in first.text and "Vou olhar primeiro" not in first.text
     assert first.text.endswith("Você tem mais interesse em programação, manutenção de computadores ou ferramentas digitais?")
     assert second.offer_ids == ("off-tec-informatica",)
     assert second.text.endswith("Quer conhecer mais detalhes?")

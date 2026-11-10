@@ -52,7 +52,7 @@
       "keywords": ["cep joao pessoa", "cep jp", "cursos do cep", "cursos", "qualificacao", "oficinas", "palestras", "workshops", "tecnico", "areas de formacao", "programacao vigente", "que cursos tem"],
       "questions": ["Quais cursos o CEP João Pessoa oferece?", "O CEP-JP tem curso técnico?", "O CEP João Pessoa tem oficinas e workshops?", "Quais são as áreas de formação do CEP-JP?"],
       "source_ids": ["pb-unidades", "pb-programacao-cursos"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "volatile", "status": "pending",
-      "notes": "A programação por unidade é carregada dinamicamente (JavaScript) e não pôde ser lida automaticamente. Ver pending.json."
+      "notes": "Este texto só é falado quando NÃO há extração do portal. Com a extração diária (knowledge/extractions/pb-programacao-cursos.json), o chat usa as turmas reais do CEP-JP, com datas, horários, valores e vagas. Ver pending.json."
     }
   ]
 }

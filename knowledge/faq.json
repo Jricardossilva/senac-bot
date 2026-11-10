@@ -15,12 +15,12 @@
     {
       "id": "faq-valores-vagas-datas",
       "title": "Valores, vagas, datas e horários",
-      "content": "Valores, vagas, datas, turnos e horários mudam a cada turma e não constam como dados confirmados nas páginas que consultei. Para saber com segurança, consulte a programação de cursos no site do Senac Paraíba ou fale com o atendimento oficial.",
+      "content": "Valores, vagas, datas e horários são de cada turma da programação oficial de cursos do Senac Paraíba, que eu consulto todos os dias. Diga o curso que você procura e eu informo a turma aberta, com a data da consulta. Esses dados mudam, então confirme na matrícula, no site do Senac Paraíba.",
       "short": "a programação de cursos no site pb.senac.br ou o telefone (83) 3208-3100",
       "category": "faq", "level": "paraiba", "unit": null, "kind": "guidance",
       "keywords": ["valor", "valores", "preco", "precos", "quanto custa", "mensalidade", "vagas", "datas", "horario", "horarios", "turno", "inicio das aulas", "duracao", "carga horaria", "custo", "pagamento"],
       "questions": ["Quanto custa um curso do Senac?", "Qual o horário de atendimento?", "Quando começam as aulas?", "Ainda tem vagas?"],
-      "source_ids": ["pb-programacao-cursos", "pb-home"], "consulted_at": "2026-11-07", "valid_until": null, "freshness": "volatile", "status": "pending"
+      "source_ids": ["pb-programacao-cursos", "pb-home"], "consulted_at": "2026-11-10", "valid_until": null, "freshness": "periodic", "status": "verified"
     },
     {
       "id": "faq-senac-bot",

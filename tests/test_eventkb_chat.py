@@ -232,7 +232,7 @@ def test_course_recommendation_follows_the_event_theme_and_keeps_the_priority(tm
     world.activate("gastronomia")
     reply = world.ask("Quero fazer um curso de gastronomia")
     assert reply.source == "guidance" and reply.knowledge == ("off-gastro-gastronomia",)
-    assert "Procurei primeiro no CEP João Pessoa" in reply.text  # prioridade: CEP-JP, depois outras unidades, depois EAD
+    assert "Procurei" not in reply.text  # a prioridade (CEP-JP, outras unidades, EAD) vale, mas não é anunciada
     world.activate("robotica")
     tech = world.ask("Quero trabalhar com informática")
     assert tech.source == "guidance" and tech.knowledge == ()  # pergunta o objetivo, como fora de eventos

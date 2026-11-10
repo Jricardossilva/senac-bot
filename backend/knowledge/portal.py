@@ -10,7 +10,8 @@ chamada que o navegador faz ao abrir a página). Esta extração:
  - se uma informação já aprovada mudar, a versão antiga continua valendo e a nova vira proposta;
  - guarda URL, data da consulta, situação e data da próxima revisão de cada registro; em falha, mantém a última versão;
  - relaciona cada registro às pendências de knowledge/pending.json, sem apagá-las.
-Valores e vagas mudam o tempo todo: ficam registrados com a data, mas NÃO são falados pelo robô.
+Valores e vagas mudam o tempo todo: o robô os fala SEMPRE com a data da consulta e a ressalva de que mudam.
+A consulta é feita antes (todo dia, na inicialização e em segundo plano): o chat nunca espera a rede.
 """
 import json
 import logging
@@ -498,8 +499,8 @@ class PortalExtractor:
         free = sum(1 for o in offerings if _num(o["volatil"].get("VALORCURSO")) == 0 and _num(o["volatil"].get("VALOR_MATRICULA")) == 0)
         add(_record("values-vagas", "volatile", "Valores e vagas no portal (dado volátil)",
                     f"Na consulta de {day}, {with_seats} de {len(offerings)} turmas listadas tinham vagas e {free} eram gratuitas. Valores e vagas variam por turma e mudam a toda hora.",
-                    stamp, review, "awaiting_validation", volatile=True, speakable=False,
-                    note="Valores e vagas ficam no arquivo com a data, mas o robô não os fala: orienta o visitante ao portal."))
+                    stamp, review, "awaiting_validation", volatile=True, speakable=True,
+                    note="O robô fala valores, vagas, datas e horários das turmas, sempre com a data da consulta e a ressalva de que mudam."))
         return out
 
     def _contact_record(self, slug: str, unit_key: str | None, name: str, rows: list[dict[str, Any]], stamp: str, review: str) -> dict[str, Any] | None:
@@ -575,6 +576,81 @@ def _num(value: Any) -> float:
         return 0.0
 
 
+# ------------------------------------------------------------------------------------------------ fala de uma turma
+MONTHS = ("janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro")
+CEP_JP_KEY = "CEP-JP"
+DETAIL_QUESTION = re.compile(
+    r"\b(valor|valores|preco|precos|quanto|custa|custo|custar|pagar|mensalidade|vagas?|horario|horarios|"
+    r"quando comeca|quando inicia|comeca|inicio|datas?|carga horaria|duracao|turno|turnos)\b")
+
+
+def _spoken_date(iso: str, today: date | None = None) -> str:
+    try:
+        parsed = date.fromisoformat(str(iso)[:10])
+    except ValueError:
+        return ""
+    text = f"{parsed.day} de {MONTHS[parsed.month - 1]}"
+    return text if today is None or parsed.year == today.year else f"{text} de {parsed.year}"
+
+
+spoken_date = _spoken_date  # nome público (usado pela orientação de cursos)
+
+
+def _spoken_money(value: Any) -> str:
+    """222.6 -> '222 reais e 60 centavos' (nunca arredonda: o valor é falado como a fonte informa)."""
+    cents = round(_num(value) * 100)
+    reais, centavos = divmod(cents, 100)
+    base = f"{reais} {'real' if reais == 1 else 'reais'}"
+    return base if not centavos else (f"{base} e {centavos} centavos" if reais else f"{centavos} centavos")
+
+
+def _spoken_hours(value: Any) -> str:
+    hours = _num(value)
+    if hours <= 0:
+        return ""
+    whole = int(hours) if hours == int(hours) else hours
+    return f"{whole} {'hora' if whole == 1 else 'horas'}"
+
+
+def spoken_turma(offering: dict[str, Any], today: date | None = None) -> str:
+    """Texto falável de UMA turma: unidade, datas, dias, horário, carga horária, valor e vagas, só com dados da fonte."""
+    unit = offering.get("unidade") or "unidade não informada"
+    city = offering.get("cidade") or ""
+    where = f"{unit}, em {city}" if city and city.lower() not in unit.lower() else unit
+    parts = [f"{offering['curso']}, na unidade {where}."]
+    start, end = offering.get("inicio") or "", offering.get("fim") or ""
+    when = []
+    if start:
+        started = bool(today and start < today.isoformat())
+        when.append(f"{'Começou' if started else 'Começa'} em {_spoken_date(start, today)}")
+    if end and end != start:
+        when.append(f"termina em {_spoken_date(end, today)}")
+    schedule = []
+    if offering.get("dias"):
+        schedule.append(str(offering["dias"]).lower())
+    schedule_hours = str(offering.get("horario") or "")
+    if schedule_hours:
+        schedule.append(f"das {schedule_hours}" if " às " in schedule_hours else schedule_hours)
+    if when:
+        parts.append(", ".join(when) + (f", {', '.join(schedule)}" if schedule else "") + ".")
+    elif schedule:
+        parts.append(f"{', '.join(schedule).capitalize()}.")
+    hours = _spoken_hours(offering.get("carga_horaria"))
+    if hours:
+        parts.append(f"A carga horária é de {hours}.")
+    volatile = offering.get("volatil") or {}
+    if "VALORCURSO" in volatile:
+        price, fee = _num(volatile.get("VALORCURSO")), _num(volatile.get("VALOR_MATRICULA"))
+        if price:
+            parts.append(f"O valor do curso é de {_spoken_money(price)}" + (f", mais {_spoken_money(fee)} de matrícula." if fee else "."))
+        else:
+            parts.append("Nesta turma não há custo." if not fee else f"O curso não tem mensalidade, e a matrícula é de {_spoken_money(fee)}.")
+    if "VAGASDISPONIVEIS" in volatile:
+        seats = int(_num(volatile.get("VAGASDISPONIVEIS")))
+        parts.append("Não restam vagas na consulta." if seats <= 0 else ("É 1 vaga." if seats == 1 else f"São {seats} vagas."))
+    return " ".join(parts)
+
+
 # ------------------------------------------------------------------------------------------------ consulta para o chat
 @dataclass
 class PortalAnswer:
@@ -608,9 +684,60 @@ STOP = {"curso", "cursos", "tecnico", "tecnicos", "senac", "paraiba", "tem", "ha
 class PortalLookup:
     """Consulta o CACHE da extração (nunca a rede) para perguntas sobre cursos técnicos que a base local não responde com segurança."""
 
-    def __init__(self, portal: PortalKnowledge, kb) -> None:
+    def __init__(self, portal: PortalKnowledge, kb, clock: Callable[[], date] = date.today) -> None:
         self._portal = portal
         self._kb = kb
+        self._clock = clock
+
+    def has_data(self) -> bool:
+        data = self._portal.load()
+        return bool(data.get("offerings")) and bool(data.get("consulted_at"))
+
+    def get_turma(self, turma_id: str) -> dict[str, Any] | None:
+        """Turma da última extração pelo id 'turma-N' (o mesmo usado nas respostas); None se não existir mais."""
+        return next((o for o in self._portal.load().get("offerings") or [] if f"turma-{o['id']}" == turma_id), None)
+
+    def consulted_label(self) -> str:
+        """Data da última consulta no formato falado: '10 de novembro'."""
+        return _spoken_date(str(self._portal.load().get("consulted_at") or "")) or ""
+
+    def describe(self, offering: dict[str, Any]) -> str:
+        """Turma falada com todos os dados (datas, horário, carga horária, valor e vagas) + data da consulta e ressalva."""
+        label = self.consulted_label()
+        note = (f"Dados do portal oficial de matrículas, consultado em {label}; " if label else "Dados do portal oficial de matrículas; ")
+        return f"{spoken_turma(offering, self._clock())} {note}valores e vagas mudam, então confirme na matrícula."
+
+    def find(self, message: str, exclude: frozenset[str] | set[str] = frozenset()) -> list[dict[str, Any]]:
+        """Turmas ABERTAS (já na extração, sem rede) que casam com o assunto, na ordem de prioridade da orientação:
+        1) CEP João Pessoa; 2) demais unidades do Senac PB (por relevância e data de início). `exclude`: ids "turma-N" já oferecidos.
+        Sem palavra de assunto (pedido genérico) devolve vazio: quem decide o que perguntar é a orientação."""
+        data = self._portal.load()
+        offerings = data.get("offerings") or []
+        if not offerings or not data.get("consulted_at"):
+            return []
+        words = self._topic_words(message, offerings)
+        if not words:
+            return []
+        today = self._clock().isoformat()
+        found: list[tuple[tuple, dict[str, Any]]] = []
+        for o in offerings:
+            if f"turma-{o['id']}" in exclude or (o.get("fim") and o["fim"] < today):
+                continue
+            volatile = o.get("volatil") or {}
+            if "VAGASDISPONIVEIS" in volatile and _num(volatile.get("VAGASDISPONIVEIS")) <= 0:
+                continue  # turma cheia não é "turma aberta"
+            hit = words & set(tokenize(" ".join([o["curso"], o["segmento"], o["area"], o["modalidade"]])))
+            if len(hit) < len(words):
+                continue
+            found.append(((0 if o.get("unidade_chave") == CEP_JP_KEY else 1, o["curso"].lower().startswith("palestra"), o.get("inicio") or "", len(o["curso"])), o))
+        found.sort(key=lambda pair: pair[0])
+        return [o for _, o in found]
+
+    def _topic_words(self, message: str, offerings: list[dict[str, Any]]) -> set[str]:
+        place_words = set(tokenize(" ".join({o["cidade"] for o in offerings} | {o["unidade"] for o in offerings})))
+        # Palavras de preço/vaga/horário/data ("quanto custa o curso de Excel?") não são o NOME do curso: saem da busca.
+        subject = DETAIL_QUESTION.sub(" ", normalize(message))
+        return {t for t in tokenize(subject) if t not in STOP and t not in place_words and len(t) > 3}
 
     def public_numbers(self) -> frozenset[str]:
         """Telefones e CEPs que as próprias turmas do portal oficial já trazem (mesma fonte oficial do Senac PB,
@@ -631,7 +758,6 @@ class PortalLookup:
         if not offerings or not data.get("consulted_at"):
             return None
         units = self._kb.detect_units(message)
-        place_words = set(tokenize(" ".join({o["cidade"] for o in offerings} | {o["unidade"] for o in offerings})))
         cities = {c for c in {o["cidade"] for o in offerings} if set(tokenize(c)) <= set(tokenize(message))}
         # IMPORTANTE: filtrar aqui pelo vocabulário real das turmas (em vez de manter STOP à mão) pareceria mais
         # robusto, mas erra pro lado perigoso: uma palavra ausente de toda a base (ex.: "astronomia", que nenhuma
@@ -639,7 +765,7 @@ class PortalLookup:
         # listar turmas SEM RELAÇÃO com o assunto, em vez de dizer honestamente que não encontrou. Por isso só
         # STOP (lista curada) filtra aqui: no pior caso, uma palavra de preenchimento nova faz a busca responder
         # "não encontrei" (seguro); nunca mostra um curso errado como se respondesse à pergunta.
-        words = {t for t in tokenize(message) if t not in STOP and t not in place_words and len(t) > 3}
+        words = self._topic_words(message, offerings)
         if not units and not cities and not words:
             return None  # pergunta geral demais: segue na base curada
         scope_name = next((o["unidade"] for o in offerings if o["unidade_chave"] in units), None) if units else (sorted(cities)[0] if cities else None)
@@ -657,6 +783,10 @@ class PortalLookup:
             return PortalAnswer(f"Não encontrei turmas desse assunto{scope} no portal oficial de matrículas do Senac Paraíba. "
                                 "As turmas mudam: confirme no portal.", data["consulted_at"], [])
         matches.sort(key=lambda m: (-m[0], m[1]["curso"].lower().startswith("palestra"), len(m[1]["curso"]), m[1]["inicio"]))
+        if words and DETAIL_QUESTION.search(normalize(message)):  # perguntou valor/vaga/horário/data: fala os dados das turmas mais relevantes
+            top = [o for _, o in matches][:2]
+            return PortalAnswer(" ".join(self.describe(o) if i == 0 else spoken_turma(o, self._clock()) for i, o in enumerate(top)),
+                                data["consulted_at"], [o["id"] for o in top])
         text = self._grouped_text([o for _, o in matches], limit)
         return PortalAnswer(text, data["consulted_at"], [o["id"] for _, o in matches][:limit * MAX_COURSES_PER_UNIT])
 
@@ -674,7 +804,8 @@ class PortalLookup:
         return f"Há turmas de {'; e de '.join(parts)}. Turmas, valores e vagas mudam: confirme no portal."
 
 
-def main() -> int:  # python -m backend.knowledge.portal [--force]
+def main() -> int:  # python -m backend.knowledge.portal [--force | --if-stale]
+    """--force: consulta sempre. --if-stale: consulta só se a última consulta não foi hoje (uso na inicialização diária)."""
     import sys  # noqa: PLC0415
 
     from backend.knowledge import KnowledgeBase  # noqa: PLC0415
@@ -683,6 +814,10 @@ def main() -> int:  # python -m backend.knowledge.portal [--force]
     directory = Path(__file__).resolve().parent.parent.parent / "knowledge"
     kb = KnowledgeBase.load(directory)
     extractor = PortalExtractor(directory, kb, lambda: PoliteFetcher(USER_AGENT))
+    if "--if-stale" in sys.argv:
+        result = extractor.refresh_if_stale()
+        print("cache - a programação já foi consultada hoje." if result is None else f"{result.outcome} - {result.detail}")
+        return 0 if result is None or result.outcome != "failed" else 1
     result = extractor.refresh(force="--force" in sys.argv)
     print(result.outcome, "-", result.detail)
     summary = extractor.store.summary()

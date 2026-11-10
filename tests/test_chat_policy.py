@@ -106,7 +106,7 @@ def test_course_interest_is_answered_by_the_guidance_with_links() -> None:
     provider = FakeProvider()
     reply = service(provider).reply("s", "Eu gostaria de trabalhar com informática.")
     assert reply.source == "guidance" and provider.calls == []
-    assert "Centro de Educação Profissional de João Pessoa" in reply.text
+    assert "Centro de Educação Profissional de João Pessoa" not in reply.text  # busca pelo CEP-JP primeiro, sem anunciar
     second = service(provider)
     second.reply("s2", "Eu gostaria de trabalhar com informática.")
     follow = second.reply("s2", "manutenção de computadores")

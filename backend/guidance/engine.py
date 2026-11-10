@@ -1,9 +1,12 @@
 """Orientação para cursos: recomenda ofertas do Senac seguindo a prioridade institucional.
 
-Prioridade obrigatória: 1) CEP-JP; 2) demais unidades do Senac Paraíba; 3) Senac EAD.
-Tudo vem do catálogo (knowledge/offers.json) e da base de conhecimento, nunca da memória do modelo. Nada de preço,
-carga horária, datas, horários, vagas ou requisitos: isso só existe na programação oficial, cujo link vai para a tela.
-O texto é montado aqui (determinístico e testável), com uma recomendação por vez e uma pergunta para continuar.
+Prioridade obrigatória: 1) turmas abertas do CEP-JP; 2) turmas abertas das demais unidades do Senac Paraíba;
+3) Senac EAD; 4) sem turma aberta: o visitante é orientado a procurar a unidade mais próxima.
+As turmas vêm da última extração do portal oficial de matrículas (consulta diária feita ANTES, nunca durante a conversa),
+com datas, horários, carga horária, valor e vagas falados junto da data da consulta. O catálogo (knowledge/offers.json)
+cobre o que o portal não lista (cursos citados nas páginas oficiais e EAD). Nada vem da memória do modelo.
+A busca começa sempre pelo CEP-JP, mas isso NÃO é dito ao visitante. O texto é montado aqui (determinístico e testável),
+com uma recomendação por vez e uma pergunta para continuar.
 """
 import logging
 import re
@@ -12,6 +15,7 @@ from dataclasses import dataclass, field
 from backend.guidance.session import GuidanceSessions, GuidanceState
 from backend.knowledge import KnowledgeBase
 from backend.knowledge.offers import Offer
+from backend.knowledge.portal import DETAIL_QUESTION, PortalLookup, spoken_date
 from backend.knowledge.text import contains_sequence, normalize, tokenize
 
 logger = logging.getLogger("senac_bot.guidance")
@@ -28,14 +32,19 @@ LINK_LABELS = {
     "pb-psg": "Programa Senac de Gratuidade",
 }
 
-CEP_FIRST = "Procurei primeiro no CEP João Pessoa, mas não tenho a programação vigente dele confirmada."
-NO_PB_OFFER = "Procurei nas unidades da Paraíba, começando pelo CEP João Pessoa, e não tenho oferta confirmada para esse assunto, então olhei a educação a distância."
+NO_PB_OFFER = "Não encontrei oferta confirmada para esse assunto nas unidades da Paraíba, então olhei a educação a distância."
+NO_TURMA = "No momento não encontrei turma aberta desse assunto nas unidades do Senac Paraíba."
+NO_TURMA_EAD = "No momento não encontrei turma aberta desse assunto nas unidades do Senac Paraíba, mas o Senac tem educação a distância."
+NO_TURMA_OFFER = "Mas não encontrei turma aberta dele no momento."
+ASK_OTHER = "Quer ver outra opção?"
+NEAREST_PROMPT = "Procure a unidade do Senac mais próxima de você."
 CONFIRM_UNIT = "A unidade que o oferece precisa ser confirmada na programação oficial."
 CONFIRM_AVAILABILITY = "A disponibilidade atual precisa ser confirmada na programação oficial."
 CONFIRM_EAD = "Os detalhes ficam na programação oficial."
 STALE_NOTE = "Essa informação pode estar desatualizada."
 ASK_MORE = "Quer conhecer mais detalhes?"
 NO_DETAILS = "Não tenho confirmados preço, carga horária, datas, horários, vagas nem requisitos."
+TURMA = "turma-"  # prefixo do id de uma turma do portal em state.recommended / offer_ids
 DECLINE_ACK = "Tudo bem, não vou insistir nos cursos. Se mudar de ideia, é só pedir. Posso ajudar com outra dúvida sobre o Senac?"
 NO_OTHER = "Por enquanto, essa é a única opção confirmada que tenho para esse interesse. Quer falar de outra área?"
 ENTREPRENEUR = (
@@ -46,6 +55,7 @@ UNMATCHED = (
     "Não encontrei na minha base uma oferta confirmada para esse assunto. "
     "O melhor caminho é ver a programação oficial do Senac Paraíba, que deixei na tela. Quer me contar outro interesse?"
 )
+UNMATCHED_PORTAL = f"{NO_TURMA} Quer me contar outro interesse?"
 FREE_BASE = (
     "O Senac tem o Programa Senac de Gratuidade, mas nem todos os cursos são gratuitos: "
     "depende da programação, dos critérios e das condições de cada oferta."
@@ -119,9 +129,12 @@ def _lower_first(text: str) -> str:
     return text[:1].lower() + text[1:]
 
 
+
+
 class Guidance:
-    def __init__(self, knowledge: KnowledgeBase, sessions: GuidanceSessions | None = None) -> None:
+    def __init__(self, knowledge: KnowledgeBase, sessions: GuidanceSessions | None = None, portal: PortalLookup | None = None) -> None:
         self._kb = knowledge
+        self._portal = portal
         self._sessions = sessions or GuidanceSessions()
         self._offers = [o for o in knowledge.catalog.offers]
         self._keywords = {o.id: [tokenize(k) for k in o.keywords] for o in self._offers}
@@ -191,12 +204,54 @@ class Guidance:
         parts = [opener] if opener else []
         if offer.tier == 3 and not explicit_ead:
             parts.append(NO_PB_OFFER)  # prioridade 3: só chega à EAD quando não há oferta compatível nas unidades da Paraíba
-        elif offer.tier == 2 and not state.cep_checked:
-            parts.append(CEP_FIRST)
         state.cep_checked = True
         parts += [offer.phrase, offer.pitch, self._confirm_note(offer) + self._stale_note(offer), ASK_MORE]
         self._remember(state, offer)
         return GuidanceReply(" ".join(parts), self._links(offer), (offer.id,))
+
+    # ------------------------------------------------------------------ turmas do portal (prioridade: CEP-JP, outras unidades)
+    def _portal_ready(self) -> bool:
+        return self._portal is not None and self._portal.has_data()
+
+    def _turmas(self, text: str, state: GuidanceState) -> list[dict]:
+        return self._portal.find(text, frozenset(state.recommended)) if self._portal_ready() else []
+
+    def _remember_turma(self, state: GuidanceState, turma: dict) -> str:
+        tid = f"{TURMA}{turma['id']}"
+        state.stage, state.last_offer_id, state.cep_checked, state.since_last = "more", tid, True, 0
+        if tid not in state.recommended:
+            state.recommended.append(tid)
+        return tid
+
+    def _recommend_turma(self, state: GuidanceState, turma: dict, opener: str | None = None) -> GuidanceReply:
+        tid = self._remember_turma(state, turma)
+        text = " ".join(p for p in (opener, self._portal.describe(turma), ASK_OTHER) if p)
+        return GuidanceReply(text, self._links(), (tid,), subject=turma["curso"])
+
+    def _no_turma(self, state: GuidanceState, text: str, opener: str | None = None) -> GuidanceReply | None:
+        """Sem turma aberta do assunto: EAD do mesmo assunto; senão, o curso citado nas páginas oficiais (sem turma) e a
+        orientação de procurar a unidade mais próxima (o serviço acrescenta a unidade pela localização). None = nada do assunto."""
+        ead = self._rank(text, set(state.recommended), True)
+        if ead:
+            return self._recommend(state, ead[0], " ".join(p for p in (opener, NO_TURMA_EAD) if p), explicit_ead=True)
+        cited = self._rank(text, set(state.recommended))
+        if not cited:
+            return None
+        state.cep_checked = True
+        self._remember(state, cited[0])
+        state.stage = None  # sem turma não há o que detalhar: a conversa segue livre
+        return GuidanceReply(" ".join(p for p in (opener, cited[0].phrase, NO_TURMA_OFFER, NEAREST_PROMPT) if p), self._links(cited[0]), (cited[0].id,), intent="no_turma")
+
+    def _recommend_for(self, state: GuidanceState, text: str, opener: str | None = None, ranked: list[Offer] | None = None) -> GuidanceReply | None:
+        """Recomendação com a prioridade da instituição: turma aberta (CEP-JP, depois outras unidades), EAD, sem turma.
+        Sem dados do portal (extração ausente), mantém o catálogo curado como antes."""
+        if self._portal_ready():
+            turmas = self._turmas(text, state)
+            if turmas:
+                return self._recommend_turma(state, turmas[0], opener)
+            return self._no_turma(state, text, opener)
+        ranked = ranked if ranked is not None else self._rank(text, set(state.recommended))
+        return self._recommend(state, ranked[0], opener) if ranked else None
 
     def _details(self, state: GuidanceState, offer: Offer) -> GuidanceReply:
         note = "" if offer.unit_known or offer.tier == 3 else " Na programação, filtre pela unidade CEP João Pessoa para ver se há turma."
@@ -212,6 +267,15 @@ class Guidance:
         state.since_last = 0
 
     def _next_option(self, state: GuidanceState) -> GuidanceReply:
+        if self._portal_ready():
+            turmas = self._turmas(state.topic_text, state)
+            if turmas:
+                return self._recommend_turma(state, turmas[0], "Certo!")
+            ead = self._rank(state.topic_text, set(state.recommended), True)
+            if ead:
+                return self._recommend(state, ead[0], "Certo!", explicit_ead=True)
+            state.stage = None
+            return GuidanceReply(NO_OTHER, self._links(), intent="no_match")
         candidates = self._rank(state.topic_text, set(state.recommended))
         if not candidates:
             state.stage = None
@@ -275,11 +339,18 @@ class Guidance:
         if ead_only and not ranked:
             fallback = self._ead_fallback()
             ranked = [fallback] if fallback else []
-        topic = bool(ranked)
+        turmas = [] if ead_only else self._turmas(message, state)  # turmas abertas do portal: sempre a primeira consulta
+        topic = bool(ranked) or bool(turmas)
 
         if topic and _DETAIL_TERMS.search(norm):
-            offer = ranked[0]
             state.topic_text = message
+            if turmas:  # perguntou preço/horário/vaga/data: fala os dados reais da turma, com a data da consulta
+                return self._recommend_turma(state, turmas[0], "Sobre esse assunto:")
+            if self._portal_ready() and not ead_only:
+                reply = self._no_turma(state, message, "Sobre esse assunto:")
+                if reply is not None:
+                    return reply
+            offer = ranked[0]
             self._remember(state, offer)
             text = f"Sobre esse assunto, {_lower_first(offer.phrase)} {NO_DETAILS} Deixei os links oficiais na tela. Quer que eu fale mais desse curso?"
             return GuidanceReply(text, self._links(offer), (offer.id,))
@@ -293,12 +364,14 @@ class Guidance:
                 opener = "Que legal!" if not state.greeted else "Certo!"
                 state.greeted = True
                 state.cep_checked = True
-                text = f"{opener} {area.opener} O Senac tem formações para quem deseja atuar nessa área. Vou olhar primeiro o Centro de Educação Profissional de João Pessoa. {area.clarify}"
+                text = f"{opener} {area.opener} O Senac tem formações para quem deseja atuar nessa área. {area.clarify}"
                 return GuidanceReply(text, ())
             state.topic_text = message
             opener = "Que legal!" if not state.greeted else None
             state.greeted = True
-            return self._recommend(state, ranked[0], opener, ead_only)
+            if ead_only:
+                return self._recommend(state, ranked[0], opener, ead_only)
+            return self._recommend_for(state, message, opener, ranked)
 
         if not topic and not _DETAIL_TERMS.search(norm) and not _LIST_QUESTION.search(norm):
             if _GENERIC_COURSE.fullmatch(norm):
@@ -308,8 +381,9 @@ class Guidance:
                 return GuidanceReply(f"Que legal! {self._kb.catalog.generic_prompt}", self._links())
             if _INTEREST_VERB.search(norm) and _COURSE_NOUN.search(norm):
                 state.declined = False
-                # Nada no catálogo curado (knowledge/offers.json): antes de desistir, o chamador pode consultar
-                # o cache do portal oficial de matrículas (dados reais, mas sem a hierarquia/conversa da orientação).
+                if self._portal_ready():  # a programação (portal) foi consultada e não há turma aberta desse assunto
+                    return GuidanceReply(UNMATCHED_PORTAL, self._links(), intent="no_turma")
+                # Sem dados do portal: antes de desistir, o chamador pode consultar o cache do portal oficial.
                 return GuidanceReply(UNMATCHED, self._links(), intent="no_match")
         return None
 
@@ -330,11 +404,14 @@ class Guidance:
             if _DISINTEREST.search(norm) or (len(words) <= 4 and _NEGATIVE.fullmatch(norm)):
                 return self._decline(state)
             combined = f"{state.topic_text} {message}"
-            ranked = self._rank(combined, set(state.recommended))
-            if not ranked:
+            if not self._portal_ready() and not self._rank(combined, set(state.recommended)):
                 return None
-            state.topic_text = combined
-            return self._recommend(state, ranked[0], "Certo!")
+            reply = self._recommend_for(state, combined, "Certo!")
+            if reply is not None:
+                state.topic_text = combined
+            return reply
+        if (state.last_offer_id or "").startswith(TURMA):
+            return self._follow_up_turma(state, norm, words)
         offer = next((o for o in self._offers if o.id == state.last_offer_id), None)
         if offer is None:
             state.stage = None
@@ -348,6 +425,25 @@ class Guidance:
         state.stage = None  # a conversa seguiu outro rumo
         return None
 
+    def _follow_up_turma(self, state: GuidanceState, norm: str, words: list[str]) -> GuidanceReply | None:
+        """Depois de recomendar uma turma do portal: 'não' encerra; 'sim'/'outra opção' traz a próxima turma;
+        pergunta curta de valor/horário/vaga/data repete os dados da turma (todos já foram falados na recomendação)."""
+        if len(words) <= 6 and _NEGATIVE.fullmatch(norm):
+            return self._decline(state)
+        if state.stage == "details" and len(words) <= 6 and _AFFIRM.fullmatch(norm) and self._portal is not None:
+            turma = self._portal.get_turma(state.last_offer_id or "")  # sugestão curta aceita: agora com todos os dados
+            if turma is not None:
+                state.stage = "more"
+                return GuidanceReply(f"{self._portal.describe(turma)} {ASK_OTHER}", self._links(), (state.last_offer_id,))
+        if _OTHER_OPTION.search(norm) or (len(words) <= 6 and _AFFIRM.fullmatch(norm)):
+            return self._next_option(state)
+        if len(words) <= 8 and DETAIL_QUESTION.search(norm) and self._portal is not None:
+            turma = self._portal.get_turma(state.last_offer_id or "")
+            if turma is not None:
+                return GuidanceReply(f"{self._portal.describe(turma)} {ASK_OTHER}", self._links(), (state.last_offer_id,))
+        state.stage = None  # a conversa seguiu outro rumo
+        return None
+
     def suggestion(self, session_id: str | None, message: str, answer: str, topic_hint: str = "", hint_first: bool = False) -> GuidanceReply | None:
         """Sugestão educacional curta para concluir uma resposta sobre outro assunto (sem forçar nem repetir)."""
         if not self.enabled or len(answer.split()) > MAX_ANSWER_WORDS_FOR_SUGGESTION:
@@ -358,6 +454,18 @@ class Guidance:
         norm = normalize(message)
         if _DISINTEREST.search(norm) or self._kb.detect_units(message):
             return None
+        if self._portal_ready() and not _EAD.search(norm):
+            # Sugestão só com turma aberta de verdade (CEP-JP primeiro); o tema do evento é a pista quando a pergunta não tem assunto.
+            for candidate in ([topic_hint, message] if hint_first and topic_hint else [message, topic_hint]):
+                turmas = self._turmas(candidate, state) if candidate else []
+                if turmas:
+                    turma = turmas[0]
+                    self._remember_turma(state, turma)
+                    state.stage, state.topic_text = "details", candidate
+                    start = spoken_date(turma.get("inicio") or "")
+                    when = f", com início em {start}" if start else ""
+                    return GuidanceReply(f"Aliás, a unidade {turma['unidade']} tem turma de {turma['curso']}{when}. Quer saber mais?",
+                                         self._links(), (f"{TURMA}{turma['id']}",))
         ranked, topic = [], message
         if hint_first and topic_hint:  # resposta sobre o evento: o tema do evento orienta a sugestão (não palavras soltas da pergunta)
             ranked, topic = self._rank(topic_hint, set(state.recommended)), topic_hint

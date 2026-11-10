@@ -12,7 +12,7 @@ import backend.main as main
 from backend.ai.service import ChatService
 from backend.knowledge import KnowledgeBase
 from backend.knowledge.fetch import PoliteFetcher
-from backend.knowledge.portal import PortalExtractor, PortalKnowledge, PortalLookup, parse_listing, parse_structure
+from backend.knowledge.portal import PortalExtractor, PortalKnowledge, PortalLookup, parse_listing, parse_structure, spoken_date, spoken_turma
 from tests.fakes import FakeProvider
 from tests.kb_helpers import KNOWLEDGE_DIR, TEST_TODAY
 
@@ -150,7 +150,7 @@ def test_nothing_that_needs_human_validation_is_approved_automatically(kb_dir) -
     for rid in ("unit-CEP-JP", "areas-CEP-JP", "unit-PATOS", "requirements", "values-vagas", "offer-modalities"):
         assert records[rid]["status"] == "awaiting_validation" and records[rid]["approved_by"] is None
     assert records["struct-cidades"]["status"] == "found" and records["struct-cidades"]["approved_by"] is None
-    assert records["values-vagas"]["volatile"] and records["values-vagas"]["speakable"] is False
+    assert records["values-vagas"]["volatile"] and records["values-vagas"]["speakable"] is True  # valores e vagas são falados, com data
     assert not any(r["approved_by"] == "operator" for r in records.values())
 
 
@@ -163,7 +163,7 @@ def test_contacts_are_compared_with_what_the_base_already_knows(kb_dir) -> None:
     assert records["contact-PATOS"]["status"] == "found"  # a base não tinha endereço de Patos: nada para comparar
 
 
-def test_values_and_seats_are_stored_with_a_date_but_never_become_speakable_text(kb_dir) -> None:
+def test_values_and_seats_are_stored_with_the_consultation_date(kb_dir) -> None:
     portal, kb, extractor = setup(kb_dir)
     extractor.refresh()
     data = extractor.store.load()
@@ -369,7 +369,7 @@ def test_rejected_records_do_not_come_back_and_vanished_ones_become_stale(kb_dir
 def lookup(kb_dir):
     portal, kb, extractor = setup(kb_dir)
     extractor.refresh()
-    return kb, PortalLookup(extractor.store, kb), portal
+    return kb, PortalLookup(extractor.store, kb, clock=lambda: TEST_TODAY), portal
 
 
 def test_lookup_answers_with_course_names_unit_address_and_phone(kb_dir) -> None:
@@ -414,7 +414,7 @@ def test_lookup_prefers_short_course_names_over_lectures(kb_dir) -> None:
     portal, kb, extractor = setup(kb_dir)
     portal.listing = json.dumps([turma(1, "Palestra: Um Título Muito Longo Sobre Um Assunto Qualquer"), turma(2, "Excel Básico"), turma(3, "Atendimento ao Cliente")])
     extractor.refresh()
-    answer = PortalLookup(extractor.store, kb).answer("Quais cursos o CEP João Pessoa oferece?")
+    answer = PortalLookup(extractor.store, kb, clock=lambda: TEST_TODAY).answer("Quais cursos o CEP João Pessoa oferece?")
     assert answer and answer.text.index("Excel Básico") < answer.text.find("Palestra") if "Palestra" in answer.text else "Excel Básico" in answer.text
 
 
@@ -429,30 +429,93 @@ def test_lookup_returns_nothing_for_unmatched_or_generic_questions(kb_dir) -> No
 def test_chat_uses_the_portal_only_when_the_local_base_cannot_answer_safely(kb_dir) -> None:
     portal, kb, extractor = setup(kb_dir)
     extractor.refresh()
-    chat = ChatService(FakeProvider(configured=False), knowledge=kb, portal=PortalLookup(extractor.store, kb))
+    chat = ChatService(FakeProvider(configured=False), knowledge=kb, portal=PortalLookup(extractor.store, kb, clock=lambda: TEST_TODAY))
     reply = chat.reply("s", "Quais cursos o CEP João Pessoa oferece?")  # a base só tem a pendência "não tenho a lista"
     assert reply.source == "portal" and "Há turmas de" in reply.text and reply.links and reply.links[0].url == PAGE_URL
     assert all(k.startswith("turma-") for k in reply.knowledge)
     known = chat.reply("s", "Onde fica o CEP João Pessoa?")
     assert known.source == "knowledge" and "Dom Pedro I" in known.text  # a base responde com segurança: o portal não entra
-    assert chat.reply("s", "Quanto custa o curso de Excel?").source != "portal"  # preço segue a regra de dados não confirmados
+    price = chat.reply("s", "Quanto custa o curso de Excel?")  # valores são falados (turma real do portal), com data e ressalva
+    assert "300 reais" in price.text and "consultado em" in price.text and "mudam" in price.text
 
 
-def test_guidance_consults_the_portal_before_giving_up(kb_dir) -> None:
+def test_guidance_uses_the_portal_first_and_speaks_dates_hours_values_and_seats(kb_dir) -> None:
     """"Quero fazer um curso de Excel" não está no catálogo curado (offers.json), mas o portal tem a turma real."""
     portal, kb, extractor = setup(kb_dir)
     extractor.refresh()
-    chat = ChatService(FakeProvider(configured=False), knowledge=kb, portal=PortalLookup(extractor.store, kb))
+    chat = ChatService(FakeProvider(configured=False), knowledge=kb, portal=PortalLookup(extractor.store, kb, clock=lambda: TEST_TODAY))
     reply = chat.reply("s", "Quero fazer um curso de Excel")
-    assert reply.source == "portal" and "Excel" in reply.text
-    assert all(k.startswith("turma-") for k in reply.knowledge)
+    assert reply.source == "guidance" and "Excel Avançado" in reply.text
+    assert reply.knowledge == ("turma-1",) and reply.links and reply.links[0].url == PAGE_URL
+    for fact in ("1 de dezembro", "30 de janeiro", "segunda e quarta", "das 08h00 às 12h00", "60 horas", "300 reais", "50 reais de matrícula", "12 vagas",
+                 "consultado em ", "valores e vagas mudam"):
+        assert fact in reply.text, fact
+    assert "Procurei" not in reply.text and "Centro de Educação Profissional de João Pessoa" in reply.text  # unidade da turma
+    assert reply.text.endswith("Quer ver outra opção?")
+
+
+def test_spoken_class_uses_only_source_data_in_plain_portuguese() -> None:
+    offering = {"id": 7, "curso": "Artesanato em Crochê", "unidade": "Centro de Educação Profissional de Cajazeiras", "cidade": "Cajazeiras",
+                "inicio": "2026-11-09", "fim": "2026-11-30", "dias": "Segunda, Quarta e Sexta", "horario": "13h00 às 17h00", "carga_horaria": "60",
+                "volatil": {"VALORCURSO": "222.6", "VALOR_MATRICULA": "0", "VAGASDISPONIVEIS": "20"}}
+    text = spoken_turma(offering, date(2026, 11, 10))
+    assert text == ("Artesanato em Crochê, na unidade Centro de Educação Profissional de Cajazeiras. Começou em 9 de novembro, termina em 30 de novembro, "
+                    "segunda, quarta e sexta, das 13h00 às 17h00. A carga horária é de 60 horas. O valor do curso é de 222 reais e 60 centavos. São 20 vagas.")
+    assert "Começa em 9 de novembro" in spoken_turma(offering, date(2026, 11, 1))
+    free_full = {**offering, "volatil": {"VALORCURSO": "0", "VALOR_MATRICULA": "0", "VAGASDISPONIVEIS": "0"}}
+    assert "Nesta turma não há custo." in spoken_turma(free_full) and "Não restam vagas" in spoken_turma(free_full)
+    assert spoken_date("2027-01-05", date(2026, 11, 10)) == "5 de janeiro de 2027" and spoken_date("lixo") == ""
+
+
+def test_a_cep_jp_class_comes_before_an_earlier_class_of_another_unit(kb_dir) -> None:
+    portal, kb, extractor = setup(kb_dir)
+    portal.listing = json.dumps([
+        turma(10, "Maquiagem Social", unit="CENTRO DE EDUCAÇÃO PROFISSIONAL DE PATOS", city="PATOS", NOME_UOPER="CEP - PATOS", DATA_INICIO="2026-11-20 00:00:00"),
+        turma(11, "Maquiagem Profissional", DATA_INICIO="2026-12-15 00:00:00"),  # CEP-JP, mas começa depois
+    ])
+    extractor.refresh()
+    lookup_ = PortalLookup(extractor.store, kb, clock=lambda: TEST_TODAY)
+    assert [o["id"] for o in lookup_.find("Quero um curso de maquiagem")] == [11, 10]  # CEP-JP primeiro, depois as outras unidades
+    chat = ChatService(FakeProvider(configured=False), knowledge=kb, portal=lookup_)
+    first = chat.reply("s", "Quero um curso de maquiagem")
+    assert "Maquiagem Profissional" in first.text and "Patos" not in first.text
+    second = chat.reply("s", "sim")  # outra opção: agora a turma de Patos, nunca a mesma de novo
+    assert "Maquiagem Social" in second.text and "Patos" in second.text and "Maquiagem Profissional" not in second.text
+
+
+def test_full_or_finished_classes_are_not_offered(kb_dir) -> None:
+    portal, kb, extractor = setup(kb_dir)
+    portal.listing = json.dumps([
+        turma(20, "Curso de Cerimonial", VAGASDISPONIVEIS="0"),
+        turma(21, "Curso de Cerimonial Avançado", DATA_INICIO="2026-09-01 00:00:00", DATA_FIM="2026-10-01 00:00:00"),
+    ])
+    extractor.refresh()
+    assert PortalLookup(extractor.store, kb, clock=lambda: TEST_TODAY).find("Quero um curso de cerimonial") == []
+
+
+def test_follow_up_questions_about_price_and_seats_repeat_the_real_class_data(kb_dir) -> None:
+    portal, kb, extractor = setup(kb_dir)
+    extractor.refresh()
+    chat = ChatService(FakeProvider(configured=False), knowledge=kb, portal=PortalLookup(extractor.store, kb, clock=lambda: TEST_TODAY))
+    chat.reply("s", "Quero fazer um curso de Excel")
+    again = chat.reply("s", "E qual o valor?")
+    assert again.source == "guidance" and "300 reais" in again.text and "12 vagas" in again.text
+    assert chat.reply("s", "não").text.startswith("Tudo bem")
+
+
+def test_free_class_is_spoken_as_free_for_that_class_only(kb_dir) -> None:
+    portal, kb, extractor = setup(kb_dir)
+    extractor.refresh()
+    chat = ChatService(FakeProvider(configured=False), knowledge=kb, portal=PortalLookup(extractor.store, kb, clock=lambda: TEST_TODAY))
+    reply = chat.reply("s", "Quero fazer o curso de Técnicas de Vendas")
+    assert "Nesta turma não há custo" in reply.text and "todos os cursos" not in reply.text.lower()
 
 
 def test_portal_answers_a_question_with_no_course_word_at_all(kb_dir) -> None:
     """"Vocês têm Excel?" não tem "curso"/"turma"/"técnico"/"formação": o portal precisa responder mesmo assim."""
     portal, kb, extractor = setup(kb_dir)
     extractor.refresh()
-    chat = ChatService(FakeProvider(configured=False), knowledge=kb, portal=PortalLookup(extractor.store, kb))
+    chat = ChatService(FakeProvider(configured=False), knowledge=kb, portal=PortalLookup(extractor.store, kb, clock=lambda: TEST_TODAY))
     reply = chat.reply("s", "Vocês têm Excel?")
     assert reply.source == "portal" and "Excel" in reply.text
 
@@ -463,10 +526,32 @@ def test_cep_jp_priority_overrides_a_non_cep_jp_guidance_recommendation(kb_dir) 
     portal, kb, extractor = setup(kb_dir)
     portal.listing = json.dumps(LISTING + [turma(5, "Maquiagem Social")])  # turma real no CEP-JP (unidade padrão de turma())
     extractor.refresh()
-    chat = ChatService(FakeProvider(configured=False), knowledge=kb, portal=PortalLookup(extractor.store, kb))
+    chat = ChatService(FakeProvider(configured=False), knowledge=kb, portal=PortalLookup(extractor.store, kb, clock=lambda: TEST_TODAY))
     reply = chat.reply("s", "Tem curso de maquiagem?")
-    assert reply.source == "portal" and "Maquiagem" in reply.text
+    assert reply.source == "guidance" and "Maquiagem" in reply.text and reply.knowledge == ("turma-5",)
     assert "Campina Grande" not in reply.text
+
+
+def test_without_an_open_class_the_visitor_is_sent_to_the_nearest_unit_using_the_location(kb_dir) -> None:
+    portal, kb, extractor = setup(kb_dir)
+    extractor.refresh()
+    chat = ChatService(FakeProvider(configured=False), knowledge=kb, portal=PortalLookup(extractor.store, kb, clock=lambda: TEST_TODAY))
+    near_cep_jp = (-7.119, -34.874)  # perto do CEP João Pessoa (knowledge/geo.json)
+    located = chat.reply("s", "Quero fazer um curso de astronomia avançada", lat=near_cep_jp[0], lon=near_cep_jp[1])
+    assert located.source == "guidance" and "não encontrei turma aberta" in located.text
+    assert "A unidade mais próxima da sua localização é" in located.text and "CEP João Pessoa" in located.text and "linha reta" not in located.text.split("Quer me contar")[0]
+    assert "CEP Campina Grande" in chat._nearest_hint("Moro em Campina Grande", None, None)  # noqa: SLF001 - pela cidade, sem coordenadas
+    unknown = chat.reply("s3", "Quero fazer um curso de astronomia avançada")
+    assert "cidade" in unknown.text and "localização" in unknown.text  # sem localização: pede a cidade, não inventa unidade
+
+
+def test_a_cited_course_without_an_open_class_says_so_and_points_to_the_nearest_unit(kb_dir) -> None:
+    portal, kb, extractor = setup(kb_dir)
+    extractor.refresh()  # o catálogo curado cita o Técnico em Enfermagem, mas o portal não tem turma dele
+    chat = ChatService(FakeProvider(configured=False), knowledge=kb, portal=PortalLookup(extractor.store, kb, clock=lambda: TEST_TODAY))
+    reply = chat.reply("s", "Quero fazer o curso técnico em enfermagem")
+    assert reply.source == "guidance" and reply.knowledge == ("off-tec-enfermagem",)
+    assert "Enfermagem" in reply.text and "não encontrei turma aberta" in reply.text and "unidade do Senac mais próxima" in reply.text
 
 
 def test_outbound_policy_does_not_block_the_unit_phone_and_cep_from_the_portal(kb_dir) -> None:
@@ -474,7 +559,7 @@ def test_outbound_policy_does_not_block_the_unit_phone_and_cep_from_the_portal(k
     vazamento de dado pessoal só por não estarem na base curada à mão (ver ChatService._extra_contacts)."""
     portal, kb, extractor = setup(kb_dir)
     extractor.refresh()
-    chat = ChatService(FakeProvider(configured=False), knowledge=kb, portal=PortalLookup(extractor.store, kb))
+    chat = ChatService(FakeProvider(configured=False), knowledge=kb, portal=PortalLookup(extractor.store, kb, clock=lambda: TEST_TODAY))
     reply = chat.reply("s", "Quais cursos o CEP João Pessoa oferece?")
     assert reply.source == "portal" and "telefone" in reply.text.lower()
 
@@ -482,10 +567,10 @@ def test_outbound_policy_does_not_block_the_unit_phone_and_cep_from_the_portal(k
 def test_guidance_still_gives_up_when_the_portal_also_has_nothing(kb_dir) -> None:
     portal, kb, extractor = setup(kb_dir)
     extractor.refresh()
-    chat = ChatService(FakeProvider(configured=False), knowledge=kb, portal=PortalLookup(extractor.store, kb))
+    chat = ChatService(FakeProvider(configured=False), knowledge=kb, portal=PortalLookup(extractor.store, kb, clock=lambda: TEST_TODAY))
     reply = chat.reply("s", "Quero fazer um curso de astronomia avançada")
     assert reply.source == "guidance"
-    assert "Não encontrei na minha base uma oferta confirmada" in reply.text
+    assert "não encontrei turma aberta desse assunto" in reply.text and "Quer me contar outro interesse?" in reply.text
 
 
 def test_chat_without_extraction_keeps_the_previous_behavior(kb_dir) -> None:
