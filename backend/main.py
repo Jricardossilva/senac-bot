@@ -23,7 +23,7 @@ from backend.eventkb.storage import MySQLStorage, StorageError
 from backend.eventkb.discovery import make_discovery
 from backend.eventkb.seed import ensure_first_event
 from backend.knowledge.fetch import PoliteFetcher
-from backend.knowledge.portal import PortalExtractor, PortalLookup
+from backend.knowledge.portal import PortalExtractor, PortalLookup, PortalStorageError
 from backend.knowledge.updater import USER_AGENT as KNOWLEDGE_USER_AGENT
 from backend.knowledge import KnowledgeBase
 from backend.robot.actions import ALLOWED_ACTIONS
@@ -69,19 +69,27 @@ if not EVENTS_DIR.is_absolute():
 EVENT_USER_AGENT = "SENAC-BOT-EventResearch/1.0 (projeto educacional Senac Paraiba; leitura de paginas publicas)"  # ASCII: cabecalho HTTP
 
 
-def _make_event_store() -> EventStore:
-    """MySQL quando DB_HOST/DB_NAME/DB_USER estão configurados; senão arquivos locais (events/)."""
+def _make_mysql_storage() -> MySQLStorage | None:
+    """MySQL quando DB_HOST/DB_NAME/DB_USER estão configurados; senão None (arquivos locais). Um só armazenamento para
+    os eventos e para a extração do portal de cursos."""
     if settings.db_host and settings.db_name and settings.db_user:
         try:
             storage = MySQLStorage(
                 settings.db_host, settings.db_port, settings.db_name, settings.db_user,
                 settings.db_password, settings.db_charset, settings.db_ssl,
             )
-            logger.info("Eventos: armazenamento em MySQL (%s).", settings.db_name)
-            return EventStore(EVENTS_DIR, storage)
+            logger.info("Armazenamento em MySQL (%s): eventos e programação de cursos.", settings.db_name)
+            return storage
         except StorageError:
-            logger.error("MySQL indisponível na inicialização; eventos usarão arquivos locais (NÃO persistentes no Render).")
-    return EventStore(EVENTS_DIR)
+            logger.error("MySQL indisponível na inicialização; eventos e programação usarão arquivos locais (NÃO persistentes no Render).")
+    return None
+
+
+mysql_storage = _make_mysql_storage()
+
+
+def _make_event_store() -> EventStore:
+    return EventStore(EVENTS_DIR, mysql_storage) if mysql_storage is not None else EventStore(EVENTS_DIR)
 
 
 event_store = _make_event_store()
@@ -92,8 +100,9 @@ event_manager = EventKnowledgeManager(
 )
 ensure_first_event(event_manager)
 
-# Portal oficial de matrículas (Cursos Técnicos — Senac Paraíba): consulta sob demanda do operador; o chat só lê o cache.
-portal_extractor = PortalExtractor(KNOWLEDGE_DIR, knowledge_base, lambda: PoliteFetcher(KNOWLEDGE_USER_AGENT))
+# Portal oficial de matrículas (Cursos Técnicos — Senac Paraíba): consulta diária antes das conversas; o chat só lê o cache.
+# Com MySQL, a extração e as decisões do operador sobrevivem a reinícios/deploys do Render (o arquivo versionado é só a semente).
+portal_extractor = PortalExtractor(KNOWLEDGE_DIR, knowledge_base, lambda: PoliteFetcher(KNOWLEDGE_USER_AGENT), storage=mysql_storage)
 
 chat_service = ChatService(
     ai_provider,
@@ -344,6 +353,8 @@ def decide_portal_record(record_id: str, decision: str) -> dict[str, object]:
         record = portal_extractor.store.decide(record_id, decision)
     except KeyError:
         raise HTTPException(status_code=404, detail="Registro não encontrado.") from None
+    except PortalStorageError as error:
+        raise HTTPException(status_code=503, detail=str(error)) from None
     return {"record": record, "portal": knowledge_portal()}
 
 

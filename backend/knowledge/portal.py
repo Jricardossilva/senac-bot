@@ -13,6 +13,7 @@ chamada que o navegador faz ao abrir a página). Esta extração:
 Valores e vagas mudam o tempo todo: o robô os fala SEMPRE com a data da consulta e a ressalva de que mudam.
 A consulta é feita antes (todo dia, na inicialização e em segundo plano): o chat nunca espera a rede.
 """
+import copy
 import json
 import logging
 import os
@@ -23,7 +24,7 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Protocol
 
 from backend.knowledge.fetch import PoliteFetcher
 from backend.knowledge.store import is_official_url, load_json
@@ -204,22 +205,73 @@ def _join(items: list[str], limit: int = 8) -> str:
     return text + (f" e mais {len(items) - limit}" if len(items) > limit else "")
 
 
-class PortalKnowledge:
-    """Arquivo de extração (knowledge/extractions/pb-programacao-cursos.json) com consulta, decisões do operador e pendências."""
+PORTAL_KEY = "_portal/pb-programacao-cursos.json"  # chave no banco; "_portal" nunca é um evento (não aparece na lista de eventos)
 
-    def __init__(self, directory: Path, today: Callable[[], date] = date.today, now: Callable[[], str] = _now) -> None:
+
+class PortalStorageError(RuntimeError):
+    """A decisão/extração não pôde ser gravada no banco. A mensagem é segura para o operador (sem host, usuário ou senha)."""
+
+
+class PortalStorage(Protocol):
+    """O mesmo armazenamento dos eventos (MySQLStorage): documentos JSON por chave."""
+
+    def read(self, key: str) -> Any | None: ...
+    def write(self, key: str, data: Any) -> None: ...
+
+
+class PortalKnowledge:
+    """Extração do portal (turmas, registros, decisões do operador e pendências).
+
+    Com `storage` (MySQL), a extração vive no banco e SOBREVIVE a reinícios e deploys do Render (disco efêmero). O arquivo
+    knowledge/extractions/pb-programacao-cursos.json, versionado no Git, é só a SEMENTE: usado enquanto o banco está vazio
+    ou fora do ar. Sem `storage` (desenvolvimento local), o arquivo é a fonte única, como sempre foi.
+    """
+
+    def __init__(self, directory: Path, today: Callable[[], date] = date.today, now: Callable[[], str] = _now,
+                 storage: PortalStorage | None = None) -> None:
         self.directory = Path(directory)
         self.path = self.directory / EXTRACTION_PATH
         self._today = today
         self._now = now
+        self._storage = storage
 
-    # ---------------------------------------------------------------- leitura
-    def load(self) -> dict[str, Any]:
+    @property
+    def storage_kind(self) -> str:
+        return "mysql" if self._storage is not None else "arquivo"
+
+    # ---------------------------------------------------------------- leitura e gravação
+    def _load_file(self) -> dict[str, Any]:
         try:
             data = json.loads(self.path.read_text(encoding="utf-8"))
             return data if isinstance(data, dict) else {}
         except (OSError, ValueError):
             return {}
+
+    def load(self) -> dict[str, Any]:
+        if self._storage is not None:
+            try:
+                data = self._storage.read(PORTAL_KEY)
+            except Exception as error:  # noqa: BLE001 - banco fora do ar: o chat segue com a semente versionada
+                logger.warning("Extração do portal: banco indisponível na leitura (%s); usando o arquivo versionado.", type(error).__name__)
+            else:
+                if isinstance(data, dict) and data:
+                    return copy.deepcopy(data)  # o cache do armazenamento nunca é alterado por quem chama
+        return self._load_file()
+
+    def save(self, data: dict[str, Any]) -> bool:
+        """Grava a extração. True = gravou no armazenamento configurado (banco ou, sem banco, arquivo).
+        False = o banco falhou: a extração foi gravada no arquivo só para valer nesta execução (o chat continua com dado novo)."""
+        if self._storage is not None:
+            try:
+                self._storage.write(PORTAL_KEY, data)
+                return True
+            except Exception as error:  # noqa: BLE001
+                logger.error("Extração do portal: banco indisponível na gravação (%s); gravada só em arquivo (não persistente no Render).",
+                             type(error).__name__)
+                _atomic_write(self.path, data)
+                return False
+        _atomic_write(self.path, data)
+        return True
 
     @property
     def available(self) -> bool:
@@ -253,7 +305,8 @@ class PortalKnowledge:
         data["resolutions"] = [r.to_dict() for r in self.resolve(data)]
         data.setdefault("history", []).append({"at": stamp, "kind": "decisao", "summary": f"{record['title']}: {decision}"})
         data["history"] = data["history"][-HISTORY_LIMIT:]
-        _atomic_write(self.path, data)
+        if not self.save(data):
+            raise PortalStorageError("Banco de dados indisponível: a decisão vale só até o robô reiniciar.")
         return record
 
     # ---------------------------------------------------------------- pendências
@@ -308,7 +361,7 @@ class PortalKnowledge:
             "counts": dict(Counter(r["status"] for r in records)), "stale_records": len(stale), "offerings": len(data.get("offerings", [])),
             "resolution_counts": dict(Counter(r["status"] for r in resolutions)), "resolutions": resolutions,
             "records": records, "structure": data.get("structure", {}), "fields_discarded": data.get("fields_discarded", []),
-            "history": list(reversed(data.get("history", [])))[:10],
+            "history": list(reversed(data.get("history", [])))[:10], "storage": self.storage_kind,
         }
 
 
@@ -341,10 +394,10 @@ class PortalResult:
 
 class PortalExtractor:
     def __init__(self, directory: Path, kb, fetcher_factory: Callable[[], PoliteFetcher], today: Callable[[], date] = date.today,
-                 now: Callable[[], str] = _now) -> None:
+                 now: Callable[[], str] = _now, storage: PortalStorage | None = None) -> None:
         self._kb = kb
         self._fetcher_factory = fetcher_factory
-        self.store = PortalKnowledge(directory, today, now)
+        self.store = PortalKnowledge(directory, today, now, storage)
         self._today = today
         self._now = now
 
@@ -398,7 +451,7 @@ class PortalExtractor:
             data["history"] = data["history"][-HISTORY_LIMIT:]
             if not data.get("records"):  # nada foi extraído antes: as pendências relacionadas ficam "consulta falhou"
                 data["resolutions"] = [r.to_dict() for r in self.store.resolve(data)]
-            _atomic_write(self.store.path, data)  # com extração anterior: resoluções e registros permanecem intactos
+            self.store.save(data)  # com extração anterior: resoluções e registros permanecem intactos
             return PortalResult("failed", reason)
         unit_of = lambda text: (self._kb.detect_units(text) or [None])[0]  # noqa: E731
         offerings = [normalize_offering(t, unit_of) for t in turmas if t.get("CODI_TURMA") is not None]
@@ -420,8 +473,11 @@ class PortalExtractor:
                     rec["pending_ids"].append(resolution["pending_id"])
         data.setdefault("history", []).append({"at": stamp, "kind": "consulta", "summary": f"{len(offerings)} turma(s), {len(merged)} registro(s) organizados."})
         data["history"] = data["history"][-HISTORY_LIMIT:]
-        _atomic_write(self.store.path, data)
-        return PortalResult("extracted", f"{len(offerings)} turmas e {len(merged)} registros.")
+        persisted = self.store.save(data)
+        detail = f"{len(offerings)} turmas e {len(merged)} registros."
+        if not persisted:  # o chat já usa o dado novo, mas ele se perde no próximo reinício
+            detail += " Aviso: banco de dados indisponível; a extração vale só até o robô reiniciar."
+        return PortalResult("extracted", detail)
 
     def _download(self, page_url: str) -> tuple[str, str]:
         fetcher = self._fetcher_factory()
