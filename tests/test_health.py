@@ -22,6 +22,14 @@ def test_health_reports_gemini_not_configured(monkeypatch) -> None:
     assert body["gemini_configurado"] is False
 
 
+def test_health_reports_the_deployed_commit_when_the_host_provides_it(monkeypatch) -> None:
+    monkeypatch.setattr("backend.main.chat_service", _service())
+    monkeypatch.setenv("RENDER_GIT_COMMIT", "117fb6c3a9d0e2f4b5c6d7e8f9a0b1c2d3e4f5a6")
+    assert client.get("/health").json()["versao"] == "117fb6c"  # 7 primeiros caracteres, como no GitHub
+    monkeypatch.delenv("RENDER_GIT_COMMIT")
+    assert client.get("/health").json()["versao"] is None  # fora do Render não há versão
+
+
 def test_homepage_is_available() -> None:
     resp = client.get("/")
     assert resp.status_code == 200

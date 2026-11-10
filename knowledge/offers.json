@@ -4,7 +4,8 @@
   "areas": [
     {
       "id": "tecnologia",
-      "keywords": ["informatica", "tecnologia", "computador", "computadores", "computacao", "tecnologia da informacao"],
+      "keywords": ["informatica", "tecnologia", "computador", "computadores", "computacao", "tecnologia da informacao", "programacao", "programar", "desenvolvimento de sistemas"],
+      "segment": "Tecnologia da informação",
       "opener": "A área de tecnologia oferece muitas possibilidades.",
       "clarify": "Você tem mais interesse em programação, manutenção de computadores ou ferramentas digitais?"
     }

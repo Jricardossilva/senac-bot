@@ -65,6 +65,7 @@ _NEAREST_UNIT = re.compile(
     r"|como (chego|chegar|cheg\w*)[\w\s]{0,20}(unidade|senac)[\w\s]{0,20}proxim\w*"
     r"|qual[\w\s]{0,10}unidade[\w\s]{0,15}proxim\w*"
 )
+_ABOUT_TURMAS = re.compile(r"\b(turmas?|cursos?|vagas?|oficinas?|workshops?|palestras?)\b")
 _WANTS_COURSES = re.compile(r"\b(curso|cursos|formacao|capacitacao|qualificacao|matricula|matricular)\b")
 EXTERNAL_CACHE_SECONDS = 600
 EXTERNAL_MIN_GAP_SECONDS = 2.0
@@ -222,6 +223,10 @@ class ChatService:
                     self._remember(session_id, hint=guided.subject)
                 return ChatReply(guided.text, "guidance", None, guided.intent, guided.offer_ids, guided.links)
 
+        turmas_reply = self._portal_turmas_reply(message)
+        if turmas_reply is not None:
+            return turmas_reply
+
         ack = acknowledgement(message, self._turn(session_id, "ack"))
         if ack is not None:
             return ChatReply(ack, "local", intent="info")
@@ -338,6 +343,17 @@ class ChatService:
         top_unconfirmed = bool(top and top.category == "courses" and (top.unit or self._knowledge.effective(top) == "pending"))
         if result.hits and result.confident and not top_unconfirmed:
             return None  # a base já responde com segurança
+        return self._portal_text_reply(message)
+
+    def _portal_turmas_reply(self, message: str) -> ChatReply | None:
+        """Pergunta sobre turmas/cursos que a orientação não tratou (por exemplo, cita uma unidade): se a grade do portal TEM turmas
+        do assunto, ela responde antes da base curada, que não conhece as turmas do dia. Só vale com turma encontrada: quem afirma
+        ausência é o fluxo normal, e só quando há unidade ou cidade na pergunta."""
+        if self._portal is None or not _ABOUT_TURMAS.search(normalize(message)):
+            return None
+        answer = self._portal.answer(message)
+        if answer is None or not answer.offering_ids:
+            return None
         return self._portal_text_reply(message)
 
     def _portal_text_reply(self, message: str) -> ChatReply | None:

@@ -51,6 +51,8 @@ Para encerrar: `Ctrl+C` na janela do PowerShell (ou feche a janela do `iniciar.b
 
 Testes: `.\.venv\Scripts\python.exe -m pytest`
 
+Versão em produção: no Render, `https://<seu-servico>.onrender.com/health` mostra `"versao"` com os 7 primeiros caracteres do commit publicado (compare com o último commit do GitHub). Fora do Render o campo fica vazio.
+
 ## Como operar no evento
 Use **uma única janela do navegador** (por exemplo em tela cheia no notebook) e alterne entre as abas.
 

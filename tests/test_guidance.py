@@ -122,6 +122,12 @@ def test_ead_is_the_last_resort_and_says_so() -> None:
     assert "CEP João Pessoa" not in reply.text  # a busca começa pelo CEP-JP, mas isso não é dito ao visitante
 
 
+def test_a_question_is_not_answered_with_an_enthusiastic_opener() -> None:
+    assert not guidance().handle("s", "O Senac tem curso de gastronomia?").text.startswith("Que legal!")
+    assert not guidance().handle("s2", "Tem curso de turismo?").text.startswith("Que legal!")
+    assert guidance().handle("s3", "Quero um curso de gastronomia").text.startswith("Que legal!")  # pedido: continua acolhedor
+
+
 def test_explicit_ead_request_goes_straight_to_ead() -> None:
     reply = guidance().handle("s", "Tem curso EAD?")
     assert reply.offer_ids == ("off-senac-ead",)

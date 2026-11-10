@@ -573,6 +573,76 @@ def test_guidance_still_gives_up_when_the_portal_also_has_nothing(kb_dir) -> Non
     assert "não encontrei turma aberta desse assunto" in reply.text and "Quer me contar outro interesse?" in reply.text
 
 
+TI = {"SEGMENTO": "Tecnologia da informação (TI)", "NOME_AREA": "Informação e Comunicação"}
+
+
+def chat_over(kb_dir, listing):  # noqa: F811
+    portal, kb, extractor = setup(kb_dir)
+    portal.listing = json.dumps(listing)
+    extractor.refresh()
+    lookup_ = PortalLookup(extractor.store, kb, clock=lambda: TEST_TODAY)
+    return lookup_, ChatService(FakeProvider(configured=False), knowledge=kb, portal=lookup_)
+
+
+@pytest.mark.parametrize("question", [
+    "quais são as turmas abertas no CEP-jp?",
+    "tem turma de excel aberta no cep-jp?",
+    "quais turmas de excel estão abertas?",
+    "quais as turmas abertas de excel no CEP?",
+])
+def test_request_words_like_open_are_not_part_of_the_course_name(kb_dir, question) -> None:  # noqa: F811
+    _, chat = chat_over(kb_dir, [turma(1, "Excel Básico", **TI)])
+    reply = chat.reply("s", question)
+    assert reply.source == "portal" and "Excel Básico" in reply.text and "Não encontrei" not in reply.text, question
+
+
+def test_course_words_inside_unit_names_are_kept_unless_that_unit_is_cited(kb_dir) -> None:  # noqa: F811
+    tadros = dict(unit="CENTRO DE TECNOLOGIA E FORMAÇÃO PROFISSIONAL JOSE ROBERTO TADROS", NOME_UOPER="CTFP TADROS")
+    gastro = dict(unit="ESCOLA SENAC DE GASTRONOMIA E HOTELARIA", NOME_UOPER="EGH", SEGMENTO="Gastronomia", NOME_AREA="Turismo e Hospitalidade")
+    lookup_, chat = chat_over(kb_dir, [turma(1, "Informática Básica", **TI), turma(2, "Gestão de Projetos", **tadros), turma(3, "Cozinha Básica", **gastro)])
+    assert [o["id"] for o in lookup_.find("Quero um curso de tecnologia")] == [1]  # "Tecnologia" no nome da unidade Tadros não some do assunto
+    assert [o["id"] for o in lookup_.find("Quero um curso de gastronomia")] == [3]  # nem "Gastronomia" da escola
+    reply = chat.reply("s", "quais as turmas abertas no cep-jp para a area da tecnologia?")
+    assert reply.source == "portal" and "Informática Básica" in reply.text and "Gestão de Projetos" not in reply.text
+
+
+def test_a_generic_unit_question_summarizes_the_grid_by_area(kb_dir) -> None:  # noqa: F811
+    listing = [turma(i, f"Curso {i}", **TI) for i in range(1, 4)] + [turma(4, "Curso 4", SEGMENTO="Beleza"), turma(5, "Curso 5", SEGMENTO="Beleza")]
+    _, chat = chat_over(kb_dir, listing)
+    reply = chat.reply("s", "quais são as turmas abertas no CEP-jp?")
+    assert "Há turmas de" in reply.text and "São 5 turmas na grade do portal, nas áreas de Tecnologia da informação e Beleza" in reply.text
+    assert "Não tenho confirmação de vagas" not in reply.text  # a política de saída não pode apagar o resumo
+
+
+def test_no_match_lists_the_areas_and_survives_the_output_policy(kb_dir) -> None:  # noqa: F811
+    _, chat = chat_over(kb_dir, [turma(1, "Informática Básica", **TI), turma(2, "Design de Sobrancelhas", SEGMENTO="Beleza")])
+    reply = chat.reply("s", "Tem curso de astronomia no CEP-JP?")
+    assert reply.source == "portal" and "Não encontrei turmas desse assunto" in reply.text
+    assert "As áreas com turmas na grade são Tecnologia da informação e Beleza" in reply.text
+    assert "Não tenho confirmação de vagas" not in reply.text
+
+
+def test_full_or_finished_classes_do_not_count_in_listings(kb_dir) -> None:  # noqa: F811
+    listing = [turma(1, "Curso A", VAGASDISPONIVEIS="0"), turma(2, "Curso B", DATA_INICIO="2026-09-01 00:00:00", DATA_FIM="2026-10-01 00:00:00"), turma(3, "Curso C")]
+    lookup_, _ = chat_over(kb_dir, listing)
+    answer = lookup_.answer("Quais cursos o CEP João Pessoa oferece?")
+    assert answer and answer.offering_ids == [3] and "Curso A" not in answer.text and "Curso B" not in answer.text
+
+
+def test_programming_question_offers_open_classes_of_the_technology_area(kb_dir) -> None:  # noqa: F811
+    """"programação" não tem turma exata na grade, mas a área de tecnologia da informação tem: o CEP-JP vem primeiro."""
+    _, chat = chat_over(kb_dir, [turma(1, "Informática Básica e Mídias Sociais", **TI), turma(2, "Excel Avançado", **TI),
+                                 turma(3, "Excel Recursos", unit="CENTRO DE EDUCAÇÃO PROFISSIONAL DE PATOS", city="PATOS", NOME_UOPER="CEP - PATOS", **TI)])
+    first = chat.reply("s", "O Senac tem cursos de programação?")
+    assert first.source == "guidance" and not first.text.startswith("Que legal!")  # é uma pergunta, não um pedido empolgado
+    assert "não encontrei turma aberta desse assunto" in first.text and "Na área de tecnologia da informação" in first.text
+    assert "Excel Avançado" in first.text and "Patos" not in first.text and first.knowledge == ("turma-2",)
+    details = chat.reply("s", "sim")  # a sugestão curta aceita traz todos os dados da turma
+    assert "O valor do curso é de 300 reais" in details.text and "12 vagas" in details.text
+    other = chat.reply("s", "outra opção")  # a próxima da área, nunca a mesma
+    assert "Informática Básica" in other.text and "Excel Avançado" not in other.text
+
+
 def test_chat_without_extraction_keeps_the_previous_behavior(kb_dir) -> None:
     kb = KnowledgeBase.load(kb_dir, today=lambda: TEST_TODAY)
     chat = ChatService(FakeProvider(configured=False), knowledge=kb, portal=PortalLookup(PortalKnowledge(kb_dir), kb))

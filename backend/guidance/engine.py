@@ -15,7 +15,7 @@ from dataclasses import dataclass, field
 from backend.guidance.session import GuidanceSessions, GuidanceState
 from backend.knowledge import KnowledgeBase
 from backend.knowledge.offers import Offer
-from backend.knowledge.portal import DETAIL_QUESTION, PortalLookup, spoken_date
+from backend.knowledge.portal import DETAIL_QUESTION, PortalLookup, clean_segment, spoken_date
 from backend.knowledge.text import contains_sequence, normalize, tokenize
 
 logger = logging.getLogger("senac_bot.guidance")
@@ -107,6 +107,7 @@ _NEGATIVE = re.compile(
     r"(nao|nao quero|nao obrigado|nao obrigada|nao precisa|agora nao|nao tenho interesse|nao por enquanto|por enquanto nao|"
     r"talvez depois|depois|deixa|deixa pra la|nao e isso)"
 )
+_ASKS = re.compile(r"^((o|a) )?(senac |voces |vcs )?(tem|tinha|existe|existem|ha|oferece|oferecem|quais|qual|onde|como|quando|quanto)\b")
 _OTHER_OPTION = re.compile(r"\b(outra opcao|outras opcoes|outro curso|outros cursos|mais opcoes|alguma outra|tem outro|tem outra|outra alternativa)\b")
 
 
@@ -228,9 +229,28 @@ class Guidance:
         text = " ".join(p for p in (opener, self._portal.describe(turma), ASK_OTHER) if p)
         return GuidanceReply(text, self._links(), (tid,), subject=turma["curso"])
 
+    def _related_turmas(self, state: GuidanceState, text: str) -> list[dict]:
+        """Turmas abertas da ÁREA do assunto (ex.: tecnologia da informação) quando não há do assunto exato (ex.: programação)."""
+        area = self._area_for(text) or next((a for a in self._kb.catalog.areas if a.id == state.area_id), None)
+        if area is None or not area.segment or not self._portal_ready():
+            return []
+        state.area_id = area.id
+        return self._portal.find_segment(area.segment, frozenset(state.recommended))
+
     def _no_turma(self, state: GuidanceState, text: str, opener: str | None = None) -> GuidanceReply | None:
-        """Sem turma aberta do assunto: EAD do mesmo assunto; senão, o curso citado nas páginas oficiais (sem turma) e a
-        orientação de procurar a unidade mais próxima (o serviço acrescenta a unidade pela localização). None = nada do assunto."""
+        """Sem turma aberta do assunto exato: 1) turmas abertas da mesma ÁREA (CEP-JP primeiro); 2) EAD do assunto; 3) o curso
+        citado nas páginas oficiais (sem turma) e a orientação de procurar a unidade mais próxima (o serviço acrescenta a unidade
+        pela localização). None = nada do assunto."""
+        related = self._related_turmas(state, text)
+        if related:
+            turma = related[0]
+            self._remember_turma(state, turma)
+            state.stage, state.topic_text = "details", text  # "sim" detalha esta turma; "outra opção" traz a próxima da área
+            when = spoken_date(turma.get("inicio") or "")
+            area = clean_segment(turma.get("segmento") or "") or "mesma área"
+            start = f", com início em {when}" if when else ""
+            body = f"{NO_TURMA} Na área de {_lower_first(area)}, a unidade {turma['unidade']} tem {turma['curso']}{start}. Quer saber mais?"
+            return GuidanceReply(" ".join(p for p in (opener, body) if p), self._links(), (f"{TURMA}{turma['id']}",), subject=turma["curso"])
         ead = self._rank(text, set(state.recommended), True)
         if ead:
             return self._recommend(state, ead[0], " ".join(p for p in (opener, NO_TURMA_EAD) if p), explicit_ead=True)
@@ -268,7 +288,7 @@ class Guidance:
 
     def _next_option(self, state: GuidanceState) -> GuidanceReply:
         if self._portal_ready():
-            turmas = self._turmas(state.topic_text, state)
+            turmas = self._turmas(state.topic_text, state) or self._related_turmas(state, state.topic_text)
             if turmas:
                 return self._recommend_turma(state, turmas[0], "Certo!")
             ead = self._rank(state.topic_text, set(state.recommended), True)
@@ -367,7 +387,7 @@ class Guidance:
                 text = f"{opener} {area.opener} O Senac tem formações para quem deseja atuar nessa área. {area.clarify}"
                 return GuidanceReply(text, ())
             state.topic_text = message
-            opener = "Que legal!" if not state.greeted else None
+            opener = "Que legal!" if not state.greeted and not _ASKS.search(norm) and not message.rstrip().endswith("?") else None  # pergunta não é "pedido empolgado"
             state.greeted = True
             if ead_only:
                 return self._recommend(state, ranked[0], opener, ead_only)

@@ -28,7 +28,7 @@ from typing import Any, Protocol
 
 from backend.knowledge.fetch import PoliteFetcher
 from backend.knowledge.store import is_official_url, load_json
-from backend.knowledge.text import normalize, tokenize
+from backend.knowledge.text import normalize, stem, tokenize
 
 logger = logging.getLogger("senac_bot.knowledge.portal")
 
@@ -734,7 +734,24 @@ STOP = {"curso", "cursos", "tecnico", "tecnicos", "senac", "paraiba", "tem", "ha
         "existente",
         # Verbos de pedir/contar e palavras vagas de preenchimento ("me fala sobre...", "tem alguma coisa de...").
         "fala", "falar", "falam", "conte", "contar", "diga", "dizer", "explica", "explicar", "mostra", "mostrar",
-        "coisa", "coisas", "negocio", "disso", "sobre", "algo", "area", "areas", "assunto", "tipo", "tipos"}
+        "coisa", "coisas", "negocio", "disso", "sobre", "algo", "area", "areas", "assunto", "tipo", "tipos",
+        # Palavras de PEDIDO sobre as turmas ("quais são as turmas ABERTAS...?"), não do curso. Já radicalizadas (plural -> singular).
+        "aberta", "aberto", "ativa", "ativo", "matricula", "inscricao", "hoje", "agora", "proxima", "proximo", "nova", "novo",
+        "futura", "futuro", "existe", "existem", "quantas", "quantos", "quando", "onde", "temos", "disponibilidade",
+        "esta", "estao", "estar", "estamos", "ainda", "entao"}
+
+
+def clean_segment(segment: str) -> str:
+    """"Tecnologia da informação (TI)" -> "Tecnologia da informação"; segmento vazio ou "Sem Segmento" -> ""."""
+    text = re.sub(r"\s*\([^)]*\)", "", str(segment or "")).strip()
+    return "" if normalize(text) in ("", "sem segmento") else text
+
+
+def _areas_of(offerings: list[dict]) -> list[str]:
+    """Áreas (segmentos) das turmas, da mais frequente para a menos."""
+    counts = Counter(clean_segment(o.get("segmento") or "") for o in offerings)
+    counts.pop("", None)
+    return [name for name, _ in counts.most_common()]
 
 
 class PortalLookup:
@@ -763,9 +780,22 @@ class PortalLookup:
         note = (f"Dados do portal oficial de matrículas, consultado em {label}; " if label else "Dados do portal oficial de matrículas; ")
         return f"{spoken_turma(offering, self._clock())} {note}valores e vagas mudam, então confirme na matrícula."
 
+    def _is_open(self, offering: dict[str, Any], exclude: frozenset[str] | set[str] = frozenset()) -> bool:
+        """Turma aberta de verdade: ainda não encerrada, com vaga e ainda não oferecida nesta conversa."""
+        if f"turma-{offering['id']}" in exclude or (offering.get("fim") and offering["fim"] < self._clock().isoformat()):
+            return False
+        volatile = offering.get("volatil") or {}
+        return not ("VAGASDISPONIVEIS" in volatile and _num(volatile.get("VAGASDISPONIVEIS")) <= 0)  # turma cheia não é "turma aberta"
+
+    @staticmethod
+    def _priority(offering: dict[str, Any]) -> tuple:
+        """CEP-JP primeiro; depois as demais unidades. Dentro de cada grupo: cursos antes de palestras, e quem começa antes."""
+        return (0 if offering.get("unidade_chave") == CEP_JP_KEY else 1, offering["curso"].lower().startswith("palestra"),
+                offering.get("inicio") or "", len(offering["curso"]))
+
     def find(self, message: str, exclude: frozenset[str] | set[str] = frozenset()) -> list[dict[str, Any]]:
         """Turmas ABERTAS (já na extração, sem rede) que casam com o assunto, na ordem de prioridade da orientação:
-        1) CEP João Pessoa; 2) demais unidades do Senac PB (por relevância e data de início). `exclude`: ids "turma-N" já oferecidos.
+        1) CEP João Pessoa; 2) demais unidades do Senac PB (por data de início). `exclude`: ids "turma-N" já oferecidos.
         Sem palavra de assunto (pedido genérico) devolve vazio: quem decide o que perguntar é a orientação."""
         data = self._portal.load()
         offerings = data.get("offerings") or []
@@ -774,26 +804,44 @@ class PortalLookup:
         words = self._topic_words(message, offerings)
         if not words:
             return []
-        today = self._clock().isoformat()
-        found: list[tuple[tuple, dict[str, Any]]] = []
+        found = [o for o in offerings if self._is_open(o, exclude)
+                 and words <= set(tokenize(" ".join([o["curso"], o["segmento"], o["area"], o["modalidade"]])))]
+        return sorted(found, key=self._priority)
+
+    def find_segment(self, segment: str, exclude: frozenset[str] | set[str] = frozenset()) -> list[dict[str, Any]]:
+        """Turmas abertas de um SEGMENTO do portal (ex.: "Tecnologia da informação"), mesma ordem de prioridade.
+        Usado quando não há turma do assunto exato mas há turmas da área."""
+        wanted = set(tokenize(segment))
+        if not wanted:
+            return []
+        data = self._portal.load()
+        found = [o for o in data.get("offerings") or [] if self._is_open(o, exclude) and wanted <= set(tokenize(o.get("segmento") or ""))]
+        return sorted(found, key=self._priority)
+
+    def _place_words(self, message: str, offerings: list[dict[str, Any]]) -> set[str]:
+        """Palavras que são só de LUGAR e não assunto de curso. Nome de unidade como "Centro de Tecnologia…" ou "Escola de
+        Gastronomia…" tem palavra de curso: ela só sai da busca quando a pessoa realmente citou aquela unidade ou cidade."""
+        msg_tokens = set(tokenize(message))
+        named_units = set(self._kb.detect_units(message))
+        course_words: set[str] = set()
         for o in offerings:
-            if f"turma-{o['id']}" in exclude or (o.get("fim") and o["fim"] < today):
-                continue
-            volatile = o.get("volatil") or {}
-            if "VAGASDISPONIVEIS" in volatile and _num(volatile.get("VAGASDISPONIVEIS")) <= 0:
-                continue  # turma cheia não é "turma aberta"
-            hit = words & set(tokenize(" ".join([o["curso"], o["segmento"], o["area"], o["modalidade"]])))
-            if len(hit) < len(words):
-                continue
-            found.append(((0 if o.get("unidade_chave") == CEP_JP_KEY else 1, o["curso"].lower().startswith("palestra"), o.get("inicio") or "", len(o["curso"])), o))
-        found.sort(key=lambda pair: pair[0])
-        return [o for _, o in found]
+            course_words |= set(tokenize(" ".join([o["curso"], o["segmento"], o["area"], o["modalidade"]])))
+        all_places: set[str] = set()
+        cited: set[str] = set()
+        for o in offerings:
+            for place, cited_now in ((o["cidade"], set(tokenize(o["cidade"])) <= msg_tokens), (o["unidade"], o.get("unidade_chave") in named_units)):
+                tokens = set(tokenize(place))
+                all_places |= tokens
+                if cited_now:
+                    cited |= tokens
+        return (all_places - course_words) | cited
 
     def _topic_words(self, message: str, offerings: list[dict[str, Any]]) -> set[str]:
-        place_words = set(tokenize(" ".join({o["cidade"] for o in offerings} | {o["unidade"] for o in offerings})))
+        place_words = self._place_words(message, offerings)
         # Palavras de preço/vaga/horário/data ("quanto custa o curso de Excel?") não são o NOME do curso: saem da busca.
         subject = DETAIL_QUESTION.sub(" ", normalize(message))
-        return {t for t in tokenize(subject) if t not in STOP and t not in place_words and len(t) > 3}
+        stop = STOP | {stem(w) for w in (getattr(self._kb, "aliases", None) or {}).get("stopwords", [])}  # + palavras vazias da base
+        return {t for t in tokenize(subject) if t not in stop and t not in place_words and len(t) > 3}
 
     def public_numbers(self) -> frozenset[str]:
         """Telefones e CEPs que as próprias turmas do portal oficial já trazem (mesma fonte oficial do Senac PB,
@@ -826,7 +874,7 @@ class PortalLookup:
             return None  # pergunta geral demais: segue na base curada
         scope_name = next((o["unidade"] for o in offerings if o["unidade_chave"] in units), None) if units else (sorted(cities)[0] if cities else None)
         scope = f" em {scope_name}" if scope_name else ""
-        pool = [o for o in offerings if (not units or o["unidade_chave"] in units) and (not cities or o["cidade"] in cities)]
+        pool = [o for o in offerings if self._is_open(o) and (not units or o["unidade_chave"] in units) and (not cities or o["cidade"] in cities)]
         matches = []
         for o in pool:
             hit = words & set(tokenize(" ".join([o["curso"], o["segmento"], o["area"], o["modalidade"]])))
@@ -836,17 +884,32 @@ class PortalLookup:
         if not matches:
             if not words or not scope_name:
                 return None  # só afirma ausência quando a pergunta tem unidade/cidade (a consulta cobre aquela lista)
-            return PortalAnswer(f"Não encontrei turmas desse assunto{scope} no portal oficial de matrículas do Senac Paraíba. "
+            areas = _areas_of([o for o in pool])
+            where = f" As áreas com turmas na grade são {_join(areas, 6)}." if areas else ""
+            return PortalAnswer(f"Não encontrei turmas desse assunto{scope} no portal oficial de matrículas do Senac Paraíba.{where} "
                                 "As turmas mudam: confirme no portal.", data["consulted_at"], [])
         matches.sort(key=lambda m: (-m[0], m[1]["curso"].lower().startswith("palestra"), len(m[1]["curso"]), m[1]["inicio"]))
         if words and DETAIL_QUESTION.search(normalize(message)):  # perguntou valor/vaga/horário/data: fala os dados das turmas mais relevantes
             top = [o for _, o in matches][:2]
             return PortalAnswer(" ".join(self.describe(o) if i == 0 else spoken_turma(o, self._clock()) for i, o in enumerate(top)),
                                 data["consulted_at"], [o["id"] for o in top])
-        text = self._grouped_text([o for _, o in matches], limit)
-        return PortalAnswer(text, data["consulted_at"], [o["id"] for _, o in matches][:limit * MAX_COURSES_PER_UNIT])
+        found = [o for _, o in matches]
+        text = self._grouped_text(found, limit, self._summary(found, bool(words)))
+        return PortalAnswer(text, data["consulted_at"], [o["id"] for o in found][:limit * MAX_COURSES_PER_UNIT])
 
-    def _grouped_text(self, matched_offerings: list[dict], max_units: int) -> str:
+    @staticmethod
+    def _summary(found: list[dict], has_topic: bool) -> str:
+        """Quando a lista é de UMA unidade e tem mais turmas do que cabe na fala: o total e como pedir o detalhe."""
+        if len({o["unidade"] for o in found}) != 1 or len(found) <= MAX_COURSES_PER_UNIT:
+            return ""
+        # Sem a expressão "turmas abertas": a política de saída remove frases que afirmam isso sem ressalva.
+        if has_topic:
+            return f"São {len(found)} turmas desse assunto na grade do portal. Diga o nome de um curso e eu detalho datas, horário, valor e vagas. "
+        areas = _areas_of(found)
+        return (f"São {len(found)} turmas na grade do portal" + (f", nas áreas de {_join(areas, 6)}" if areas else "")
+                + ". Diga uma área ou o nome de um curso e eu detalho. ")
+
+    def _grouped_text(self, matched_offerings: list[dict], max_units: int, summary: str = "") -> str:
         """Cursos agrupados por unidade, cada uma com local e contato (nunca preço, carga horária ou vagas)."""
         groups: dict[str, list[dict]] = {}
         for offering in matched_offerings:
@@ -857,7 +920,7 @@ class PortalLookup:
             address = _address_text(offs[0].get("endereco") or {})
             place = f"{unit_name} ({address})" if address else unit_name
             parts.append(f"{_join(names, MAX_COURSES_PER_UNIT)} em {place}")
-        return f"Há turmas de {'; e de '.join(parts)}. Turmas, valores e vagas mudam: confirme no portal."
+        return f"Há turmas de {'; e de '.join(parts)}. {summary}Turmas, valores e vagas mudam: confirme no portal."
 
 
 def main() -> int:  # python -m backend.knowledge.portal [--force | --if-stale]

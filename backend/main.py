@@ -1,6 +1,7 @@
 """Ponto de entrada do backend FastAPI do SENAC BOT."""
 import asyncio
 import logging
+import os
 from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Any, Literal
@@ -222,6 +223,8 @@ def health() -> dict[str, object]:
         "ai_status": ai_status,
         "gemini_status": ai_status,
         "gemini_configurado": ai_status != "not_configured",
+        # Código do commit em produção (o Render informa em RENDER_GIT_COMMIT); fora do Render fica None.
+        "versao": (os.environ.get("RENDER_GIT_COMMIT") or "")[:7] or None,
     }
 
 

@@ -58,6 +58,7 @@ class Area:
     keywords: tuple[str, ...]
     opener: str
     clarify: str
+    segment: str = ""  # segmento da grade do portal (ex.: "Tecnologia da informação"): turmas "vizinhas" quando não há do assunto exato
 
 
 @dataclass
@@ -154,7 +155,7 @@ def load_offers(directory: Path, sources: dict[str, Source], unit_keys: set[str]
         catalog.offers.append(offer)
     for item in raw.get("areas", []):
         try:
-            catalog.areas.append(Area(str(item["id"]), tuple(item["keywords"]), str(item["opener"]), str(item["clarify"])))
+            catalog.areas.append(Area(str(item["id"]), tuple(item["keywords"]), str(item["opener"]), str(item["clarify"]), str(item.get("segment", ""))))
         except (KeyError, TypeError) as error:
             catalog.errors.append(f"offers.json: área inválida ({error})")
     if raw.get("generic_prompt"):
