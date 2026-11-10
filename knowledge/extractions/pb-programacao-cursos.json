@@ -1,13 +1,13 @@
 {
-  "last_attempt": "2026-11-09T11:08:32+00:00",
+  "last_attempt": "2026-11-10T12:52:55+00:00",
   "source_id": "pb-programacao-cursos",
   "url": "https://pb.senac.br/matriculas/matricula/cursos-tecnicos/index.php",
   "name": "Cursos Técnicos — Senac Paraíba",
   "category": "Cursos e matrículas",
   "institution": "Senac PB",
   "kind": "Fonte oficial",
-  "consulted_at": "2026-11-09T11:08:32+00:00",
-  "next_review": "2026-11-16",
+  "consulted_at": "2026-11-10T12:52:55+00:00",
+  "next_review": "2026-11-17",
   "error": null,
   "error_at": null,
   "structure": {
@@ -86,358 +86,6 @@
   },
   "offerings": [
     {
-      "id": 28955,
-      "curso": "Artesanato em Crochê",
-      "unidade": "Centro de Educação Profissional de Cajazeiras",
-      "unidade_chave": "CEP-CZ",
-      "cidade": "Cajazeiras",
-      "inicio": "2026-11-09",
-      "fim": "2026-11-30",
-      "dias": "Segunda, Quarta e Sexta",
-      "horario": "13h00 às 17h00",
-      "carga_horaria": "60",
-      "modalidade": "Formação Inicial e Continuada",
-      "natureza": "Programas Socioprofissionais",
-      "area": "Produção Cultural e Design",
-      "segmento": "Moda",
-      "escolaridade": "",
-      "idade_minima": 16,
-      "endereco": {
-        "logradouro": "Rua Francisca Fernandes Claudino",
-        "numero": 705,
-        "bairro": "Centro",
-        "cep": "58900000",
-        "telefone": "8335313553"
-      },
-      "volatil": {
-        "VALORCURSO": "222.6",
-        "VALOR_MATRICULA": "0",
-        "VALOR_PARCELADO": "55.65",
-        "NUMEROPARCELAS": 1,
-        "VAGASDISPONIVEIS": "20"
-      }
-    },
-    {
-      "id": 29170,
-      "curso": "Brow Lamination",
-      "unidade": "Centro de Educação Profissional de Patos",
-      "unidade_chave": "PATOS",
-      "cidade": "Patos",
-      "inicio": "2026-11-09",
-      "fim": "2026-11-13",
-      "dias": "Segunda a Sexta-feira",
-      "horario": "09H00 AS 12H00",
-      "carga_horaria": "15",
-      "modalidade": "Formação Inicial e Continuada",
-      "natureza": "Programas Socioprofissionais",
-      "area": "Ambiente e Saúde",
-      "segmento": "Beleza",
-      "escolaridade": "",
-      "idade_minima": 16,
-      "endereco": {
-        "logradouro": "Rua Presidente Epitácio Pessoa",
-        "numero": 80,
-        "bairro": "Centro",
-        "cep": "58700020",
-        "telefone": "8334157457"
-      },
-      "volatil": {
-        "VALORCURSO": "96.41",
-        "VALOR_MATRICULA": "0",
-        "VALOR_PARCELADO": "96.41",
-        "NUMEROPARCELAS": 1,
-        "VAGASDISPONIVEIS": "4"
-      }
-    },
-    {
-      "id": 28259,
-      "curso": "Culinária Nordestina",
-      "unidade": "Centro de Educação Profissional de Patos",
-      "unidade_chave": "PATOS",
-      "cidade": "Patos",
-      "inicio": "2026-11-09",
-      "fim": "2026-11-18",
-      "dias": "Segunda a Sexta-feira",
-      "horario": "18H00 AS 22H00",
-      "carga_horaria": "30",
-      "modalidade": "Formação Inicial e Continuada",
-      "natureza": "Aperfeiçoamento",
-      "area": "Turismo, Hospitalidade e Lazer",
-      "segmento": "Gastronomia",
-      "escolaridade": "",
-      "idade_minima": 18,
-      "endereco": {
-        "logradouro": "Rua Presidente Epitácio Pessoa",
-        "numero": 80,
-        "bairro": "Centro",
-        "cep": "58700020",
-        "telefone": "8334157457"
-      },
-      "volatil": {
-        "VALORCURSO": "217.37",
-        "VALOR_MATRICULA": "0",
-        "VALOR_PARCELADO": "54.34",
-        "NUMEROPARCELAS": 4,
-        "VAGASDISPONIVEIS": "4"
-      }
-    },
-    {
-      "id": 29207,
-      "curso": "Design de Corte Masculino Avançado",
-      "unidade": "Centro de Educação Profissional de Cajazeiras",
-      "unidade_chave": "CEP-CZ",
-      "cidade": "Cajazeiras",
-      "inicio": "2026-11-09",
-      "fim": "2026-12-08",
-      "dias": "Segunda e Terça",
-      "horario": "18h00 às 22h00",
-      "carga_horaria": "40",
-      "modalidade": "Formação Inicial e Continuada",
-      "natureza": "Aperfeiçoamento",
-      "area": "Ambiente e Saúde",
-      "segmento": "Beleza",
-      "escolaridade": "",
-      "idade_minima": 18,
-      "endereco": {
-        "logradouro": "Rua Francisca Fernandes Claudino",
-        "numero": 705,
-        "bairro": "Centro",
-        "cep": "58900000",
-        "telefone": "8335313553"
-      },
-      "volatil": {
-        "VALORCURSO": "277.62",
-        "VALOR_MATRICULA": "0",
-        "VALOR_PARCELADO": "55.52",
-        "NUMEROPARCELAS": 5,
-        "VAGASDISPONIVEIS": "2"
-      }
-    },
-    {
-      "id": 29316,
-      "curso": "Designer de Sobrancelhas",
-      "unidade": "Centro de Tecnologia e Formação Profissional José Roberto Tadros",
-      "unidade_chave": "TADROS",
-      "cidade": "João Pessoa",
-      "inicio": "2026-11-09",
-      "fim": "2026-11-17",
-      "dias": "Segunda, Terça e Quarta-feira",
-      "horario": "08h00 às 12h00",
-      "carga_horaria": "20",
-      "modalidade": "Formação Inicial e Continuada",
-      "natureza": "Programas Socioprofissionais",
-      "area": "Ambiente e Saúde",
-      "segmento": "Beleza",
-      "escolaridade": "",
-      "idade_minima": 16,
-      "endereco": {
-        "logradouro": "R. Elisa de Carvalho",
-        "numero": null,
-        "bairro": "Gramame",
-        "cep": "58068033",
-        "telefone": "8394118999"
-      },
-      "volatil": {
-        "VALORCURSO": "128.55",
-        "VALOR_MATRICULA": "0",
-        "VALOR_PARCELADO": "64.28",
-        "NUMEROPARCELAS": 2,
-        "VAGASDISPONIVEIS": "5"
-      }
-    },
-    {
-      "id": 29317,
-      "curso": "Designer de Sobrancelhas",
-      "unidade": "Centro de Tecnologia e Formação Profissional José Roberto Tadros",
-      "unidade_chave": "TADROS",
-      "cidade": "João Pessoa",
-      "inicio": "2026-11-09",
-      "fim": "2026-11-13",
-      "dias": "Segunda a Sexta-feira",
-      "horario": "13h00 às 17h00",
-      "carga_horaria": "20",
-      "modalidade": "Formação Inicial e Continuada",
-      "natureza": "Programas Socioprofissionais",
-      "area": "Ambiente e Saúde",
-      "segmento": "Beleza",
-      "escolaridade": "",
-      "idade_minima": 16,
-      "endereco": {
-        "logradouro": "R. Elisa de Carvalho",
-        "numero": null,
-        "bairro": "Gramame",
-        "cep": "58068033",
-        "telefone": "8394118999"
-      },
-      "volatil": {
-        "VALORCURSO": "128.55",
-        "VALOR_MATRICULA": "0",
-        "VALOR_PARCELADO": "64.28",
-        "NUMEROPARCELAS": 2,
-        "VAGASDISPONIVEIS": "6"
-      }
-    },
-    {
-      "id": 29210,
-      "curso": "Formação de Preço de Venda",
-      "unidade": "Centro de Educação Profissional de Cajazeiras",
-      "unidade_chave": "CEP-CZ",
-      "cidade": "Cajazeiras",
-      "inicio": "2026-11-09",
-      "fim": "2026-11-13",
-      "dias": "Segunda a Sexta",
-      "horario": "18h00 às 21h00",
-      "carga_horaria": "15",
-      "modalidade": "Formação Inicial e Continuada",
-      "natureza": "Aperfeiçoamento",
-      "area": "Gestão e Negócios",
-      "segmento": "Comércio",
-      "escolaridade": "",
-      "idade_minima": 16,
-      "endereco": {
-        "logradouro": "Rua Francisca Fernandes Claudino",
-        "numero": 705,
-        "bairro": "Centro",
-        "cep": "58900000",
-        "telefone": "8335313553"
-      },
-      "volatil": {
-        "VALORCURSO": "92.14",
-        "VALOR_MATRICULA": "0",
-        "VALOR_PARCELADO": "92.14",
-        "NUMEROPARCELAS": 1,
-        "VAGASDISPONIVEIS": "20"
-      }
-    },
-    {
-      "id": 29005,
-      "curso": "Manutenção Básica de Computadores Para Usuários",
-      "unidade": "Centro de Educação Profissional de João Pessoa",
-      "unidade_chave": "CEP-JP",
-      "cidade": "João Pessoa",
-      "inicio": "2026-11-09",
-      "fim": "2026-11-23",
-      "dias": "Segunda a Sexta",
-      "horario": "14h00 às 17h00",
-      "carga_horaria": "30",
-      "modalidade": "Formação Inicial e Continuada",
-      "natureza": "Programas Socioprofissionais",
-      "area": "Informação e Comunicação",
-      "segmento": "Tecnologia da informação (TI)",
-      "escolaridade": "",
-      "idade_minima": 15,
-      "endereco": {
-        "logradouro": "Av. Dom Pedro I",
-        "numero": 389,
-        "bairro": "Centro",
-        "cep": "58013020",
-        "telefone": "8332142345"
-      },
-      "volatil": {
-        "VALORCURSO": "154.6",
-        "VALOR_MATRICULA": "0",
-        "VALOR_PARCELADO": "51.53",
-        "NUMEROPARCELAS": 3,
-        "VAGASDISPONIVEIS": "11"
-      }
-    },
-    {
-      "id": 28958,
-      "curso": "Oratória - Práticas e Técnicas",
-      "unidade": "Centro de Educação Profissional de Cajazeiras",
-      "unidade_chave": "CEP-CZ",
-      "cidade": "Cajazeiras",
-      "inicio": "2026-11-09",
-      "fim": "2026-11-19",
-      "dias": "Terça e Quinta",
-      "horario": "08h00 às 12h00",
-      "carga_horaria": "30",
-      "modalidade": "Formação Inicial e Continuada",
-      "natureza": "Programas Socioculturais",
-      "area": "Produção Cultural e Design",
-      "segmento": "Comunicação",
-      "escolaridade": "",
-      "idade_minima": 14,
-      "endereco": {
-        "logradouro": "Rua Francisca Fernandes Claudino",
-        "numero": 705,
-        "bairro": "Centro",
-        "cep": "58900000",
-        "telefone": "8335313553"
-      },
-      "volatil": {
-        "VALORCURSO": "161.94",
-        "VALOR_MATRICULA": "0",
-        "VALOR_PARCELADO": "53.98",
-        "NUMEROPARCELAS": 1,
-        "VAGASDISPONIVEIS": "20"
-      }
-    },
-    {
-      "id": 29279,
-      "curso": "Preparo de Ceias Natalinas",
-      "unidade": "Centro de Educação Profissional de Campina Grande",
-      "unidade_chave": "CEP-CG",
-      "cidade": "Campina Grande",
-      "inicio": "2026-11-09",
-      "fim": "2026-11-13",
-      "dias": "Segunda a Sexta",
-      "horario": "18h00 às 22h00",
-      "carga_horaria": "20",
-      "modalidade": "Formação Inicial e Continuada",
-      "natureza": "Programas Socioprofissionais",
-      "area": "Turismo, Hospitalidade e Lazer",
-      "segmento": "Gastronomia",
-      "escolaridade": "",
-      "idade_minima": 18,
-      "endereco": {
-        "logradouro": "Av. Manoel Tavares",
-        "numero": 300,
-        "bairro": "Jardim Tavares",
-        "cep": "58402068",
-        "telefone": "8333437997"
-      },
-      "volatil": {
-        "VALORCURSO": "133.56",
-        "VALOR_MATRICULA": "0",
-        "VALOR_PARCELADO": "66.78",
-        "NUMEROPARCELAS": 2,
-        "VAGASDISPONIVEIS": "3"
-      }
-    },
-    {
-      "id": 29204,
-      "curso": "Técnicas de Manicure e Pedicure e Unhas Decoradas",
-      "unidade": "Centro de Educação Profissional de Cajazeiras",
-      "unidade_chave": "CEP-CZ",
-      "cidade": "Cajazeiras",
-      "inicio": "2026-11-09",
-      "fim": "2026-11-23",
-      "dias": "Segunda a Sexta",
-      "horario": "13h00 às 17h00",
-      "carga_horaria": "40",
-      "modalidade": "Formação Inicial e Continuada",
-      "natureza": "Programas Socioprofissionais",
-      "area": "Ambiente e Saúde",
-      "segmento": "Beleza",
-      "escolaridade": "",
-      "idade_minima": 18,
-      "endereco": {
-        "logradouro": "Rua Francisca Fernandes Claudino",
-        "numero": 705,
-        "bairro": "Centro",
-        "cep": "58900000",
-        "telefone": "8335313553"
-      },
-      "volatil": {
-        "VALORCURSO": "242.55",
-        "VALOR_MATRICULA": "0",
-        "VALOR_PARCELADO": "60.64",
-        "NUMEROPARCELAS": 4,
-        "VAGASDISPONIVEIS": "7"
-      }
-    },
-    {
       "id": 29275,
       "curso": "Análise de Coloração Pessoal",
       "unidade": "Centro de Educação Profissional de João Pessoa",
@@ -467,70 +115,6 @@
         "VALOR_PARCELADO": "65.11",
         "NUMEROPARCELAS": 3,
         "VAGASDISPONIVEIS": "17"
-      }
-    },
-    {
-      "id": 29169,
-      "curso": "Criação de Conteúdo Para Redes Sociais Com Inteligência Artificial: Fotografia, Vídeo e Texto",
-      "unidade": "Cendege-centro de Desenvolvimento Gerencial",
-      "unidade_chave": "CENDEGE",
-      "cidade": "João Pessoa",
-      "inicio": "2026-11-10",
-      "fim": "2026-11-26",
-      "dias": "Terças e Quintas-feiras",
-      "horario": "18h30 às 21h30",
-      "carga_horaria": "16",
-      "modalidade": "Formação Inicial e Continuada",
-      "natureza": "Aperfeiçoamento",
-      "area": "Produção Cultural e Design",
-      "segmento": "Comunicação",
-      "escolaridade": "",
-      "idade_minima": 16,
-      "endereco": {
-        "logradouro": "Rua Desembargador Souto Maior",
-        "numero": 115,
-        "bairro": "Centro",
-        "cep": "58013190",
-        "telefone": "8332142340"
-      },
-      "volatil": {
-        "VALORCURSO": "98.12",
-        "VALOR_MATRICULA": "0",
-        "VALOR_PARCELADO": "98.12",
-        "NUMEROPARCELAS": 1,
-        "VAGASDISPONIVEIS": "15"
-      }
-    },
-    {
-      "id": 29168,
-      "curso": "Excel - Criando Planilhas Interativas Com Dashboard",
-      "unidade": "Cendege-centro de Desenvolvimento Gerencial",
-      "unidade_chave": "CENDEGE",
-      "cidade": "João Pessoa",
-      "inicio": "2026-11-10",
-      "fim": "2026-11-26",
-      "dias": "Terças e Quintas-feiras",
-      "horario": "14h às 17h",
-      "carga_horaria": "18",
-      "modalidade": "Formação Inicial e Continuada",
-      "natureza": "Programas Instrumentais",
-      "area": "Informação e Comunicação",
-      "segmento": "Tecnologia da informação (TI)",
-      "escolaridade": "",
-      "idade_minima": 16,
-      "endereco": {
-        "logradouro": "Rua Desembargador Souto Maior",
-        "numero": 115,
-        "bairro": "Centro",
-        "cep": "58013190",
-        "telefone": "8332142340"
-      },
-      "volatil": {
-        "VALORCURSO": "97.16",
-        "VALOR_MATRICULA": "0",
-        "VALOR_PARCELADO": "97.16",
-        "NUMEROPARCELAS": 1,
-        "VAGASDISPONIVEIS": "20"
       }
     },
     {
@@ -594,7 +178,7 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "0",
         "NUMEROPARCELAS": 1,
-        "VAGASDISPONIVEIS": "5"
+        "VAGASDISPONIVEIS": "4"
       }
     },
     {
@@ -626,7 +210,7 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "64.78",
         "NUMEROPARCELAS": 2,
-        "VAGASDISPONIVEIS": "5"
+        "VAGASDISPONIVEIS": "4"
       }
     },
     {
@@ -680,7 +264,7 @@
       "idade_minima": 18,
       "endereco": {
         "logradouro": "R. Elisa de Carvalho",
-        "numero": null,
+        "numero": 535,
         "bairro": "Gramame",
         "cep": "58068033",
         "telefone": "8394118999"
@@ -712,7 +296,7 @@
       "idade_minima": 18,
       "endereco": {
         "logradouro": "R. Elisa de Carvalho",
-        "numero": null,
+        "numero": 535,
         "bairro": "Gramame",
         "cep": "58068033",
         "telefone": "8394118999"
@@ -722,39 +306,39 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "52.29",
         "NUMEROPARCELAS": 7,
-        "VAGASDISPONIVEIS": "6"
+        "VAGASDISPONIVEIS": "3"
       }
     },
     {
-      "id": 29288,
-      "curso": "Palestra: Anúncios Que Vendem: Princípios Básicos do Tráfego Pago",
-      "unidade": "Centro de Educação Profissional de João Pessoa",
-      "unidade_chave": "CEP-JP",
-      "cidade": "João Pessoa",
+      "id": 28874,
+      "curso": "Técnicas de Depilação",
+      "unidade": "Centro de Educação Profissional de Patos",
+      "unidade_chave": "PATOS",
+      "cidade": "Patos",
       "inicio": "2026-11-11",
-      "fim": "2026-11-11",
-      "dias": "Quarta-feira",
-      "horario": "17h00 às 18h00",
-      "carga_horaria": "1",
+      "fim": "2026-11-25",
+      "dias": "Segunda a Sexta-feira",
+      "horario": "18H00 AS 22H00",
+      "carga_horaria": "40",
       "modalidade": "Formação Inicial e Continuada",
-      "natureza": "Acao Extensiva",
-      "area": "Gestão e Negócios",
-      "segmento": "Comércio",
+      "natureza": "Aperfeiçoamento",
+      "area": "Ambiente e Saúde",
+      "segmento": "Beleza",
       "escolaridade": "",
-      "idade_minima": null,
+      "idade_minima": 16,
       "endereco": {
-        "logradouro": "Av. Dom Pedro I",
-        "numero": 389,
+        "logradouro": "Rua Presidente Epitácio Pessoa",
+        "numero": 80,
         "bairro": "Centro",
-        "cep": "58013020",
-        "telefone": "8332142345"
+        "cep": "58700020",
+        "telefone": "8334157457"
       },
       "volatil": {
-        "VALORCURSO": "0",
+        "VALORCURSO": "294.28",
         "VALOR_MATRICULA": "0",
-        "VALOR_PARCELADO": "0",
-        "NUMEROPARCELAS": 1,
-        "VAGASDISPONIVEIS": "2"
+        "VALOR_PARCELADO": "58.86",
+        "NUMEROPARCELAS": 5,
+        "VAGASDISPONIVEIS": "1"
       }
     },
     {
@@ -808,7 +392,7 @@
       "idade_minima": 16,
       "endereco": {
         "logradouro": "R. Elisa de Carvalho",
-        "numero": null,
+        "numero": 535,
         "bairro": "Gramame",
         "cep": "58068033",
         "telefone": "8394118999"
@@ -818,7 +402,7 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "96.41",
         "NUMEROPARCELAS": 1,
-        "VAGASDISPONIVEIS": "9"
+        "VAGASDISPONIVEIS": "8"
       }
     },
     {
@@ -850,7 +434,7 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "0",
         "NUMEROPARCELAS": 1,
-        "VAGASDISPONIVEIS": "5"
+        "VAGASDISPONIVEIS": "4"
       }
     },
     {
@@ -882,7 +466,7 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "53.98",
         "NUMEROPARCELAS": 3,
-        "VAGASDISPONIVEIS": "9"
+        "VAGASDISPONIVEIS": "8"
       }
     },
     {
@@ -914,7 +498,39 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "0",
         "NUMEROPARCELAS": 1,
-        "VAGASDISPONIVEIS": "5"
+        "VAGASDISPONIVEIS": "4"
+      }
+    },
+    {
+      "id": 28955,
+      "curso": "Artesanato em Crochê",
+      "unidade": "Centro de Educação Profissional de Cajazeiras",
+      "unidade_chave": "CEP-CZ",
+      "cidade": "Cajazeiras",
+      "inicio": "2026-11-16",
+      "fim": "2026-12-07",
+      "dias": "Segunda a Sexta",
+      "horario": "13h00 às 17h00",
+      "carga_horaria": "60",
+      "modalidade": "Formação Inicial e Continuada",
+      "natureza": "Programas Socioprofissionais",
+      "area": "Produção Cultural e Design",
+      "segmento": "Moda",
+      "escolaridade": "",
+      "idade_minima": 16,
+      "endereco": {
+        "logradouro": "Rua Francisca Fernandes Claudino",
+        "numero": 705,
+        "bairro": "Centro",
+        "cep": "58900000",
+        "telefone": "8335313553"
+      },
+      "volatil": {
+        "VALORCURSO": "222.6",
+        "VALOR_MATRICULA": "0",
+        "VALOR_PARCELADO": "55.65",
+        "NUMEROPARCELAS": 1,
+        "VAGASDISPONIVEIS": "20"
       }
     },
     {
@@ -979,38 +595,6 @@
         "VALOR_PARCELADO": "58.6",
         "NUMEROPARCELAS": 2,
         "VAGASDISPONIVEIS": "16"
-      }
-    },
-    {
-      "id": 28985,
-      "curso": "Designer de Sobrancelhas",
-      "unidade": "Centro de Educação Profissional de João Pessoa",
-      "unidade_chave": "CEP-JP",
-      "cidade": "João Pessoa",
-      "inicio": "2026-11-16",
-      "fim": "2026-12-02",
-      "dias": "Segunda, Quarta e Sexta",
-      "horario": "18h30 às 21h30",
-      "carga_horaria": "20",
-      "modalidade": "Formação Inicial e Continuada",
-      "natureza": "Programas Socioprofissionais",
-      "area": "Ambiente e Saúde",
-      "segmento": "Beleza",
-      "escolaridade": "",
-      "idade_minima": 16,
-      "endereco": {
-        "logradouro": "Av. Dom Pedro I",
-        "numero": 389,
-        "bairro": "Centro",
-        "cep": "58013020",
-        "telefone": "8332142345"
-      },
-      "volatil": {
-        "VALORCURSO": "128.55",
-        "VALOR_MATRICULA": "0",
-        "VALOR_PARCELADO": "64.28",
-        "NUMEROPARCELAS": 2,
-        "VAGASDISPONIVEIS": "1"
       }
     },
     {
@@ -1362,7 +946,39 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "62.5",
         "NUMEROPARCELAS": 2,
-        "VAGASDISPONIVEIS": "5"
+        "VAGASDISPONIVEIS": "4"
+      }
+    },
+    {
+      "id": 28958,
+      "curso": "Oratória - Práticas e Técnicas",
+      "unidade": "Centro de Educação Profissional de Cajazeiras",
+      "unidade_chave": "CEP-CZ",
+      "cidade": "Cajazeiras",
+      "inicio": "2026-11-16",
+      "fim": "2026-11-26",
+      "dias": "Terça e Quinta",
+      "horario": "08h00 às 12h00",
+      "carga_horaria": "30",
+      "modalidade": "Formação Inicial e Continuada",
+      "natureza": "Programas Socioculturais",
+      "area": "Produção Cultural e Design",
+      "segmento": "Comunicação",
+      "escolaridade": "",
+      "idade_minima": 14,
+      "endereco": {
+        "logradouro": "Rua Francisca Fernandes Claudino",
+        "numero": 705,
+        "bairro": "Centro",
+        "cep": "58900000",
+        "telefone": "8335313553"
+      },
+      "volatil": {
+        "VALORCURSO": "161.94",
+        "VALOR_MATRICULA": "0",
+        "VALOR_PARCELADO": "53.98",
+        "NUMEROPARCELAS": 1,
+        "VAGASDISPONIVEIS": "20"
       }
     },
     {
@@ -1526,6 +1142,38 @@
       }
     },
     {
+      "id": 29204,
+      "curso": "Técnicas de Manicure e Pedicure e Unhas Decoradas",
+      "unidade": "Centro de Educação Profissional de Cajazeiras",
+      "unidade_chave": "CEP-CZ",
+      "cidade": "Cajazeiras",
+      "inicio": "2026-11-16",
+      "fim": "2026-11-30",
+      "dias": "Segunda a Sexta",
+      "horario": "13h00 às 17h00",
+      "carga_horaria": "40",
+      "modalidade": "Formação Inicial e Continuada",
+      "natureza": "Programas Socioprofissionais",
+      "area": "Ambiente e Saúde",
+      "segmento": "Beleza",
+      "escolaridade": "",
+      "idade_minima": 18,
+      "endereco": {
+        "logradouro": "Rua Francisca Fernandes Claudino",
+        "numero": 705,
+        "bairro": "Centro",
+        "cep": "58900000",
+        "telefone": "8335313553"
+      },
+      "volatil": {
+        "VALORCURSO": "242.55",
+        "VALOR_MATRICULA": "0",
+        "VALOR_PARCELADO": "60.64",
+        "NUMEROPARCELAS": 4,
+        "VAGASDISPONIVEIS": "7"
+      }
+    },
+    {
       "id": 28224,
       "curso": "Técnicas de Maquiagem",
       "unidade": "Centro de Educação Profissional de Campina Grande",
@@ -1682,7 +1330,7 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "0",
         "NUMEROPARCELAS": 1,
-        "VAGASDISPONIVEIS": "7"
+        "VAGASDISPONIVEIS": "6"
       }
     },
     {
@@ -1846,6 +1494,38 @@
       }
     },
     {
+      "id": 29169,
+      "curso": "Criação de Conteúdo Para Redes Sociais Com Inteligência Artificial: Fotografia, Vídeo e Texto",
+      "unidade": "Cendege-centro de Desenvolvimento Gerencial",
+      "unidade_chave": "CENDEGE",
+      "cidade": "João Pessoa",
+      "inicio": "2026-11-19",
+      "fim": "2026-12-10",
+      "dias": "Terças e Quintas-feiras",
+      "horario": "18h30 às 21h30",
+      "carga_horaria": "16",
+      "modalidade": "Formação Inicial e Continuada",
+      "natureza": "Aperfeiçoamento",
+      "area": "Produção Cultural e Design",
+      "segmento": "Comunicação",
+      "escolaridade": "",
+      "idade_minima": 16,
+      "endereco": {
+        "logradouro": "Rua Desembargador Souto Maior",
+        "numero": 115,
+        "bairro": "Centro",
+        "cep": "58013190",
+        "telefone": "8332142340"
+      },
+      "volatil": {
+        "VALORCURSO": "98.12",
+        "VALOR_MATRICULA": "0",
+        "VALOR_PARCELADO": "98.12",
+        "NUMEROPARCELAS": 1,
+        "VAGASDISPONIVEIS": "12"
+      }
+    },
+    {
       "id": 29293,
       "curso": "Palestra: Atendimento Ao Cliente: Como Transformar Atendimento em Experiência",
       "unidade": "Centro de Educação Profissional de João Pessoa",
@@ -1874,7 +1554,7 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "0",
         "NUMEROPARCELAS": 1,
-        "VAGASDISPONIVEIS": "5"
+        "VAGASDISPONIVEIS": "3"
       }
     },
     {
@@ -2066,7 +1746,7 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "53.98",
         "NUMEROPARCELAS": 4,
-        "VAGASDISPONIVEIS": "20"
+        "VAGASDISPONIVEIS": "19"
       }
     },
     {
@@ -2130,7 +1810,7 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "53.98",
         "NUMEROPARCELAS": 4,
-        "VAGASDISPONIVEIS": "11"
+        "VAGASDISPONIVEIS": "8"
       }
     },
     {
@@ -2290,7 +1970,7 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "66.78",
         "NUMEROPARCELAS": 2,
-        "VAGASDISPONIVEIS": "13"
+        "VAGASDISPONIVEIS": "12"
       }
     },
     {
@@ -2326,38 +2006,6 @@
       }
     },
     {
-      "id": 29175,
-      "curso": "Tranças e Penteados",
-      "unidade": "Centro de Educação Profissional de Patos",
-      "unidade_chave": "PATOS",
-      "cidade": "Patos",
-      "inicio": "2026-11-23",
-      "fim": "2026-12-04",
-      "dias": "Segunda a Sexta-feira",
-      "horario": "13H00 AS 17H00",
-      "carga_horaria": "40",
-      "modalidade": "Formação Inicial e Continuada",
-      "natureza": "Aperfeiçoamento",
-      "area": "Ambiente e Saúde",
-      "segmento": "Beleza",
-      "escolaridade": "",
-      "idade_minima": 16,
-      "endereco": {
-        "logradouro": "Rua Presidente Epitácio Pessoa",
-        "numero": 80,
-        "bairro": "Centro",
-        "cep": "58700020",
-        "telefone": "8334157457"
-      },
-      "volatil": {
-        "VALORCURSO": "294.28",
-        "VALOR_MATRICULA": "0",
-        "VALOR_PARCELADO": "58.86",
-        "NUMEROPARCELAS": 5,
-        "VAGASDISPONIVEIS": "15"
-      }
-    },
-    {
       "id": 29312,
       "curso": "Tráfego Pago: Venda Mais Usando Anúncios Online",
       "unidade": "Centro de Educação Profissional de Campina Grande",
@@ -2386,7 +2034,7 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "52.09",
         "NUMEROPARCELAS": 3,
-        "VAGASDISPONIVEIS": "20"
+        "VAGASDISPONIVEIS": "19"
       }
     },
     {
@@ -2536,7 +2184,7 @@
       "idade_minima": 16,
       "endereco": {
         "logradouro": "R. Elisa de Carvalho",
-        "numero": null,
+        "numero": 535,
         "bairro": "Gramame",
         "cep": "58068033",
         "telefone": "8394118999"
@@ -2546,7 +2194,7 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "96.41",
         "NUMEROPARCELAS": 1,
-        "VAGASDISPONIVEIS": "4"
+        "VAGASDISPONIVEIS": "3"
       }
     },
     {
@@ -2610,7 +2258,39 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "0",
         "NUMEROPARCELAS": 1,
-        "VAGASDISPONIVEIS": "6"
+        "VAGASDISPONIVEIS": "5"
+      }
+    },
+    {
+      "id": 29243,
+      "curso": "Pilotagem de Drones",
+      "unidade": "Centro de Educação Profissional de João Pessoa",
+      "unidade_chave": "CEP-JP",
+      "cidade": "João Pessoa",
+      "inicio": "2026-11-24",
+      "fim": "2026-12-03",
+      "dias": "Terça e Quinta",
+      "horario": "08h00 às 12h15",
+      "carga_horaria": "16",
+      "modalidade": "Formação Inicial e Continuada",
+      "natureza": "Programas Socioprofissionais",
+      "area": "Informação e Comunicação",
+      "segmento": "Tecnologia da informação (TI)",
+      "escolaridade": "",
+      "idade_minima": 18,
+      "endereco": {
+        "logradouro": "Av. Dom Pedro I",
+        "numero": 389,
+        "bairro": "Centro",
+        "cep": "58013020",
+        "telefone": "8332142345"
+      },
+      "volatil": {
+        "VALORCURSO": "203.52",
+        "VALOR_MATRICULA": "0",
+        "VALOR_PARCELADO": "50.88",
+        "NUMEROPARCELAS": 4,
+        "VAGASDISPONIVEIS": "1"
       }
     },
     {
@@ -2632,7 +2312,7 @@
       "idade_minima": 16,
       "endereco": {
         "logradouro": "R. Elisa de Carvalho",
-        "numero": null,
+        "numero": 535,
         "bairro": "Gramame",
         "cep": "58068033",
         "telefone": "8394118999"
@@ -2706,7 +2386,7 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "0",
         "NUMEROPARCELAS": 1,
-        "VAGASDISPONIVEIS": "2"
+        "VAGASDISPONIVEIS": "1"
       }
     },
     {
@@ -2802,7 +2482,7 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "0",
         "NUMEROPARCELAS": 1,
-        "VAGASDISPONIVEIS": "4"
+        "VAGASDISPONIVEIS": "3"
       }
     },
     {
@@ -2930,7 +2610,7 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "0",
         "NUMEROPARCELAS": 1,
-        "VAGASDISPONIVEIS": "7"
+        "VAGASDISPONIVEIS": "6"
       }
     },
     {
@@ -3030,38 +2710,6 @@
       }
     },
     {
-      "id": 29183,
-      "curso": "Chocolates e Doces Finos",
-      "unidade": "Centro de Educação Profissional de Patos",
-      "unidade_chave": "PATOS",
-      "cidade": "Patos",
-      "inicio": "2026-11-30",
-      "fim": "2026-12-14",
-      "dias": "Segunda a Sexta-feira",
-      "horario": "08H00 AS 12H00",
-      "carga_horaria": "40",
-      "modalidade": "Formação Inicial e Continuada",
-      "natureza": "Aperfeiçoamento",
-      "area": "Produção Alimentícia",
-      "segmento": "Produção de alimentos",
-      "escolaridade": "",
-      "idade_minima": 18,
-      "endereco": {
-        "logradouro": "Rua Presidente Epitácio Pessoa",
-        "numero": 80,
-        "bairro": "Centro",
-        "cep": "58700020",
-        "telefone": "8334157457"
-      },
-      "volatil": {
-        "VALORCURSO": "289.83",
-        "VALOR_MATRICULA": "0",
-        "VALOR_PARCELADO": "57.97",
-        "NUMEROPARCELAS": 5,
-        "VAGASDISPONIVEIS": "15"
-      }
-    },
-    {
       "id": 28886,
       "curso": "Excel",
       "unidade": "Centro de Educação Profissional de Patos",
@@ -3122,7 +2770,7 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "66.78",
         "NUMEROPARCELAS": 2,
-        "VAGASDISPONIVEIS": "7"
+        "VAGASDISPONIVEIS": "6"
       }
     },
     {
@@ -3186,7 +2834,7 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "50.33",
         "NUMEROPARCELAS": 5,
-        "VAGASDISPONIVEIS": "6"
+        "VAGASDISPONIVEIS": "5"
       }
     },
     {
@@ -3218,7 +2866,7 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "96.41",
         "NUMEROPARCELAS": 1,
-        "VAGASDISPONIVEIS": "3"
+        "VAGASDISPONIVEIS": "2"
       }
     },
     {
@@ -3250,7 +2898,7 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "0",
         "NUMEROPARCELAS": 1,
-        "VAGASDISPONIVEIS": "3"
+        "VAGASDISPONIVEIS": "2"
       }
     },
     {
@@ -3282,7 +2930,7 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "62.5",
         "NUMEROPARCELAS": 2,
-        "VAGASDISPONIVEIS": "17"
+        "VAGASDISPONIVEIS": "16"
       }
     },
     {
@@ -3368,7 +3016,7 @@
       "idade_minima": 16,
       "endereco": {
         "logradouro": "R. Elisa de Carvalho",
-        "numero": null,
+        "numero": 535,
         "bairro": "Gramame",
         "cep": "58068033",
         "telefone": "8394118999"
@@ -3378,7 +3026,7 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "96.41",
         "NUMEROPARCELAS": 1,
-        "VAGASDISPONIVEIS": "3"
+        "VAGASDISPONIVEIS": "2"
       }
     },
     {
@@ -3442,7 +3090,7 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "0",
         "NUMEROPARCELAS": 1,
-        "VAGASDISPONIVEIS": "4"
+        "VAGASDISPONIVEIS": "3"
       }
     },
     {
@@ -3474,7 +3122,7 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "0",
         "NUMEROPARCELAS": 1,
-        "VAGASDISPONIVEIS": "3"
+        "VAGASDISPONIVEIS": "2"
       }
     },
     {
@@ -3496,7 +3144,7 @@
       "idade_minima": 16,
       "endereco": {
         "logradouro": "R. Elisa de Carvalho",
-        "numero": null,
+        "numero": 535,
         "bairro": "Gramame",
         "cep": "58068033",
         "telefone": "8394118999"
@@ -3507,38 +3155,6 @@
         "VALOR_PARCELADO": "96.41",
         "NUMEROPARCELAS": 1,
         "VAGASDISPONIVEIS": "10"
-      }
-    },
-    {
-      "id": 29234,
-      "curso": "Oficina: Hamburguer Gourmet",
-      "unidade": "Escola Senac de Gastronomia e Hotelaria",
-      "unidade_chave": "GASTRO-HOTELARIA",
-      "cidade": "João Pessoa",
-      "inicio": "2026-12-07",
-      "fim": "2026-12-10",
-      "dias": "Segunda, Quarta e Quinta-feira",
-      "horario": "09h00 às 12h00",
-      "carga_horaria": "9",
-      "modalidade": "Sem Modalidade",
-      "natureza": "Acao Extensiva",
-      "area": "Produção Alimentícia",
-      "segmento": "Produção de alimentos",
-      "escolaridade": "",
-      "idade_minima": null,
-      "endereco": {
-        "logradouro": "Av. Cabo Branco",
-        "numero": 2788,
-        "bairro": "Cabo Branco",
-        "cep": "58045010",
-        "telefone": "8330313547"
-      },
-      "volatil": {
-        "VALORCURSO": "138",
-        "VALOR_MATRICULA": "0",
-        "VALOR_PARCELADO": "69",
-        "NUMEROPARCELAS": 2,
-        "VAGASDISPONIVEIS": "2"
       }
     },
     {
@@ -3638,38 +3254,6 @@
       }
     },
     {
-      "id": 29303,
-      "curso": "Palestra: Como Criar Uma Estratégia de Divulgação Para Seu Negócio",
-      "unidade": "Centro de Educação Profissional de João Pessoa",
-      "unidade_chave": "CEP-JP",
-      "cidade": "João Pessoa",
-      "inicio": "2026-12-10",
-      "fim": "2026-12-10",
-      "dias": "Quinta-feira",
-      "horario": "17h00 às 18h00",
-      "carga_horaria": "1",
-      "modalidade": "Formação Inicial e Continuada",
-      "natureza": "Acao Extensiva",
-      "area": "Gestão e Negócios",
-      "segmento": "Gestão",
-      "escolaridade": "",
-      "idade_minima": null,
-      "endereco": {
-        "logradouro": "Av. Dom Pedro I",
-        "numero": 389,
-        "bairro": "Centro",
-        "cep": "58013020",
-        "telefone": "8332142345"
-      },
-      "volatil": {
-        "VALORCURSO": "0",
-        "VALOR_MATRICULA": "0",
-        "VALOR_PARCELADO": "0",
-        "NUMEROPARCELAS": 1,
-        "VAGASDISPONIVEIS": "1"
-      }
-    },
-    {
       "id": 29255,
       "curso": "Extensão de Cílios: Volume Russo",
       "unidade": "Centro de Tecnologia e Formação Profissional José Roberto Tadros",
@@ -3688,7 +3272,7 @@
       "idade_minima": 16,
       "endereco": {
         "logradouro": "R. Elisa de Carvalho",
-        "numero": null,
+        "numero": 535,
         "bairro": "Gramame",
         "cep": "58068033",
         "telefone": "8394118999"
@@ -3730,7 +3314,7 @@
         "VALOR_MATRICULA": "0",
         "VALOR_PARCELADO": "0",
         "NUMEROPARCELAS": 1,
-        "VAGASDISPONIVEIS": "4"
+        "VAGASDISPONIVEIS": "3"
       }
     }
   ],
@@ -3743,7 +3327,7 @@
       "category": "Cursos e matrículas",
       "source_id": "pb-programacao-cursos",
       "consulted_at": "2026-11-07T19:11:58+00:00",
-      "next_review": "2026-11-16",
+      "next_review": "2026-11-17",
       "status": "confirmed",
       "pending_ids": [],
       "approved_by": "operator",
@@ -3761,8 +3345,8 @@
       "content": "O portal de matrículas do Senac Paraíba permite filtrar as turmas por unidades: Administração Regional Sede, Cendege-centro de Desenvolvimento Gerencial, Centro de Educação Profissional de Cajazeiras, Centro de Educação Profissional de Campina Grande, Centro de Educação Profissional de João Pessoa, Centro de Educação Profissional de Patos, Centro de Tecnologia e Formação Profissional José Roberto Tadros, Escola de Gastronomia Hotelaria e Turismo de Areia, Escola Senac Dom Ulrico, Escola Senac de Gastronomia e Hotelaria e Unidade Movel Educacional.",
       "category": "Cursos e matrículas",
       "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
       "status": "found",
       "pending_ids": [],
       "approved_by": null,
@@ -3780,8 +3364,8 @@
       "content": "O portal de matrículas do Senac Paraíba permite filtrar as turmas por segmentos: Sem Segmento, Artes, Asseio, conservação e zeladoria, Beleza, Comunicação, Comércio, Construção e reforma, Design, Educacional, Eventos, Games e Gastronomia e mais 18.",
       "category": "Cursos e matrículas",
       "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
       "status": "found",
       "pending_ids": [],
       "approved_by": null,
@@ -3799,8 +3383,8 @@
       "content": "O portal de matrículas do Senac Paraíba permite filtrar as turmas por modalidades: Formação Inicial e Continuada, Educação Profissional Técnica de Nível Médio, Educação Superior e Sem Modalidade.",
       "category": "Cursos e matrículas",
       "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
       "status": "found",
       "pending_ids": [],
       "approved_by": null,
@@ -3818,8 +3402,8 @@
       "content": "O portal de matrículas do Senac Paraíba permite filtrar as turmas por tipos de formação: Educação Profissional, Ação Extensiva, Pós-Graduação lato sensu, Aperfeiçoamento e Seleção PSG.",
       "category": "Cursos e matrículas",
       "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
       "status": "found",
       "pending_ids": [],
       "approved_by": null,
@@ -3856,8 +3440,8 @@
       "content": "O portal de matrículas lista as turmas com filtros por cidade, unidade, segmento, modalidade, tipo de formação, turno e período, e tem carrinho de compras.",
       "category": "Cursos e matrículas",
       "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
       "status": "found",
       "pending_ids": [],
       "approved_by": null,
@@ -3869,191 +3453,14 @@
       "update_proposal": null
     },
     {
-      "id": "unit-CEP-CZ",
-      "kind": "unit_courses",
-      "title": "Cursos listados no portal: Centro de Educação Profissional de Cajazeiras",
-      "content": "Na consulta de 09/11/2026, o portal de matrículas listava 15 turma(s) em Centro de Educação Profissional de Cajazeiras (Cajazeiras), em 15 curso(s) diferente(s), como: Artesanato em Crochê, Design de Corte Masculino Avançado, Formação de Preço de Venda, Oratória - Práticas e Técnicas, Técnicas de Manicure e Pedicure e Unhas Decoradas e Maquiagem Para Pele Madura e mais 9.",
-      "category": "Cursos e matrículas",
-      "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
-      "status": "awaiting_validation",
-      "pending_ids": [],
-      "approved_by": null,
-      "approved_at": null,
-      "volatile": true,
-      "speakable": true,
-      "unit": "CEP-CZ",
-      "note": "Lista de turmas muda com frequência; o robô só a cita com a data da consulta.",
-      "update_proposal": null
-    },
-    {
-      "id": "areas-CEP-CZ",
-      "kind": "unit_areas",
-      "title": "Áreas dos cursos listados: Centro de Educação Profissional de Cajazeiras",
-      "content": "Na consulta de 09/11/2026, as turmas de Centro de Educação Profissional de Cajazeiras estavam nas áreas: Ambiente e Saúde, Produção Cultural e Design, Gestão e Negócios, Informação e Comunicação e Turismo, Hospitalidade e Lazer.",
-      "category": "Cursos e matrículas",
-      "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
-      "status": "awaiting_validation",
-      "pending_ids": [],
-      "approved_by": null,
-      "approved_at": null,
-      "volatile": true,
-      "speakable": true,
-      "unit": "CEP-CZ",
-      "note": "Áreas do portal; não são necessariamente os eixos tecnológicos da unidade.",
-      "update_proposal": null
-    },
-    {
-      "id": "contact-CEP-CZ",
-      "kind": "contact",
-      "title": "Endereço e contato no portal: Centro de Educação Profissional de Cajazeiras",
-      "content": "Segundo o portal de matrículas, Centro de Educação Profissional de Cajazeiras fica em Rua Francisca Fernandes Claudino, 705, Centro, Cajazeiras, CEP 58900-000, telefone (83) 3531-3553.",
-      "category": "Cursos e matrículas",
-      "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
-      "status": "awaiting_validation",
-      "pending_ids": [
-        "pend-divergencia-cajazeiras"
-      ],
-      "approved_by": null,
-      "approved_at": null,
-      "volatile": false,
-      "speakable": true,
-      "unit": "CEP-CZ",
-      "note": "As páginas oficiais já divergiam neste ponto (pendência). O portal traz uma versão diferente das já registradas. O portal não resolve a divergência sozinho: a decisão é do operador.",
-      "update_proposal": null
-    },
-    {
-      "id": "unit-PATOS",
-      "kind": "unit_courses",
-      "title": "Cursos listados no portal: Centro de Educação Profissional de Patos",
-      "content": "Na consulta de 09/11/2026, o portal de matrículas listava 16 turma(s) em Centro de Educação Profissional de Patos (Patos), em 14 curso(s) diferente(s), como: Técnicas de Maquiagem, Chocolates e Doces Finos, Brow Lamination, Culinária Nordestina, Corte de Cabelo: Tendências Atuais e Tranças e Penteados e mais 8.",
-      "category": "Cursos e matrículas",
-      "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
-      "status": "awaiting_validation",
-      "pending_ids": [],
-      "approved_by": null,
-      "approved_at": null,
-      "volatile": true,
-      "speakable": true,
-      "unit": "PATOS",
-      "note": "Lista de turmas muda com frequência; o robô só a cita com a data da consulta.",
-      "update_proposal": null
-    },
-    {
-      "id": "areas-PATOS",
-      "kind": "unit_areas",
-      "title": "Áreas dos cursos listados: Centro de Educação Profissional de Patos",
-      "content": "Na consulta de 09/11/2026, as turmas de Centro de Educação Profissional de Patos estavam nas áreas: Ambiente e Saúde, Turismo, Hospitalidade e Lazer, Gestão e Negócios, Produção Alimentícia, Informação e Comunicação e Produção Cultural e Design.",
-      "category": "Cursos e matrículas",
-      "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
-      "status": "awaiting_validation",
-      "pending_ids": [],
-      "approved_by": null,
-      "approved_at": null,
-      "volatile": true,
-      "speakable": true,
-      "unit": "PATOS",
-      "note": "Áreas do portal; não são necessariamente os eixos tecnológicos da unidade.",
-      "update_proposal": null
-    },
-    {
-      "id": "contact-PATOS",
-      "kind": "contact",
-      "title": "Endereço e contato no portal: Centro de Educação Profissional de Patos",
-      "content": "Segundo o portal de matrículas, Centro de Educação Profissional de Patos fica em Rua Presidente Epitácio Pessoa, 80, Centro, Patos, CEP 58700-020, telefone (83) 3415-7457.",
-      "category": "Cursos e matrículas",
-      "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
-      "status": "found",
-      "pending_ids": [
-        "pend-patos"
-      ],
-      "approved_by": null,
-      "approved_at": null,
-      "volatile": false,
-      "speakable": true,
-      "unit": "PATOS",
-      "note": "Sem informação anterior para comparar.",
-      "update_proposal": null
-    },
-    {
-      "id": "unit-TADROS",
-      "kind": "unit_courses",
-      "title": "Cursos listados no portal: Centro de Tecnologia e Formação Profissional José Roberto Tadros",
-      "content": "Na consulta de 09/11/2026, o portal de matrículas listava 10 turma(s) em Centro de Tecnologia e Formação Profissional José Roberto Tadros (João Pessoa), em 6 curso(s) diferente(s), como: Designer de Sobrancelhas, Brow Lamination, Extensão de Cílios: Fio a Fio, Extensão de Cílios: Volume Russo, Colorimetria e Design de Sobrancelhas.",
-      "category": "Cursos e matrículas",
-      "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
-      "status": "awaiting_validation",
-      "pending_ids": [],
-      "approved_by": null,
-      "approved_at": null,
-      "volatile": true,
-      "speakable": true,
-      "unit": "TADROS",
-      "note": "Lista de turmas muda com frequência; o robô só a cita com a data da consulta.",
-      "update_proposal": null
-    },
-    {
-      "id": "areas-TADROS",
-      "kind": "unit_areas",
-      "title": "Áreas dos cursos listados: Centro de Tecnologia e Formação Profissional José Roberto Tadros",
-      "content": "Na consulta de 09/11/2026, as turmas de Centro de Tecnologia e Formação Profissional José Roberto Tadros estavam nas áreas: Ambiente e Saúde.",
-      "category": "Cursos e matrículas",
-      "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
-      "status": "awaiting_validation",
-      "pending_ids": [],
-      "approved_by": null,
-      "approved_at": null,
-      "volatile": true,
-      "speakable": true,
-      "unit": "TADROS",
-      "note": "Áreas do portal; não são necessariamente os eixos tecnológicos da unidade.",
-      "update_proposal": null
-    },
-    {
-      "id": "contact-TADROS",
-      "kind": "contact",
-      "title": "Endereço e contato no portal: Centro de Tecnologia e Formação Profissional José Roberto Tadros",
-      "content": "Segundo o portal de matrículas, Centro de Tecnologia e Formação Profissional José Roberto Tadros fica em R. Elisa de Carvalho, Gramame, João Pessoa, CEP 58068-033, telefone (83) 9411-8999.",
-      "category": "Cursos e matrículas",
-      "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
-      "status": "found",
-      "pending_ids": [
-        "pend-tadros"
-      ],
-      "approved_by": null,
-      "approved_at": null,
-      "volatile": false,
-      "speakable": true,
-      "unit": "TADROS",
-      "note": "Sem informação anterior para comparar.",
-      "update_proposal": null
-    },
-    {
       "id": "unit-CEP-JP",
       "kind": "unit_courses",
       "title": "Cursos listados no portal: Centro de Educação Profissional de João Pessoa",
-      "content": "Na consulta de 09/11/2026, o portal de matrículas listava 39 turma(s) em Centro de Educação Profissional de João Pessoa (João Pessoa), em 37 curso(s) diferente(s), como: Designer de Sobrancelhas, Manutenção Básica de Computadores Para Usuários, Análise de Coloração Pessoal, Palestra: Uma Nova Forma de Usar o Autocad: Utilizando Blocos Dinâmicos, Parâmetros e Automações, Clareamento de Axilas e Virilhas e Palestra: Anúncios Que Vendem: Princípios Básicos do Tráfego Pago e mais 31.",
+      "content": "Na consulta de 10/11/2026, o portal de matrículas listava 36 turma(s) em Centro de Educação Profissional de João Pessoa (João Pessoa), em 35 curso(s) diferente(s), como: Designer de Sobrancelhas, Análise de Coloração Pessoal, Palestra: Uma Nova Forma de Usar o Autocad: Utilizando Blocos Dinâmicos, Parâmetros e Automações, Clareamento de Axilas e Virilhas, Técnicas de Rejuvenescimento Facial e Clareamento de Manchas e Palestra: Automaquiagem Para Imagem Profissional e mais 29.",
       "category": "Cursos e matrículas",
       "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
       "status": "awaiting_validation",
       "pending_ids": [
         "pend-cep-jp-cursos"
@@ -4070,11 +3477,11 @@
       "id": "areas-CEP-JP",
       "kind": "unit_areas",
       "title": "Áreas dos cursos listados: Centro de Educação Profissional de João Pessoa",
-      "content": "Na consulta de 09/11/2026, as turmas de Centro de Educação Profissional de João Pessoa estavam nas áreas: Informação e Comunicação, Ambiente e Saúde, Gestão e Negócios e Produção Cultural e Design.",
+      "content": "Na consulta de 10/11/2026, as turmas de Centro de Educação Profissional de João Pessoa estavam nas áreas: Informação e Comunicação, Ambiente e Saúde, Produção Cultural e Design e Gestão e Negócios.",
       "category": "Cursos e matrículas",
       "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
       "status": "awaiting_validation",
       "pending_ids": [
         "pend-cep-jp-eixos"
@@ -4094,8 +3501,8 @@
       "content": "Segundo o portal de matrículas, Centro de Educação Profissional de João Pessoa fica em Av. Dom Pedro I, 389, Centro, João Pessoa, CEP 58013-020, telefone (83) 3214-2345.",
       "category": "Cursos e matrículas",
       "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
       "status": "divergent",
       "pending_ids": [],
       "approved_by": null,
@@ -4107,71 +3514,73 @@
       "update_proposal": null
     },
     {
-      "id": "unit-CEP-CG",
+      "id": "unit-CEP-CZ",
       "kind": "unit_courses",
-      "title": "Cursos listados no portal: Centro de Educação Profissional de Campina Grande",
-      "content": "Na consulta de 09/11/2026, o portal de matrículas listava 25 turma(s) em Centro de Educação Profissional de Campina Grande (Campina Grande), em 24 curso(s) diferente(s), como: Preparo de Ceias Natalinas, Oratória - Práticas e Técnicas, Excel Recursos Avançados, Informática Aplicada À Gestão, Modelagem Básica Para Vestuário e Oficina: Corte de Cabelo Masculino e mais 18.",
+      "title": "Cursos listados no portal: Centro de Educação Profissional de Cajazeiras",
+      "content": "Na consulta de 10/11/2026, o portal de matrículas listava 13 turma(s) em Centro de Educação Profissional de Cajazeiras (Cajazeiras), em 13 curso(s) diferente(s), como: Maquiagem Para Pele Madura, Artesanato em Crochê, Introdução À Informática Com Digitação, Oficina: Spa dos Pés, Oratória - Práticas e Técnicas e Prospecção de Clientes: Identifique Seus Clientes Potenciais e mais 7.",
       "category": "Cursos e matrículas",
       "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
       "status": "awaiting_validation",
       "pending_ids": [],
       "approved_by": null,
       "approved_at": null,
       "volatile": true,
       "speakable": true,
-      "unit": "CEP-CG",
+      "unit": "CEP-CZ",
       "note": "Lista de turmas muda com frequência; o robô só a cita com a data da consulta.",
       "update_proposal": null
     },
     {
-      "id": "areas-CEP-CG",
+      "id": "areas-CEP-CZ",
       "kind": "unit_areas",
-      "title": "Áreas dos cursos listados: Centro de Educação Profissional de Campina Grande",
-      "content": "Na consulta de 09/11/2026, as turmas de Centro de Educação Profissional de Campina Grande estavam nas áreas: Ambiente e Saúde, Gestão e Negócios, Turismo, Hospitalidade e Lazer, Informação e Comunicação e Produção Cultural e Design.",
+      "title": "Áreas dos cursos listados: Centro de Educação Profissional de Cajazeiras",
+      "content": "Na consulta de 10/11/2026, as turmas de Centro de Educação Profissional de Cajazeiras estavam nas áreas: Ambiente e Saúde, Produção Cultural e Design, Informação e Comunicação, Gestão e Negócios e Turismo, Hospitalidade e Lazer.",
       "category": "Cursos e matrículas",
       "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
       "status": "awaiting_validation",
       "pending_ids": [],
       "approved_by": null,
       "approved_at": null,
       "volatile": true,
       "speakable": true,
-      "unit": "CEP-CG",
+      "unit": "CEP-CZ",
       "note": "Áreas do portal; não são necessariamente os eixos tecnológicos da unidade.",
       "update_proposal": null
     },
     {
-      "id": "contact-CEP-CG",
+      "id": "contact-CEP-CZ",
       "kind": "contact",
-      "title": "Endereço e contato no portal: Centro de Educação Profissional de Campina Grande",
-      "content": "Segundo o portal de matrículas, Centro de Educação Profissional de Campina Grande fica em Av. Manoel Tavares, 300, Jardim Tavares, Campina Grande, CEP 58402-068, telefone (83) 3343-7997.",
+      "title": "Endereço e contato no portal: Centro de Educação Profissional de Cajazeiras",
+      "content": "Segundo o portal de matrículas, Centro de Educação Profissional de Cajazeiras fica em Rua Francisca Fernandes Claudino, 705, Centro, Cajazeiras, CEP 58900-000, telefone (83) 3531-3553.",
       "category": "Cursos e matrículas",
       "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
-      "status": "divergent",
-      "pending_ids": [],
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
+      "status": "awaiting_validation",
+      "pending_ids": [
+        "pend-divergencia-cajazeiras"
+      ],
       "approved_by": null,
       "approved_at": null,
       "volatile": false,
       "speakable": true,
-      "unit": "CEP-CG",
-      "note": "Difere do que consta na base (unit-campina-grande): telefone. Confira antes de aprovar.",
+      "unit": "CEP-CZ",
+      "note": "As páginas oficiais já divergiam neste ponto (pendência). O portal traz uma versão diferente das já registradas. O portal não resolve a divergência sozinho: a decisão é do operador.",
       "update_proposal": null
     },
     {
       "id": "unit-CENDEGE",
       "kind": "unit_courses",
       "title": "Cursos listados no portal: Cendege-centro de Desenvolvimento Gerencial",
-      "content": "Na consulta de 09/11/2026, o portal de matrículas listava 6 turma(s) em Cendege-centro de Desenvolvimento Gerencial (João Pessoa), em 6 curso(s) diferente(s), como: Criação de Conteúdo Para Redes Sociais Com Inteligência Artificial: Fotografia, Vídeo e Texto, Excel - Criando Planilhas Interativas Com Dashboard, Técnicas Básicas Para Porteiro, Desenvolvimento de Equipes, Marketing de Conteúdo em Redes Sociais Com Inteligência Artificial e Vendas de Alta Performance.",
+      "content": "Na consulta de 10/11/2026, o portal de matrículas listava 5 turma(s) em Cendege-centro de Desenvolvimento Gerencial (João Pessoa), em 5 curso(s) diferente(s), como: Técnicas Básicas Para Porteiro, Desenvolvimento de Equipes, Marketing de Conteúdo em Redes Sociais Com Inteligência Artificial, Criação de Conteúdo Para Redes Sociais Com Inteligência Artificial: Fotografia, Vídeo e Texto e Vendas de Alta Performance.",
       "category": "Cursos e matrículas",
       "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
       "status": "awaiting_validation",
       "pending_ids": [],
       "approved_by": null,
@@ -4186,11 +3595,11 @@
       "id": "areas-CENDEGE",
       "kind": "unit_areas",
       "title": "Áreas dos cursos listados: Cendege-centro de Desenvolvimento Gerencial",
-      "content": "Na consulta de 09/11/2026, as turmas de Cendege-centro de Desenvolvimento Gerencial estavam nas áreas: Gestão e Negócios, Produção Cultural e Design, Informação e Comunicação e Infraestrutura.",
+      "content": "Na consulta de 10/11/2026, as turmas de Cendege-centro de Desenvolvimento Gerencial estavam nas áreas: Gestão e Negócios, Infraestrutura e Produção Cultural e Design.",
       "category": "Cursos e matrículas",
       "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
       "status": "awaiting_validation",
       "pending_ids": [],
       "approved_by": null,
@@ -4208,8 +3617,8 @@
       "content": "Segundo o portal de matrículas, Cendege-centro de Desenvolvimento Gerencial fica em Rua Desembargador Souto Maior, 115, Centro, João Pessoa, CEP 58013-190, telefone (83) 3214-2340.",
       "category": "Cursos e matrículas",
       "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
       "status": "confirmed",
       "pending_ids": [],
       "approved_by": "fonte oficial (duas páginas coincidem)",
@@ -4221,14 +3630,189 @@
       "update_proposal": null
     },
     {
+      "id": "unit-TADROS",
+      "kind": "unit_courses",
+      "title": "Cursos listados no portal: Centro de Tecnologia e Formação Profissional José Roberto Tadros",
+      "content": "Na consulta de 10/11/2026, o portal de matrículas listava 8 turma(s) em Centro de Tecnologia e Formação Profissional José Roberto Tadros (João Pessoa), em 5 curso(s) diferente(s), como: Brow Lamination, Extensão de Cílios: Fio a Fio, Extensão de Cílios: Volume Russo, Colorimetria e Design de Sobrancelhas.",
+      "category": "Cursos e matrículas",
+      "source_id": "pb-programacao-cursos",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
+      "status": "awaiting_validation",
+      "pending_ids": [],
+      "approved_by": null,
+      "approved_at": null,
+      "volatile": true,
+      "speakable": true,
+      "unit": "TADROS",
+      "note": "Lista de turmas muda com frequência; o robô só a cita com a data da consulta.",
+      "update_proposal": null
+    },
+    {
+      "id": "areas-TADROS",
+      "kind": "unit_areas",
+      "title": "Áreas dos cursos listados: Centro de Tecnologia e Formação Profissional José Roberto Tadros",
+      "content": "Na consulta de 10/11/2026, as turmas de Centro de Tecnologia e Formação Profissional José Roberto Tadros estavam nas áreas: Ambiente e Saúde.",
+      "category": "Cursos e matrículas",
+      "source_id": "pb-programacao-cursos",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
+      "status": "awaiting_validation",
+      "pending_ids": [],
+      "approved_by": null,
+      "approved_at": null,
+      "volatile": true,
+      "speakable": true,
+      "unit": "TADROS",
+      "note": "Áreas do portal; não são necessariamente os eixos tecnológicos da unidade.",
+      "update_proposal": null
+    },
+    {
+      "id": "contact-TADROS",
+      "kind": "contact",
+      "title": "Endereço e contato no portal: Centro de Tecnologia e Formação Profissional José Roberto Tadros",
+      "content": "Segundo o portal de matrículas, Centro de Tecnologia e Formação Profissional José Roberto Tadros fica em R. Elisa de Carvalho, 535, Gramame, João Pessoa, CEP 58068-033, telefone (83) 9411-8999.",
+      "category": "Cursos e matrículas",
+      "source_id": "pb-programacao-cursos",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
+      "status": "found",
+      "pending_ids": [
+        "pend-tadros"
+      ],
+      "approved_by": null,
+      "approved_at": null,
+      "volatile": false,
+      "speakable": true,
+      "unit": "TADROS",
+      "note": "Sem informação anterior para comparar.",
+      "update_proposal": null
+    },
+    {
+      "id": "unit-PATOS",
+      "kind": "unit_courses",
+      "title": "Cursos listados no portal: Centro de Educação Profissional de Patos",
+      "content": "Na consulta de 10/11/2026, o portal de matrículas listava 13 turma(s) em Centro de Educação Profissional de Patos (Patos), em 11 curso(s) diferente(s), como: Técnicas de Depilação, Técnicas de Maquiagem, Corte de Cabelo: Tendências Atuais, Ventosaterapia, Workshop: Estratégias de Vendas Nas Redes Sociais e Chocolates e Doces Finos e mais 5.",
+      "category": "Cursos e matrículas",
+      "source_id": "pb-programacao-cursos",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
+      "status": "awaiting_validation",
+      "pending_ids": [],
+      "approved_by": null,
+      "approved_at": null,
+      "volatile": true,
+      "speakable": true,
+      "unit": "PATOS",
+      "note": "Lista de turmas muda com frequência; o robô só a cita com a data da consulta.",
+      "update_proposal": null
+    },
+    {
+      "id": "areas-PATOS",
+      "kind": "unit_areas",
+      "title": "Áreas dos cursos listados: Centro de Educação Profissional de Patos",
+      "content": "Na consulta de 10/11/2026, as turmas de Centro de Educação Profissional de Patos estavam nas áreas: Ambiente e Saúde, Gestão e Negócios, Produção Alimentícia, Informação e Comunicação, Turismo, Hospitalidade e Lazer e Produção Cultural e Design.",
+      "category": "Cursos e matrículas",
+      "source_id": "pb-programacao-cursos",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
+      "status": "awaiting_validation",
+      "pending_ids": [],
+      "approved_by": null,
+      "approved_at": null,
+      "volatile": true,
+      "speakable": true,
+      "unit": "PATOS",
+      "note": "Áreas do portal; não são necessariamente os eixos tecnológicos da unidade.",
+      "update_proposal": null
+    },
+    {
+      "id": "contact-PATOS",
+      "kind": "contact",
+      "title": "Endereço e contato no portal: Centro de Educação Profissional de Patos",
+      "content": "Segundo o portal de matrículas, Centro de Educação Profissional de Patos fica em Rua Presidente Epitácio Pessoa, 80, Centro, Patos, CEP 58700-020, telefone (83) 3415-7457.",
+      "category": "Cursos e matrículas",
+      "source_id": "pb-programacao-cursos",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
+      "status": "found",
+      "pending_ids": [
+        "pend-patos"
+      ],
+      "approved_by": null,
+      "approved_at": null,
+      "volatile": false,
+      "speakable": true,
+      "unit": "PATOS",
+      "note": "Sem informação anterior para comparar.",
+      "update_proposal": null
+    },
+    {
+      "id": "unit-CEP-CG",
+      "kind": "unit_courses",
+      "title": "Cursos listados no portal: Centro de Educação Profissional de Campina Grande",
+      "content": "Na consulta de 10/11/2026, o portal de matrículas listava 24 turma(s) em Centro de Educação Profissional de Campina Grande (Campina Grande), em 24 curso(s) diferente(s), como: Oratória - Práticas e Técnicas, Excel Recursos Avançados, Informática Aplicada À Gestão, Modelagem Básica Para Vestuário, Oficina: Corte de Cabelo Masculino e Palestra: Turbine Suas Vendas de Final de Ano e mais 18.",
+      "category": "Cursos e matrículas",
+      "source_id": "pb-programacao-cursos",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
+      "status": "awaiting_validation",
+      "pending_ids": [],
+      "approved_by": null,
+      "approved_at": null,
+      "volatile": true,
+      "speakable": true,
+      "unit": "CEP-CG",
+      "note": "Lista de turmas muda com frequência; o robô só a cita com a data da consulta.",
+      "update_proposal": null
+    },
+    {
+      "id": "areas-CEP-CG",
+      "kind": "unit_areas",
+      "title": "Áreas dos cursos listados: Centro de Educação Profissional de Campina Grande",
+      "content": "Na consulta de 10/11/2026, as turmas de Centro de Educação Profissional de Campina Grande estavam nas áreas: Ambiente e Saúde, Gestão e Negócios, Informação e Comunicação, Produção Cultural e Design e Turismo, Hospitalidade e Lazer.",
+      "category": "Cursos e matrículas",
+      "source_id": "pb-programacao-cursos",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
+      "status": "awaiting_validation",
+      "pending_ids": [],
+      "approved_by": null,
+      "approved_at": null,
+      "volatile": true,
+      "speakable": true,
+      "unit": "CEP-CG",
+      "note": "Áreas do portal; não são necessariamente os eixos tecnológicos da unidade.",
+      "update_proposal": null
+    },
+    {
+      "id": "contact-CEP-CG",
+      "kind": "contact",
+      "title": "Endereço e contato no portal: Centro de Educação Profissional de Campina Grande",
+      "content": "Segundo o portal de matrículas, Centro de Educação Profissional de Campina Grande fica em Av. Manoel Tavares, 300, Jardim Tavares, Campina Grande, CEP 58402-068, telefone (83) 3343-7997.",
+      "category": "Cursos e matrículas",
+      "source_id": "pb-programacao-cursos",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
+      "status": "divergent",
+      "pending_ids": [],
+      "approved_by": null,
+      "approved_at": null,
+      "volatile": false,
+      "speakable": true,
+      "unit": "CEP-CG",
+      "note": "Difere do que consta na base (unit-campina-grande): telefone. Confira antes de aprovar.",
+      "update_proposal": null
+    },
+    {
       "id": "unit-GASTRO-HOTELARIA",
       "kind": "unit_courses",
       "title": "Cursos listados no portal: Escola Senac de Gastronomia e Hotelaria",
-      "content": "Na consulta de 09/11/2026, o portal de matrículas listava 3 turma(s) em Escola Senac de Gastronomia e Hotelaria (João Pessoa), em 3 curso(s) diferente(s), como: Oficina: Drinks a Base de Coco, Oficina: Drinques Natalinos e Oficina: Hamburguer Gourmet.",
+      "content": "Na consulta de 10/11/2026, o portal de matrículas listava 2 turma(s) em Escola Senac de Gastronomia e Hotelaria (João Pessoa), em 2 curso(s) diferente(s), como: Oficina: Drinks a Base de Coco e Oficina: Drinques Natalinos.",
       "category": "Cursos e matrículas",
       "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
       "status": "awaiting_validation",
       "pending_ids": [],
       "approved_by": null,
@@ -4243,11 +3827,11 @@
       "id": "areas-GASTRO-HOTELARIA",
       "kind": "unit_areas",
       "title": "Áreas dos cursos listados: Escola Senac de Gastronomia e Hotelaria",
-      "content": "Na consulta de 09/11/2026, as turmas de Escola Senac de Gastronomia e Hotelaria estavam nas áreas: Turismo, Hospitalidade e Lazer,  Sem Eixo Tecnológico e Produção Alimentícia.",
+      "content": "Na consulta de 10/11/2026, as turmas de Escola Senac de Gastronomia e Hotelaria estavam nas áreas: Turismo, Hospitalidade e Lazer e  Sem Eixo Tecnológico.",
       "category": "Cursos e matrículas",
       "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
       "status": "awaiting_validation",
       "pending_ids": [],
       "approved_by": null,
@@ -4265,8 +3849,8 @@
       "content": "Segundo o portal de matrículas, Escola Senac de Gastronomia e Hotelaria fica em Av. Cabo Branco, 2788, Cabo Branco, João Pessoa, CEP 58045-010, telefone (83) 3031-3547.",
       "category": "Cursos e matrículas",
       "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
       "status": "awaiting_validation",
       "pending_ids": [
         "pend-divergencia-gastronomia"
@@ -4283,11 +3867,11 @@
       "id": "offer-modalities",
       "kind": "offer",
       "title": "Modalidades das turmas listadas no portal",
-      "content": "Na consulta de 09/11/2026, as turmas listadas por modalidade eram: Formação Inicial e Continuada: 101 e Sem Modalidade: 13.",
+      "content": "Na consulta de 10/11/2026, as turmas listadas por modalidade eram: Formação Inicial e Continuada: 89 e Sem Modalidade: 12.",
       "category": "Cursos e matrículas",
       "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
       "status": "awaiting_validation",
       "pending_ids": [
         "pend-valores-vagas"
@@ -4304,11 +3888,11 @@
       "id": "requirements",
       "kind": "requirements",
       "title": "Requisitos de ingresso nas turmas do portal",
-      "content": "Requisitos de ingresso informados nas turmas (variam por curso); o portal não informou escolaridade mínima nas turmas listadas; idade mínima — 16 anos (47), 18 anos (24), 15 anos (5) e 14 anos (4) e mais 2.",
+      "content": "Requisitos de ingresso informados nas turmas (variam por curso); o portal não informou escolaridade mínima nas turmas listadas; idade mínima — 16 anos (41), 18 anos (21), 14 anos (4) e 15 anos (4) e mais 2.",
       "category": "Cursos e matrículas",
       "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
       "status": "awaiting_validation",
       "pending_ids": [],
       "approved_by": null,
@@ -4323,11 +3907,11 @@
       "id": "values-vagas",
       "kind": "volatile",
       "title": "Valores e vagas no portal (dado volátil)",
-      "content": "Na consulta de 09/11/2026, 114 de 114 turmas listadas tinham vagas e 17 eram gratuitas. Valores e vagas variam por turma e mudam a toda hora.",
+      "content": "Na consulta de 10/11/2026, 101 de 101 turmas listadas tinham vagas e 15 eram gratuitas. Valores e vagas variam por turma e mudam a toda hora.",
       "category": "Cursos e matrículas",
       "source_id": "pb-programacao-cursos",
-      "consulted_at": "2026-11-09T11:08:32+00:00",
-      "next_review": "2026-11-16",
+      "consulted_at": "2026-11-10T12:52:55+00:00",
+      "next_review": "2026-11-17",
       "status": "awaiting_validation",
       "pending_ids": [
         "pend-valores-vagas"
@@ -4335,9 +3919,9 @@
       "approved_by": null,
       "approved_at": null,
       "volatile": true,
-      "speakable": false,
+      "speakable": true,
       "unit": null,
-      "note": "Valores e vagas ficam no arquivo com a data, mas o robô não os fala: orienta o visitante ao portal.",
+      "note": "O robô fala valores, vagas, datas e horários das turmas, sempre com a data da consulta e a ressalva de que mudam.",
       "update_proposal": null
     }
   ],
@@ -4623,6 +4207,11 @@
       "at": "2026-11-09T11:08:32+00:00",
       "kind": "consulta",
       "summary": "114 turma(s), 31 registro(s) organizados."
+    },
+    {
+      "at": "2026-11-10T12:52:55+00:00",
+      "kind": "consulta",
+      "summary": "101 turma(s), 31 registro(s) organizados."
     }
   ]
 }
