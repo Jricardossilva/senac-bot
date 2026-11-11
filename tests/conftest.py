@@ -15,4 +15,5 @@ def fresh_robot(monkeypatch):
     controller = RobotController(hardware, StateManager(), events)
     monkeypatch.setattr(main, "events", events)
     monkeypatch.setattr(main, "controller", controller)
+    main.chat_limiter.reset()  # o limite do chat é global: não deve vazar entre testes
     return controller

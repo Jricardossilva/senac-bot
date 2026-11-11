@@ -16,8 +16,10 @@ from backend.policy.messages import (
     FREE_CAVEAT,
     IDENTITY,
     MANIPULATION,
+    NO_EVALUATION,
     UNCONFIRMED_AVAILABILITY,
 )
+from backend.policy.reputation import output_issue
 
 logger = logging.getLogger("senac_bot.policy")
 
@@ -155,8 +157,14 @@ class OutboundPolicy:
             issues.append("identidade_humana")
             return Outcome(IDENTITY, tuple(issues))
 
+        if generated:
+            issue = output_issue(text)
+            if issue:
+                issues.append(issue)
+                return Outcome(NO_EVALUATION, tuple(issues))
+
         result = text
-        reduced = self._drop_unconfirmed_availability(result)
+        reduced =self._drop_unconfirmed_availability(result)
         if reduced is not None:
             issues.append("disponibilidade_sem_confirmacao")
             result = reduced if reduced else UNCONFIRMED_AVAILABILITY

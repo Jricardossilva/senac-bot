@@ -45,6 +45,12 @@ class EventManager:
         self._version = 0  # muda a cada alteração de itens/estado: invalida o cache do evento ativo
         self._last_run: dict[str, datetime] = {}
 
+    def _guard_not_researching(self, event_id: str) -> None:
+        """A pesquisa grava a lista inteira de itens/fontes ao terminar: editar durante ela perderia a edição do operador."""
+        with self._lock:
+            if self._job.get("running") and self._job.get("event_id") == event_id:
+                raise EventStoreError("Pesquisa em andamento neste evento: aguarde terminar para alterar informações ou fontes.", 409)
+
     # ------------------------------------------------------------------ consulta
     def summarize(self, event: Event) -> dict[str, Any]:
         items = self.store.items(event.id)
@@ -105,6 +111,7 @@ class EventManager:
     # ------------------------------------------------------------------ fontes
     def add_source(self, event_id: str, url: str, kind: str = "other", trust: str = "official") -> dict[str, Any]:
         self.store.get(event_id)
+        self._guard_not_researching(event_id)
         if not is_public_url(url, system_resolver):
             raise EventStoreError("Endereço não permitido: informe um site público (http ou https).")
         if trust not in ("official", "third_party", "candidate"):
@@ -122,6 +129,7 @@ class EventManager:
         """Promove uma fonte candidata a oficial (ou rebaixa). Os itens já encontrados continuam aguardando validação."""
         if trust not in ("official", "third_party", "candidate"):
             raise EventStoreError("Confiança da fonte inválida.")
+        self._guard_not_researching(event_id)
         sources = self.store.sources(event_id)
         source = next((s for s in sources if s.id == source_id), None)
         if source is None:
@@ -132,6 +140,7 @@ class EventManager:
         return source.__dict__
 
     def remove_source(self, event_id: str, source_id: str) -> None:
+        self._guard_not_researching(event_id)
         sources = self.store.sources(event_id)
         remaining = [s for s in sources if s.id != source_id]
         if len(remaining) == len(sources):
@@ -142,6 +151,7 @@ class EventManager:
     # ------------------------------------------------------------------ validação humana
     def _decide(self, event_id: str, item_id: str, change) -> dict[str, Any]:
         with self._lock:
+            self._guard_not_researching(event_id)
             items = self.store.items(event_id)
             item = next((i for i in items if i.id == item_id), None)
             if item is None:
@@ -207,6 +217,7 @@ class EventManager:
         if check_message(text) is not None:
             raise EventStoreError("O texto parece uma instrução ao robô ou traz informação sigilosa: reescreva como informação do evento.")
         with self._lock:
+            self._guard_not_researching(event_id)
             items = self.store.items(event_id)
             stamp = now_iso()
             item = EventItem(id=_item_id_unique("operador", title, text, {i.id for i in items}), category=category, title=title.strip()[:120], content=text,
@@ -221,6 +232,7 @@ class EventManager:
     def approve_all_pending(self, event_id: str, statuses: tuple[str, ...] = ("pending",)) -> int:
         """Aprovação em lote, só de itens aguardando validação (nunca divergentes, rejeitados ou encontrados em fonte candidata)."""
         with self._lock:
+            self._guard_not_researching(event_id)
             items = self.store.items(event_id)
             count = 0
             for item in items:

@@ -1,5 +1,7 @@
 // Gerenciador de Eventos (painel do operador). Nada daqui aparece na tela do visitante.
 // Todo texto vindo do servidor entra na página por textContent (nunca innerHTML).
+import { authFetch } from "/assets/auth.js";
+
 const $ = (selector, root = document) => root.querySelector(selector);
 
 const STATUS_CLASS = { confirmed: "ok", pending: "warn", found: "warn", divergent: "bad", stale: "muted", rejected: "muted" };
@@ -28,7 +30,7 @@ export function el(tag, attrs = {}, ...children) {
 }
 
 export async function api(path, options = {}) {
-  const response = await fetch(path, {
+  const response = await authFetch(path, {
     method: options.method || "GET",
     headers: { "Content-Type": "application/json" },
     body: options.body === undefined ? undefined : JSON.stringify(options.body)

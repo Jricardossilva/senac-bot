@@ -36,6 +36,8 @@ class Settings:
     db_password: str
     db_charset: str
     db_ssl: bool
+    operator_token: str
+    chat_rate_per_minute: int
 
 
 def _int_env(name: str, default: int) -> int:
@@ -98,4 +100,6 @@ def load_settings() -> Settings:
         db_password=os.getenv("DB_PASSWORD", ""),
         db_charset=os.getenv("DB_CHARSET", "").strip() or "utf8mb4",
         db_ssl=_bool_env("DB_SSL", False),
+        operator_token=os.getenv("OPERATOR_TOKEN", "").strip(),
+        chat_rate_per_minute=max(0, _int_env("CHAT_RATE_PER_MINUTE", 30)),
     )

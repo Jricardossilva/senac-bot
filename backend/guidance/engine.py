@@ -149,6 +149,9 @@ class Guidance:
     def clear(self) -> None:
         self._sessions.clear()
 
+    def discard(self, session_id: str | None) -> None:
+        self._sessions.discard(session_id)
+
     # ------------------------------------------------------------------ consulta ao catálogo
     def _usable(self, offer: Offer) -> bool:
         return self._kb.effective_offer(offer) != "pending"

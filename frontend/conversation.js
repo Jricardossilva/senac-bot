@@ -29,6 +29,7 @@ const DEFAULT_TIMINGS = Object.freeze({
   maxNetworkFailures: 3,
   maxRestartsPerWindow: 12,
   restartWindowMs: 15000,
+  fillerMaxMs: 6000, // tempo máximo esperando a expressão de reflexão terminar de falar
   reflectionChance: 0.5 // chance de usar uma expressão natural de reflexão antes de respostas que exigem raciocínio
 });
 
@@ -359,10 +360,25 @@ export class VoiceConversation {
 
     // A expressão de reflexão fala em paralelo à consulta (não atrasa o pedido ao Gemini); se a resposta
     // chegar antes dela terminar, espera-a terminar para não sobrepor os dois áudios.
+    // O Chrome às vezes não dispara o fim da fala: um vigia libera a espera para a resposta nunca ficar presa.
     let fillerDone = null;
     if (this.#deps.speech.supported && this.#shouldReflect(text)) {
       fillerDone = new Promise((resolve) => {
-        if (!this.#deps.speech.speak(this.#pickFiller(), { onEnd: resolve, onError: resolve })) resolve();
+        const guard = window.setTimeout(() => {
+          this.#deps.speech.cancel();
+          resolve();
+        }, this.#timings.fillerMaxMs);
+        const done = () => {
+          window.clearTimeout(guard);
+          resolve();
+        };
+        let started = false;
+        try {
+          started = this.#deps.speech.speak(this.#pickFiller(), { onEnd: done, onError: done });
+        } catch {
+          started = false;
+        }
+        if (!started) done();
       });
     }
 

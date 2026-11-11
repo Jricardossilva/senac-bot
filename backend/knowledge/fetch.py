@@ -3,6 +3,7 @@
 Usada pelo atualizador da base institucional (domínios oficiais do Senac) e pelo Gerenciador de Eventos (domínios
 informados pelo operador). Nunca acessa áreas autenticadas: 401/403 no robots.txt significa "não acessar".
 """
+import ipaddress
 import logging
 import time
 import urllib.robotparser
@@ -15,6 +16,25 @@ logger = logging.getLogger("senac_bot.fetch")
 
 MAX_REDIRECTS = 3
 TIMEOUT_SECONDS = 15.0
+
+
+def _internal_peer(response: httpx.Response) -> str | None:
+    """Endereço IP interno ao qual a conexão realmente se ligou (None = público ou desconhecido).
+
+    Segunda barreira contra SSRF/DNS rebinding: o nome pode ter resolvido para um IP público na checagem prévia e para um
+    interno na conexão. Se o IP real for interno, a resposta é descartada e nunca chega ao conteúdo da pesquisa."""
+    try:
+        stream = response.extensions.get("network_stream")
+        info = stream.get_extra_info("server_addr") if stream is not None else None
+        ip = ipaddress.ip_address(str(info[0]).split("%")[0]) if info else None
+    except (AttributeError, IndexError, TypeError, ValueError, OSError):
+        return None
+    if ip is None:
+        return None
+    if getattr(ip, "ipv4_mapped", None) is not None:
+        ip = ip.ipv4_mapped
+    internal = ip.is_private or ip.is_loopback or ip.is_link_local or ip.is_reserved or ip.is_multicast or ip.is_unspecified
+    return str(ip) if internal else None
 
 
 class PoliteFetcher:
@@ -85,6 +105,9 @@ class PoliteFetcher:
                 response = self.get(url)
             except httpx.HTTPError as error:
                 return None, f"falha de rede ({type(error).__name__})"
+            if _internal_peer(response) is not None:
+                logger.warning("Conexão para %s terminou em endereço interno; resposta descartada.", url)
+                return None, "endereço não permitido (a conexão levou a uma rede interna)"
             if response.status_code in (301, 302, 303, 307, 308) and response.headers.get("location"):
                 url = urljoin(url, response.headers["location"])
                 continue

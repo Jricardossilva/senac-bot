@@ -32,8 +32,13 @@ _FINANCE_STRONG = _rx(
 )
 _FINANCE_CONTEXT = _rx(r"\b(receitas?|despesas?|gastos?|custos?|verbas?|orcamentos?|investimentos?|contas|patrimonio)\b")
 _FINANCE_SCOPE = _rx(r"\b(senac|instituicao|regional|departamento|unidade|cep|cendege|tadros)\b")
-_FINANCE_PUBLIC = _rx(r"\b(curso|cursos|mensalidade|matricula|inscricao|preco|precos|parcela|desconto|bolsa|gratuit\w*)\b")
+_FINANCE_PUBLIC = _rx(
+    r"\b(curso|cursos|mensalidade|matricula|inscricao|preco|precos|parcela|desconto|bolsa|gratuit\w*|"
+    r"estudar|estudo|cursar|fazer|participar|inscrever|matricular|material|transporte|alimentacao|estagio|formacao|formatura|certificado)\b"
+)
 
+# Pergunta de mercado de trabalho ("quanto ganha um professor formado em informática?"): pública, desde que não fale do Senac.
+_SALARY_MARKET = _rx(r"\b(formad[oa]s?|mercado|carreira|profissao|piso salarial|media salarial|depois de (se )?formar|apos (se )?formar|trabalhar como)\b")
 _PAY_TERM = _rx(r"\b(salario|salarios|remuneracao|remuneracoes|contracheque|holerite|vencimentos|quanto (ganha|ganham|recebe|recebem|paga|pagam))\b")
 _STAFF_TERM = _rx(
     r"\b(professor\w*|instrutor\w*|docente\w*|funcionari\w*|colaborador\w*|diretor\w*|gestor\w*|presidente|"
@@ -85,13 +90,13 @@ _REVEAL = _rx(
     r"\b(prompt|system prompt|prompt de sistema|instrucoes? (internas?|do sistema|iniciais?|originais?)|suas instrucoes|"
     r"suas regras|regras internas|configuracao|configuracoes|sua programacao|seu treinamento|mensagem de sistema)\b"
 )
-_PROMPT_WORDS = _rx(r"\b(system prompt|prompt de sistema|prompt do sistema|mensagem de sistema|instrucoes de sistema|instrucao de sistema|seu prompt)\b")
+_PROMPT_WORDS = _rx(r"\b(system prompt|prompt de sistema|prompt do sistema|mensagem de sistema|instrucoes de sistema|instrucao de sistema|seu prompt(?! (favorito|preferido)))\b")
 _IDENTITY = _rx(
     r"\b(finja|finge|fingir|simule|simula|simular|faca de conta|aja como|atue como|aja feito|comporte se como|"
     r"voce agora e|voce passa a ser|a partir de agora voce|de agora em diante voce|assuma (a )?(identidade|o papel)|"
     r"voce nao e (mais )?o senac bot|esqueca que voce e|responda como se fosse|interprete o papel)\b"
 )
-_MODES = _rx(r"\b(modo (desenvolvedor|deus|dan|admin\w*|sem restricoes|sem filtros?|livre|irrestrito)|jailbreak|developer mode|dan mode|sem (filtros|restricoes|regras|limites))\b")
+_MODES = _rx(r"\b(modo (desenvolvedor|deus|dan|admin\w*|sem restricoes|sem filtros?|livre|irrestrito)|jailbreak|developer mode|dan mode|sem (filtros|restricoes|regras|limites)(?! de (tamanho|tempo|palavras|idade|horario|duracao)))\b")
 _INTERNAL_BASE = _rx(
     r"\b(base de conhecimento|banco de conhecimento|arquivos? json|arquivos? de conhecimento|conteudo interno)\b[^.?!]{0,60}"
     r"\b(mostre|mostra|exiba|liste|despeje|copie|envie|inteir\w*|completo|completa|todo|toda|todos|todas|bruto|cru)\b"
@@ -107,7 +112,9 @@ def _finance(norm: str) -> bool:
 
 
 def _salary(norm: str) -> bool:
-    return bool(_PAY_TERM.search(norm) and _STAFF_TERM.search(norm))
+    if not (_PAY_TERM.search(norm) and _STAFF_TERM.search(norm)):
+        return False
+    return not (_SALARY_MARKET.search(norm) and not _FINANCE_SCOPE.search(norm))
 
 
 def _personal(norm: str) -> bool:

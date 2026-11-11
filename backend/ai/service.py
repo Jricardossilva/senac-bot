@@ -11,6 +11,7 @@ Perguntas institucionais SEMPRE consultam a base antes de qualquer resposta:
 """
 import logging
 import re
+import threading
 import time
 from collections import OrderedDict
 from dataclasses import dataclass, field, replace
@@ -32,7 +33,7 @@ from backend.knowledge import KnowledgeBase
 from backend.knowledge.compose import ungrounded_numbers
 from backend.knowledge.portal import PortalLookup
 from backend.knowledge.text import contains_sequence, normalize, tokenize
-from backend.policy import OutboundPolicy, check_message
+from backend.policy import OutboundPolicy, check_message, check_reputation
 
 logger = logging.getLogger("senac_bot.chat")
 
@@ -73,6 +74,7 @@ EXTERNAL_MAX_WORDS = 55
 EXTERNAL_HEDGE = "Essa informação veio de uma pesquisa na internet e não foi confirmada pela organização do evento."
 MAX_FOLLOW_UP_WORDS = 6
 MAX_SUBJECT_SESSIONS = 50
+MAX_VARIANT_KEYS = 400  # contadores de variação por sessão: limitados para que sessões novas em excesso não consumam memória
 SUBJECT_CATEGORIES = ("programs", "units", "social", "empresas", "courses")
 
 
@@ -126,7 +128,8 @@ class ChatService:
         self._status = "configured" if provider.is_configured() else "not_configured"
         self._guidance = Guidance(knowledge, portal=portal) if knowledge is not None else None
         self._subjects: OrderedDict[str, _Subject] = OrderedDict()  # assunto da conversa atual (só em memória)
-        self._variants: dict[str, int] = {}  # quantas vezes cada tipo de resposta padrão já foi usado na sessão
+        self._variants: OrderedDict[str, int] = OrderedDict()  # quantas vezes cada tipo de resposta padrão já foi usado na sessão
+        self._state_lock = threading.Lock()  # o /chat roda em várias threads: protege os estados compartilhados em memória
         emails, numbers = knowledge.public_contact_data() if knowledge is not None else (frozenset(), frozenset())
         self._policy = OutboundPolicy(
             protected_texts if protected_texts is not None else (SYSTEM_INSTRUCTION, KNOWLEDGE_RULES),
@@ -172,8 +175,21 @@ class ChatService:
         self._contexts.clear()
         if self._guidance is not None:
             self._guidance.clear()
-        self._subjects.clear()
-        self._variants.clear()
+        with self._state_lock:
+            self._subjects.clear()
+            self._variants.clear()
+
+    def clear_session(self, session_id: str | None) -> None:
+        """Encerra só a conversa de uma sessão (o visitante que saiu): as demais conversas em andamento continuam."""
+        if not session_id:
+            return
+        self._contexts.discard(session_id)
+        if self._guidance is not None:
+            self._guidance.discard(session_id)
+        with self._state_lock:
+            self._subjects.pop(session_id, None)
+            for key in [k for k in self._variants if k.startswith(f"{session_id}:")]:
+                del self._variants[key]
 
     # ------------------------------------------------------------------ resposta
     def reply(self, session_id: str | None, message: str, lat: float | None = None, lon: float | None = None) -> ChatReply:
@@ -181,6 +197,10 @@ class ChatService:
         decision = check_message(message)
         if decision is not None:
             return ChatReply(decision.reply, "policy", decision.category, "policy")
+        # Postura: defende o Senac de críticas e não avalia terceiros (também sem passar pelo Gemini).
+        stance = check_reputation(message)
+        if stance is not None:
+            return ChatReply(stance.reply, "policy", stance.category, "policy")
 
         routed = self._route(session_id, message, lat, lon)
         # 2) Política de saída em TODAS as respostas.
@@ -437,16 +457,18 @@ class ChatService:
             return None
         key = normalize(safe_message)
         now = time.monotonic()
-        cached = self._external_cache.get(key)
-        if cached and now - cached[0] < EXTERNAL_CACHE_SECONDS:
-            return cached[1]
-        if now - self._external_last < EXTERNAL_MIN_GAP_SECONDS:
-            return None
-        self._external_last = now
-        reply = self._search_reply(safe_message, active)
-        self._external_cache[key] = (now, reply)
-        while len(self._external_cache) > 50:
-            self._external_cache.popitem(last=False)
+        with self._state_lock:
+            cached = self._external_cache.get(key)
+            if cached and now - cached[0] < EXTERNAL_CACHE_SECONDS:
+                return cached[1]
+            if now - self._external_last < EXTERNAL_MIN_GAP_SECONDS:
+                return None
+            self._external_last = now
+        reply = self._search_reply(safe_message, active)  # chamada de rede: fora da trava
+        with self._state_lock:
+            self._external_cache[key] = (now, reply)
+            while len(self._external_cache) > 50:
+                self._external_cache.popitem(last=False)
         return reply
 
     def _search_reply(self, safe_message: str, active) -> ChatReply | None:
@@ -475,8 +497,11 @@ class ChatService:
     # ---- contexto da conversa atual -------------------------------------------------------------------------------
     def _turn(self, session_id: str | None, kind: str) -> int:
         key = f"{session_id}:{kind}"
-        count = self._variants.get(key, 0)
-        self._variants[key] = count + 1
+        with self._state_lock:
+            count = self._variants.pop(key, 0)
+            self._variants[key] = count + 1
+            while len(self._variants) > MAX_VARIANT_KEYS:
+                self._variants.popitem(last=False)
         return count
 
     def _vary(self, session_id: str | None, reply: ChatReply) -> ChatReply:
@@ -489,12 +514,13 @@ class ChatService:
     def _remember(self, session_id: str | None, unit_alias: str | None = None, hint: str | None = None) -> None:
         if not session_id:
             return
-        subject = self._subjects.pop(session_id, _Subject())
-        subject.unit_alias = unit_alias or subject.unit_alias
-        subject.hint = hint or subject.hint
-        self._subjects[session_id] = subject
-        while len(self._subjects) > MAX_SUBJECT_SESSIONS:
-            self._subjects.popitem(last=False)
+        with self._state_lock:
+            subject = self._subjects.pop(session_id, _Subject())
+            subject.unit_alias = unit_alias or subject.unit_alias
+            subject.hint = hint or subject.hint
+            self._subjects[session_id] = subject
+            while len(self._subjects) > MAX_SUBJECT_SESSIONS:
+                self._subjects.popitem(last=False)
 
     def _remember_result(self, session_id: str | None, result) -> None:
         kb = self._knowledge

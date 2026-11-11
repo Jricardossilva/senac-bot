@@ -36,3 +36,5 @@ services:
         sync: false
       - key: GEMINI_API_KEY
         sync: false
+      - key: OPERATOR_TOKEN  # código de acesso do painel do operador (obrigatório em produção)
+        sync: false

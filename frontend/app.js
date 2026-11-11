@@ -13,6 +13,7 @@ import { STATES, VoiceConversation } from "/assets/conversation.js";
 import { initDiagnostics } from "/assets/diagnostics.js";
 import { runDemo } from "/assets/demo.js";
 import { initEvents } from "/assets/events.js";
+import { authFetch } from "/assets/auth.js";
 import { initKnowledgePanel } from "/assets/knowledge.js";
 
 const $ = (selector) => document.querySelector(selector);
@@ -308,7 +309,7 @@ function appendMessage(text, kind, source, links) {
 }
 
 async function postJson(url, body) {
-  const response = await fetch(url, {
+  const response = await authFetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body || {})
@@ -677,7 +678,7 @@ const conversation = new VoiceConversation({
     updateStatus(await postJson("/api/session/start"));
   },
   closeSession: async () => {
-    updateStatus(await postJson("/api/session/stop"));
+    updateStatus(await postJson("/api/session/stop", { session_id: sessionId }));
   },
   onState: onConversationState,
   onCaption: onConversationCaption,
@@ -1035,7 +1036,7 @@ async function refreshKnowledge() {
   const summary = $("#knowledge-summary");
   const list = $("#knowledge-list");
   try {
-    const response = await fetch("/api/knowledge/status");
+    const response = await authFetch("/api/knowledge/status");
     const k = await response.json();
     list.replaceChildren();
     if (!k.loaded) {

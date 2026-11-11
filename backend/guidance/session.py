@@ -40,6 +40,12 @@ class GuidanceSessions:
                 self._data.popitem(last=False)
             return state
 
+    def discard(self, session_id: str | None) -> None:
+        if not session_id:
+            return
+        with self._lock:
+            self._data.pop(session_id, None)
+
     def clear(self) -> None:
         with self._lock:
             self._data.clear()

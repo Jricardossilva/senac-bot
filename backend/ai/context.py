@@ -38,6 +38,13 @@ class SessionContexts:
             self._data[session_id] = (now, turns)
             self._purge(now)
 
+    def discard(self, session_id: str | None) -> None:
+        """Apaga só o contexto de uma sessão (o visitante que encerrou), sem afetar os demais."""
+        if not session_id:
+            return
+        with self._lock:
+            self._data.pop(session_id, None)
+
     def clear(self) -> None:
         with self._lock:
             self._data.clear()

@@ -6,8 +6,8 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Any, Literal
 
-from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
-from fastapi.responses import FileResponse
+from fastapi import FastAPI, HTTPException, Request, WebSocket, WebSocketDisconnect
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field, field_validator
 
@@ -27,8 +27,9 @@ from backend.knowledge.fetch import PoliteFetcher
 from backend.knowledge.portal import PortalExtractor, PortalLookup, PortalStorageError
 from backend.knowledge.updater import USER_AGENT as KNOWLEDGE_USER_AGENT
 from backend.knowledge import KnowledgeBase
-from backend.robot.actions import ALLOWED_ACTIONS
+from backend.robot.actions import ALLOWED_ACTIONS, EXPRESSIONS
 from backend.robot.controller import RobotController
+from backend.security import TOKEN_HEADER, RateLimiter, is_operator_path, operator_access
 from backend.state import StateManager
 
 settings = load_settings()
@@ -143,6 +144,26 @@ async def lifespan(_: FastAPI):
 
 app = FastAPI(title="SENAC BOT", lifespan=lifespan)
 register_error_handlers(app)
+chat_limiter = RateLimiter(settings.chat_rate_per_minute, 60.0, global_limit=settings.chat_rate_per_minute * 10 or None)
+
+
+@app.middleware("http")
+async def operator_guard(request: Request, call_next):
+    """Rotas do operador exigem OPERATOR_TOKEN (ver backend/security.py); a tela do visitante só usa as rotas públicas."""
+    if is_operator_path(request.url.path):
+        denied = operator_access(settings.operator_token, request.headers.get(TOKEN_HEADER), settings.app_env)
+        if denied is not None:
+            return JSONResponse(status_code=denied[0], content={"detail": denied[1]})
+    return await call_next(request)
+
+
+def _is_operator(request: Request) -> bool:
+    return operator_access(settings.operator_token, request.headers.get(TOKEN_HEADER), settings.app_env) is None
+
+
+def _client_key(request: Request) -> str:
+    forwarded = request.headers.get("x-forwarded-for", "").split(",")[0].strip()
+    return forwarded or (request.client.host if request.client else "desconhecido")
 
 
 @app.exception_handler(EventStoreError)
@@ -240,9 +261,13 @@ def start_session() -> dict[str, object]:
 
 
 @app.post("/api/session/stop")
-def stop_session() -> dict[str, object]:
+def stop_session(request: Request, payload: dict[str, Any] | None = None) -> dict[str, object]:
     controller.stop_session()
-    chat_service.clear_contexts()
+    session_id = str((payload or {}).get("session_id") or "")[:64]
+    if session_id and not _is_operator(request):
+        chat_service.clear_session(session_id)  # o visitante encerra só a própria conversa
+    else:
+        chat_service.clear_contexts()  # operador (ou sem identificação): encerra todas
     return _status_snapshot()
 
 
@@ -254,7 +279,11 @@ def toggle_emergency_stop() -> dict[str, object]:
 
 
 @app.post("/api/simulator/action")
-def simulator_action(request: SimulatorActionRequest) -> dict[str, object]:
+def simulator_action(request: SimulatorActionRequest, http: Request) -> dict[str, object]:
+    # Pública só para as expressões automáticas da conversa; movimentos e comandos do operador exigem o código de acesso.
+    if (request.origin != "conversation" or request.action not in EXPRESSIONS) and not _is_operator(http):
+        denied = operator_access(settings.operator_token, None, settings.app_env)
+        raise HTTPException(status_code=denied[0] if denied else 401, detail=denied[1] if denied else "Acesso restrito ao operador.")
     controller.execute(request.action, quiet=request.origin == "conversation")
     return _status_snapshot()
 
@@ -486,7 +515,9 @@ def edit_event_item(event_id: str, item_id: str, payload: dict[str, Any]) -> dic
 
 
 @app.post("/chat")
-def chat(request: ChatRequest) -> dict[str, object]:
+def chat(request: ChatRequest, http: Request) -> dict[str, object]:
+    if not chat_limiter.allow(_client_key(http)):
+        raise HTTPException(status_code=429, detail="Muitas mensagens em pouco tempo. Aguarde um instante e tente de novo.")
     message = request.message.strip()
     if not message:
         raise HTTPException(status_code=422, detail="A mensagem não pode estar vazia.")
