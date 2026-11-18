@@ -585,5 +585,14 @@ body[data-mode="exposicao"] .view:not(.visitor-view) { display: none !important;
 @keyframes camera-pulse { 50% { opacity: 0.35; } }
 /* Olhar: --gaze vai de -1 (esquerda) a 1 (direita). As propriedades individuais translate/rotate somam-se ao transform das
    expressões e dos movimentos (olhar para os lados, inclinar a cabeça) sem substituí-lo. */
+/* Tela de atração (modo exposição, enquanto ninguém conversa): convite grande, botão pulsando e perguntas em destaque */
+.attract-banner { margin: 0.4rem 0 1rem; padding: 0.9rem 1.2rem; border-radius: 1rem; color: var(--white); background: var(--blue-700); font-size: clamp(1.3rem, 2.6vw, 2.1rem); font-weight: 800; line-height: 1.25; box-shadow: var(--shadow); animation: attract-breath 2.6s ease-in-out infinite; }
+.attract-banner[hidden] { display: none; }
+@keyframes attract-breath { 50% { transform: scale(1.015); } }
+body[data-mode="exposicao"][data-attract="on"] .conversation-button { animation: attract-pulse 2.2s ease-in-out infinite; }
+@keyframes attract-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(255, 130, 0, 0.55); } 50% { box-shadow: 0 0 0 16px rgba(255, 130, 0, 0); } }
+body[data-mode="exposicao"] .try-list q { font-size: 1.15em; }
+body[data-mode="exposicao"][data-attract="on"] .intro { display: none; }
+body[data-mode="exposicao"][data-attract="on"] #messages { display: none; } /* a saudação já está no convite; o botão fica à vista sem rolar */ /* o convite grande já diz isso; libera espaço para o botão ficar à vista */
 .robot .robot-svg .eyes { translate: calc(var(--gaze, 0) * 14px) 0; transition: translate 180ms ease-out; }
 .robot .robot-svg .head { translate: calc(var(--gaze, 0) * 5px) 0; rotate: calc(var(--gaze, 0) * 3deg); transform-origin: 150px 165px; transition: translate 220ms ease-out, rotate 220ms ease-out, transform 260ms ease; }

@@ -49,7 +49,10 @@ try:
     R.check("microfone pedido na preparação e liberado",
             b.js("window.__fake.mic.opened >= 1 && window.__fake.mic.opened === window.__fake.mic.stopped"), True)
 
+    R.check("tela de atração visível com a estação ligada", b.wait_for("!document.getElementById('attract-banner').hidden", 5), True)
+    R.check("convite com a câmera ligada", "Vamos conversar" in b.js("document.getElementById('attract-text').textContent"), True)
     feed(FAR, 1.5)
+    R.check("rosto longe: convite pede para chegar mais perto", "Aproxime-se um pouco" in b.js("document.getElementById('attract-text').textContent"), True)
     R.check("rosto longe não inicia", b.js("window.__fake.spoken.length"), 0)
     feed(NEAR, 0.05)
     feed("null", 1.5)
@@ -58,6 +61,7 @@ try:
     feed(NEAR, 1.0)
     R.check("saudação falada sem clique", b.wait_for("window.__fake.spoken.length === 1", 5), True)
     R.check("saudação convida a conversar", "Quer conversar" in b.js("window.__fake.spoken[0]"), True)
+    R.check("convite some durante a saudação", b.wait_for("document.getElementById('attract-banner').hidden", 3), True)
     R.check("microfone ainda fechado durante a saudação", b.js("window.__fake.running === false && window.__fake.starts === 0"), True)
     R.check("olhar acompanha o rosto (lado direito da tela)", gaze() > 0, True)
 
@@ -89,6 +93,7 @@ try:
     R.check("reinício encerra a conversa", b.wait_for("window.__fake.running === false", 5), True)
     R.check("reinício limpa as legendas", b.wait_for("document.querySelectorAll('#messages .message').length === 1", 5), True)
     R.check("estado volta a Aguardando", b.wait_state("Aguardando", 5), True)
+    R.check("tela de atração volta depois do reinício", b.wait_for("!document.getElementById('attract-banner').hidden", 5), True)
 
     R.check("sem erros de JavaScript", b.real_errors(), [])
 finally:

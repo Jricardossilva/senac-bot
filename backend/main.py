@@ -40,6 +40,7 @@ mimetypes.add_type("application/wasm", ".wasm")
 mimetypes.add_type("text/javascript", ".mjs")
 mimetypes.add_type("application/octet-stream", ".tflite")
 FRONTEND_INDEX = FRONTEND_DIR / "index.html"
+PUBLIC_CONVERSATION_ACTIONS = frozenset(EXPRESSIONS) | {"wave"}
 logging.basicConfig(
     level=settings.log_level,
     format="%(asctime)s %(levelname)s %(name)s: %(message)s",
@@ -294,8 +295,9 @@ def toggle_emergency_stop() -> dict[str, object]:
 
 @app.post("/api/simulator/action")
 def simulator_action(request: SimulatorActionRequest, http: Request) -> dict[str, object]:
-    # Pública só para as expressões automáticas da conversa; movimentos e comandos do operador exigem o código de acesso.
-    if (request.origin != "conversation" or request.action not in EXPRESSIONS) and not _is_operator(http):
+    # Pública só para as expressões automáticas da conversa e o aceno (gesto momentâneo de boas-vindas/despedida); os demais
+    # movimentos e comandos do operador exigem o código de acesso.
+    if (request.origin != "conversation" or request.action not in PUBLIC_CONVERSATION_ACTIONS) and not _is_operator(http):
         denied = operator_access(settings.operator_token, None, settings.app_env)
         raise HTTPException(status_code=denied[0] if denied else 401, detail=denied[1] if denied else "Acesso restrito ao operador.")
     controller.execute(request.action, quiet=request.origin == "conversation")

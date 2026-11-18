@@ -69,6 +69,11 @@ def test_visitor_flow_stays_public_with_token_configured(monkeypatch) -> None:
     # expressões automáticas da conversa são públicas; movimentos e ações do operador não
     assert client.post("/api/simulator/action", json={"action": "thinking", "origin": "conversation"}).status_code == 200
     assert client.post("/api/simulator/action", json={"action": "wheels_forward", "origin": "conversation"}).status_code == 401
+    # o aceno (gesto momentâneo) é público para a tela do estande; os outros movimentos continuam restritos
+    assert client.post("/api/simulator/action", json={"action": "wave", "origin": "conversation"}).status_code == 200
+    for action in ("spin", "left_arm", "wheels_backward", "stop"):
+        assert client.post("/api/simulator/action", json={"action": action, "origin": "conversation"}).status_code == 401, action
+    assert client.post("/api/simulator/action", json={"action": "wave"}).status_code == 401  # sem origem de conversa continua restrito
     assert client.post("/api/simulator/action", json={"action": "happy", "origin": "operator"}).status_code == 401
     assert client.post("/api/simulator/action", json={"action": "happy", "origin": "operator"}, headers={"X-Operator-Token": TOKEN}).status_code == 200
 

@@ -866,6 +866,34 @@ let greetingToken = 0;
 let emergencyActive = false;
 let cameraStatus = "off";
 
+// Tela de atração: enquanto ninguém conversa, convite grande, botão pulsando e um aceno de tempos em tempos.
+const ATTRACT_WAVE_MS = 14000;
+const attractBanner = $("#attract-banner");
+const attractText = $("#attract-text");
+let farFaceUntil = 0;
+
+function attractActive() {
+  return exposicaoMode && stationRunning && !conversation.active && conversation.state !== STATES.REQUESTING && !greeting &&
+    !demoRunning && !emergencyActive && !speechOutput.speaking;
+}
+
+function refreshAttract() {
+  const on = attractActive();
+  document.body.dataset.attract = on ? "on" : "off";
+  attractBanner.hidden = !on;
+  if (!on) return;
+  attractText.textContent = cameraStatus === "on"
+    ? Date.now() < farFaceUntil ? "Aproxime-se um pouco para conversar comigo!" : "Olá! Vamos conversar? Aproxime-se e fale comigo."
+    : "Olá! Vamos conversar? Toque em INICIAR CONVERSA.";
+}
+
+if (exposicaoMode) {
+  window.setInterval(refreshAttract, 500);
+  window.setInterval(() => {
+    if (attractActive()) conversationCommand("wave");
+  }, ATTRACT_WAVE_MS);
+}
+
 function canStartByPresence() {
   return stationRunning && presenceEnabled && !greeting && !conversation.active && conversation.state !== STATES.REQUESTING &&
     !demoRunning && !emergencyActive && !speechOutput.speaking;
@@ -895,6 +923,7 @@ function onPresenceSample(face, now) {
   visitorRobot.style.setProperty("--gaze", gazeValue.toFixed(3));
   const near = Boolean(face) && face.ratio >= presenceTracker.config.nearRatio;
   reportFace(face, near, now, gazeValue);
+  if (face && !near) farFaceUntil = Date.now() + 2500; // alguém à vista, mas longe: o convite pede para chegar mais perto
   if (presenceTracker.update(near, now, canStartByPresence()) === "start") startByPresence();
 }
 
