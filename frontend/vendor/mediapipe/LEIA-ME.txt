@@ -1,0 +1,11 @@
+Detector de rosto do MediaPipe (Google), usado SÓ para perceber se há alguém por perto (presença) e para onde olhar.
+Não identifica pessoas, não grava e não envia imagens. Roda inteiro no navegador, sem internet.
+
+Origem (copiados sem alteração):
+- vision_bundle.mjs, vision_wasm_internal.js, vision_wasm_internal.wasm: pacote npm @mediapipe/tasks-vision 0.10.21
+  (https://www.npmjs.com/package/@mediapipe/tasks-vision), licença Apache-2.0.
+- blaze_face_short_range.tflite: modelo BlazeFace "short range" (float16) do MediaPipe,
+  https://storage.googleapis.com/mediapipe-models/face_detector/blaze_face_short_range/float16/1/blaze_face_short_range.tflite
+  (Apache-2.0).
+Só a versão com SIMD do WebAssembly está incluída (Chrome/Edge atuais). Para atualizar: baixe os mesmos arquivos de uma
+versão nova do pacote e do modelo, substitua aqui e rode tests/e2e/browser_exposicao.py.

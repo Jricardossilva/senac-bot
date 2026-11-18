@@ -118,7 +118,9 @@ export class VoiceConversation {
     this.#deps.onState?.(state, detail);
   }
 
-  async start({ manageSession = true } = {}) {
+  // firstIdleMs: limite de silêncio só até a primeira fala do visitante (início automático pela câmera: quem não
+  // responde logo libera o microfone). Depois da primeira fala vale o limite normal.
+  async start({ manageSession = true, firstIdleMs = null } = {}) {
     if (this.#active || this.#state === STATES.REQUESTING) return false;
     const session = ++this.#session;
     const stale = () => this.#session !== session;
@@ -159,7 +161,7 @@ export class VoiceConversation {
     this.#lastHeard = { text: "", at: 0 };
     this.#awaitingEnd = false;
     this.#lastPartial = "";
-    this.#armIdleTimer();
+    this.#armIdleTimer(firstIdleMs);
     this.#listen(0);
     return true;
   }
@@ -195,9 +197,9 @@ export class VoiceConversation {
     window.clearTimeout(this.#idleTimer);
   }
 
-  #armIdleTimer() {
+  #armIdleTimer(ms = null) {
     window.clearTimeout(this.#idleTimer);
-    this.#idleTimer = window.setTimeout(() => this.stop("idle"), this.#timings.idleTimeoutMs);
+    this.#idleTimer = window.setTimeout(() => this.stop("idle"), ms ?? this.#timings.idleTimeoutMs);
   }
 
   #fail(kind, extra = {}) {

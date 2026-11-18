@@ -572,3 +572,18 @@ body[data-mode="exposicao"] .view:not(.visitor-view) { display: none !important;
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
+
+/* Câmera de presença (modo exposição): portão de início, indicador de câmera ativa e olhar do avatar */
+.station-gate { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 1.5rem; background: rgba(8, 31, 68, 0.88); }
+.station-gate[hidden] { display: none; }
+.station-card { max-width: 34rem; display: grid; gap: 1rem; justify-items: center; padding: 2rem; text-align: center; border-radius: 1.4rem; background: var(--white); box-shadow: var(--shadow); }
+.station-card h2 { margin: 0; color: var(--blue-700); }
+.station-card p { margin: 0; color: var(--muted); line-height: 1.55; }
+.camera-indicator { margin: 0; padding: 0 1.2rem 0.9rem; color: var(--blue-700); font-size: 0.72rem; font-weight: 600; line-height: 1.5; }
+.camera-indicator[hidden] { display: none; }
+.camera-dot { display: inline-block; width: 0.55rem; height: 0.55rem; margin-right: 0.3rem; border-radius: 50%; background: #e53935; animation: camera-pulse 1.6s ease-in-out infinite; }
+@keyframes camera-pulse { 50% { opacity: 0.35; } }
+/* Olhar: --gaze vai de -1 (esquerda) a 1 (direita). As propriedades individuais translate/rotate somam-se ao transform das
+   expressões e dos movimentos (olhar para os lados, inclinar a cabeça) sem substituí-lo. */
+.robot .robot-svg .eyes { translate: calc(var(--gaze, 0) * 14px) 0; transition: translate 180ms ease-out; }
+.robot .robot-svg .head { translate: calc(var(--gaze, 0) * 5px) 0; rotate: calc(var(--gaze, 0) * 3deg); transform-origin: 150px 165px; transition: translate 220ms ease-out, rotate 220ms ease-out, transform 260ms ease; }

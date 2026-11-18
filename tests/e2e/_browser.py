@@ -10,6 +10,7 @@ dublês de SpeechRecognition, speechSynthesis e do microfone (veja FAKES_JS), co
     __fake.spoken / chats / sessions / mic        o que foi falado, enviado ao /chat, chamadas de sessão, uso do microfone
 """
 import json
+import os
 import subprocess
 import sys
 import tempfile
@@ -18,10 +19,11 @@ import urllib.request
 
 from websockets.sync.client import connect
 
-EDGE = r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
+EDGE = os.environ.get("SENAC_E2E_BROWSER", r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe")  # SENAC_E2E_BROWSER: caminho do Chrome
 
 FAKES_JS = r"""
 (() => {
+  window.__SENAC_TEST_HOOKS__ = Object.assign(window.__SENAC_TEST_HOOKS__ || {}, (window.__FAKE_OPTIONS__ || {}).hooks || {});
   const opt = Object.assign({ permission: "granted", devices: 1, recognition: true, tts: true, getUserMedia: true }, window.__FAKE_OPTIONS__ || {});
   const F = (window.__fake = { running: false, starts: 0, mic: { opened: 0, stopped: 0 }, spoken: [], chats: [], sessions: [], clicks: 0, ttsCurrent: null, cancels: 0, instance: null });
   if (window.__FAKE_TIMINGS__) window.__SENAC_VOICE_TIMINGS__ = window.__FAKE_TIMINGS__;
@@ -80,7 +82,9 @@ FAKES_JS = r"""
   const md = navigator.mediaDevices;
   if (md) {
     md.enumerateDevices = async () => Array.from({ length: opt.devices }, () => ({ kind: "audioinput", label: "Microfone de teste" }));
-    md.getUserMedia = opt.getUserMedia ? async () => {
+    const realGetUserMedia = md.getUserMedia.bind(md);
+    md.getUserMedia = opt.getUserMedia ? async (constraints) => {
+      if (opt.realVideo && constraints && constraints.video) return realGetUserMedia(constraints); // câmera de teste do Edge (--use-fake-device-for-media-stream)
       if (opt.permission === "denied") throw new DOMException("negado", "NotAllowedError");
       if (opt.permission === "no-device") throw new DOMException("nenhum", "NotFoundError");
       if (opt.permission === "busy") throw new DOMException("ocupado", "NotReadableError");
@@ -127,14 +131,14 @@ class Browser:
 
     def __init__(self, base: str, port: int, fakes: bool = True, options: dict | None = None,
                  timings: dict | None = None, speech_timings: dict | None = None,
-                 width: int = 1366, height: int = 900) -> None:
+                 width: int = 1366, height: int = 900, extra_args: list[str] | None = None) -> None:
         self.base = base
         self.port = port
         self.errors: list[str] = []
         self._seq = 0
         self.proc = subprocess.Popen(
             [EDGE, "--headless=new", "--disable-gpu", f"--remote-debugging-port={port}",
-             f"--user-data-dir={tempfile.mkdtemp()}", f"--window-size={width},{height}", "about:blank"],
+             f"--user-data-dir={tempfile.mkdtemp()}", f"--window-size={width},{height}", *(extra_args or []), "about:blank"],
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
         )
         page = None

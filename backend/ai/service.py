@@ -570,7 +570,7 @@ class ChatService:
             text = f"{text} {reply.follow_up}"
         elif (
             self._guidance is not None
-            and reply.source in ("knowledge", "gemini", "fallback", "local", "event", "external")
+            and reply.source in ("knowledge", "gemini", "fallback", "event", "external")  # respostas locais (identidade, piada) não levam oferta de curso
             and reply.intent in (None, "info")
             and reply.reason != "no_match"
             and "?" not in text[-80:]

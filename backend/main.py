@@ -1,6 +1,7 @@
 """Ponto de entrada do backend FastAPI do SENAC BOT."""
 import asyncio
 import logging
+import mimetypes
 import os
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -34,6 +35,10 @@ from backend.state import StateManager
 
 settings = load_settings()
 FRONTEND_DIR = Path(__file__).parent.parent / "frontend"
+# O Windows pode não conhecer estes tipos; o detector de rosto (WebAssembly) só carrega com o tipo correto.
+mimetypes.add_type("application/wasm", ".wasm")
+mimetypes.add_type("text/javascript", ".mjs")
+mimetypes.add_type("application/octet-stream", ".tflite")
 FRONTEND_INDEX = FRONTEND_DIR / "index.html"
 logging.basicConfig(
     level=settings.log_level,
@@ -170,7 +175,16 @@ def _client_key(request: Request) -> str:
 async def event_store_error_handler(_, exc: EventStoreError):
     from fastapi.responses import JSONResponse  # noqa: PLC0415
     return JSONResponse(status_code=exc.status, content={"detail": exc.message})
-app.mount("/assets", StaticFiles(directory=FRONTEND_DIR), name="assets")
+class RevalidatingStaticFiles(StaticFiles):
+    """Arquivos da interface: o navegador sempre confere se há versão nova (ETag), para não ficar com JavaScript antigo em cache."""
+
+    def file_response(self, *args: Any, **kwargs: Any):
+        response = super().file_response(*args, **kwargs)
+        response.headers["Cache-Control"] = "no-cache"
+        return response
+
+
+app.mount("/assets", RevalidatingStaticFiles(directory=FRONTEND_DIR), name="assets")
 
 
 class ChatRequest(BaseModel):
@@ -496,7 +510,7 @@ def remove_event_source(event_id: str, source_id: str) -> dict[str, object]:
 
 @app.post("/api/events/{event_id}/items")
 def add_event_item(event_id: str, payload: dict[str, Any]) -> dict[str, object]:
-    return event_manager.add_item(event_id, str(payload.get("category", "")), str(payload.get("title", "")), str(payload.get("content", "")))
+    return event_manager.add_item(event_id, str(payload.get("category", "")), str(payload.get("title", "")), str(payload.get("content", "")), payload.get("keywords"))
 
 
 @app.post("/api/events/{event_id}/items/{item_id}/approve")
@@ -511,7 +525,7 @@ def reject_event_item(event_id: str, item_id: str, payload: dict[str, Any] | Non
 
 @app.put("/api/events/{event_id}/items/{item_id}")
 def edit_event_item(event_id: str, item_id: str, payload: dict[str, Any]) -> dict[str, object]:
-    return event_manager.edit_item(event_id, item_id, payload.get("content"), payload.get("title"), payload.get("category"))
+    return event_manager.edit_item(event_id, item_id, payload.get("content"), payload.get("title"), payload.get("category"), payload.get("keywords"))
 
 
 @app.post("/chat")

@@ -59,9 +59,25 @@ def test_microphone_is_released_after_diagnostic_capture() -> None:
 
 
 def test_no_facial_recognition() -> None:
+    """Sem reconhecimento facial: nada identifica pessoas. A única exceção é a detecção de PRESENÇA (há um rosto próximo?)
+    em frontend/presence.js, que não grava, não copia o quadro e não envia nada."""
+    recognition = ("face-api", "facelandmarker", "faceembedder", "facerecognizer", "face_recognition", "faceid", "embedding")
     for path in [p for p in Path("frontend").glob("*") if p.is_file()] + list(Path("backend").rglob("*.py")):
         text = path.read_text(encoding="utf-8").lower()
-        assert "facedetector" not in text and "face-api" not in text and "getusermedia({ video" not in text
+        assert not any(word in text for word in recognition), path
+        if path.name != "presence.js":
+            assert "facedetector" not in text and "getusermedia({ video" not in text, path
+
+
+def test_presence_camera_never_stores_copies_or_sends_frames() -> None:
+    text = Path("frontend/presence.js").read_text(encoding="utf-8")
+    code = " ".join(line for line in text.splitlines() if not line.strip().startswith("//"))
+    for forbidden in ("todataurl", "toblob", "mediarecorder", "drawimage", "imagecapture", "createimagebitmap",
+                      "fetch(", "xmlhttprequest", "websocket", "sendbeacon", "localstorage", "sessionstorage", "indexeddb",
+                      "audio: true"):
+        assert forbidden not in code.lower(), forbidden
+    assert "audio: false" in code  # a câmera de presença nunca capta som
+    assert "track.stop()" in code  # a câmera é liberada ao desligar
 
 
 def test_env_file_is_ignored_by_git() -> None:

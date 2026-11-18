@@ -73,6 +73,17 @@
     </svg>
   </template>
 
+  <!-- Modo exposição: um toque do operador inicia a estação (libera voz e câmera no navegador) -->
+  <div id="station-gate" class="station-gate" role="dialog" aria-modal="true" aria-labelledby="station-gate-title" hidden>
+    <div class="station-card">
+      <img src="/assets/brand/senac-logo.png" width="102" height="60" alt="Senac">
+      <h2 id="station-gate-title">SENAC BOT · estação do estande</h2>
+      <p>Ao iniciar, a câmera detecta se há alguém por perto para começar a conversa sozinha. Nenhuma imagem é gravada ou enviada e ninguém é identificado. O microfone só abre depois da saudação do robô.</p>
+      <button id="station-start" class="button-primary" type="button">INICIAR ESTAÇÃO</button>
+      <button id="station-start-manual" class="chip-button" type="button">Iniciar sem câmera</button>
+    </div>
+  </div>
+
   <div class="app-shell">
     <header class="topbar">
       <a class="brand" href="#visitor" aria-label="SENAC BOT, Senac Paraíba">
@@ -123,6 +134,7 @@
               </div>
               <p id="voice-hint" class="voice-hint">Converse por voz: não precisa tocar de novo a cada pergunta. Sua voz não é gravada.</p>
               <p id="privacy-note" class="privacy-note"><strong>Privacidade:</strong> o SENAC BOT não grava a sua voz nem guarda a conversa. Para reconhecer a fala, o navegador (Chrome ou Edge) envia o áudio ao serviço de voz dele, e o texto da pergunta é enviado a um serviço de inteligência artificial para gerar a resposta.</p>
+              <p id="camera-indicator" class="camera-indicator" role="status" hidden><span class="camera-dot" aria-hidden="true"></span> Câmera ativa só para perceber que há alguém por perto. Nada é gravado, enviado ou identificado.</p>
             </div>
           </div>
         </div>
@@ -156,6 +168,9 @@
               <div><span class="metric-label">CONTROLES DA SESSÃO</span><p>Inicie o atendimento ou encerre-o com segurança.</p></div>
               <div class="control-actions"><button id="start-demo" class="button-primary" type="button">Iniciar demonstração</button><button id="stop-demo" class="button-secondary" type="button" disabled>Encerrar demonstração</button><button id="start-session" class="button-secondary" type="button">Iniciar sessão</button><button id="stop-session" class="button-secondary" type="button">Encerrar sessão</button><button id="reset-experience" class="button-primary" type="button">Reiniciar experiência</button><button id="check-ai" class="button-secondary" type="button">Verificar Gemini</button><button id="emergency-button" class="button-danger" type="button">Parada de emergência</button></div>
               <label class="toggle-row source-toggle"><input id="toggle-source" type="checkbox"> Exibir a origem das respostas na conversa (uso técnico do operador)</label>
+              <label class="toggle-row source-toggle"><input id="toggle-presence" type="checkbox" checked> Início automático da conversa pela câmera, na tela do estande (modo exposição)</label>
+              <p id="presence-status" class="control-feedback" role="status" aria-live="polite">Câmera do estande: aguardando a estação iniciar.</p>
+              <p id="presence-face" class="control-feedback" role="status">Rosto: sem leitura ainda.</p>
               <p id="operator-feedback" class="control-feedback" role="status" aria-live="polite"></p>
             </article>
             <article class="panel preflight-card">

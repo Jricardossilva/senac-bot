@@ -40,31 +40,55 @@ EVENT_FIELDS = {
     ],
 }
 
-# (categoria, título, conteúdo). Até 90 palavras cada, para serem faladas. Só o que as fontes oficiais ou o
-# operador informaram; nada de programação por dia (ainda não divulgada).
+# (categoria, título, conteúdo, palavras que o visitante costuma usar). Até 90 palavras cada, para serem faladas. Só o que as
+# fontes oficiais ou o operador informaram; nada de programação por dia (ainda não divulgada).
 ITEMS = [
     ("about", "Robótica 2026",
      "A Robótica 2026 é apresentada como o maior evento de robótica da América Latina. Reúne a Competição Brasileira de "
      "Robótica Petrobras, a etapa nacional da Olimpíada Brasileira de Robótica, a Mostra Nacional de Robótica, o "
      "Simpósio Brasileiro de Robóticas, o Workshop de Robótica na Educação e a Competição de Teses e Dissertações, "
-     "com mais de 400 atividades."),
+     "com mais de 400 atividades.",
+     ["o que é", "evento", "maior evento de robótica", "américa latina", "sobre o evento", "atividades"]),
     ("dates", "Datas do evento",
-     "A Robótica 2026 acontece de 23 a 29 de novembro de 2026. Nos dias 23 e 24 acontecem as competições. "
-     "A visitação ao público é de 25 a 29 de novembro, das 9h às 21h."),
+     "A Robótica 2026 acontece de 23 a 29 de novembro de 2026, no Centro de Convenções de João Pessoa. Nos dias 23 e 24 "
+     "acontecem as competições. A visitação ao público é de 25 a 29 de novembro, das 9h às 21h.",
+     ["quando", "data", "datas", "dias", "período", "quando acontece", "que dia", "começa", "termina", "onde e quando"]),
     ("location", "Local do evento",
-     "A Robótica 2026 acontece no Centro de Convenções de João Pessoa, na Rodovia PB-008, quilômetro 5, "
-     "no bairro Cabo Branco."),
+     "A Robótica 2026 acontece de 23 a 29 de novembro, no Centro de Convenções de João Pessoa, na Rodovia PB-008, "
+     "quilômetro 5, no bairro Cabo Branco.",
+     ["onde", "local", "endereço", "como chegar", "como chego", "chego", "chegar", "lugar", "centro de convenções", "cabo branco",
+      "onde acontece", "onde e quando"]),
     ("organization", "Organização",
-     "O evento é organizado por voluntários de todo o Brasil. Entre os coordenadores está o presidente da RoboCup Brasil."),
+     "Quem organiza a Robótica 2026 são voluntários de todo o Brasil. Entre os coordenadores está o presidente da "
+     "RoboCup Brasil.",
+     ["organiza", "organizador", "organizadores", "quem faz", "realização", "responsável", "promove", "robocup"]),
     ("exhibitors", "Participação do Senac Paraíba",
-     "O Senac Paraíba participa da Robótica 2026 com um estande, onde você pode conhecer o SENAC BOT, "
-     "um robô virtual com inteligência artificial que conversa por voz."),
-    ("visitor_info", "Entrada e visitação",
-     "A entrada para visitar a Robótica 2026 é gratuita. A visitação ao público é de 25 a 29 de novembro, "
-     "das 9h às 21h. A programação de cada atividade é divulgada pela organização."),
+     "O que o Senac Paraíba faz na Robótica 2026: participa com um estande, onde você conhece o SENAC BOT, "
+     "um robô virtual com inteligência artificial que conversa por voz.",
+     ["senac", "estande", "stand", "participação", "o que o senac faz", "senac paraíba", "o que tem no estande"]),
+    ("dates", "Entrada e visitação",
+     "Você pode visitar a Robótica 2026 de 25 a 29 de novembro, das 9h às 21h. A entrada é gratuita. "
+     "A programação de cada atividade é divulgada pela organização.",
+     ["visitar", "visitação", "visita", "horário", "horários", "funcionamento", "aberto", "ingresso", "entrada", "entrar",
+      "gratuita", "pagar", "pagar para entrar", "cobram", "custa", "grátis", "de graça", "quando posso visitar", "abre", "fecha",
+      "preciso pagar", "precisa pagar"]),
+    ("activities", "Competições",
+     "As competições acontecem nos dias 23 e 24 de novembro. O evento reúne a Competição Brasileira de Robótica "
+     "Petrobras e a etapa nacional da Olimpíada Brasileira de Robótica, entre outras atividades. "
+     "A visitação do público é de 25 a 29.",
+     ["competição", "competições", "campeonato", "torneio", "tem competição", "olimpíada", "equipes", "disputa"]),
+    ("faq", "Siglas do evento",
+     "No evento, CBR é a Competição Brasileira de Robótica Petrobras. OBR é a Olimpíada Brasileira de Robótica. "
+     "MNR é a Mostra Nacional de Robótica. SBR é o Simpósio Brasileiro de Robóticas. WRE é o Workshop de Robótica "
+     "na Educação, e CTDR é a Competição de Teses e Dissertações.",
+     ["o que é a OBR", "o que é a CBR", "OBR", "CBR", "MNR", "SBR", "WRE", "CTDR", "sigla", "siglas", "o que significa", "diferença",
+      "olimpíada brasileira de robótica", "mostra nacional de robótica"]),
     ("schedule", "Programação",
-     "A programação detalhada por dia ainda será divulgada pela organização. Para acompanhar, use os canais oficiais: "
-     "o Instagram arroba cbrobotica e o canal Competição Brasileira de Robótica no YouTube."),
+     "A Robótica 2026 tem mais de 400 atividades, incluindo palestras, workshops e apresentações científicas. A visitação ao público "
+     "é de 25 a 29 de novembro, das 9h às 21h. A programação detalhada por dia, inclusive a de hoje, ainda será divulgada "
+     "pela organização. Acompanhe pelo Instagram arroba cbrobotica e pelo canal Competição Brasileira de Robótica no YouTube.",
+     ["programação", "agenda", "hoje", "palestra", "palestras", "oficinas", "workshop", "workshops", "o que tem", "atrações",
+      "cronograma", "vai ter", "horário do evento"]),
 ]
 
 SOURCES = [
@@ -118,16 +142,17 @@ def main() -> int:
             print("Cadastro atualizado.")
 
         existing = {(i["category"], i["title"]): i for c in detail.get("categories", []) for i in c["items"]}
-        for category, title, content in ITEMS:
+        for category, title, content, keywords in ITEMS:
             current = existing.get((category, title))
             if current is None:
                 print(f"{'[simulação] criaria' if dry else 'Criando'} item: {title}")
                 if not dry:
-                    call("POST", f"/api/events/{event_id}/items", json={"category": category, "title": title, "content": content})
-            elif " ".join(current.get("content", "").split()) != content:
+                    call("POST", f"/api/events/{event_id}/items",
+                         json={"category": category, "title": title, "content": content, "keywords": keywords})
+            elif " ".join(current.get("content", "").split()) != content or list(current.get("keywords") or []) != keywords:
                 print(f"{'[simulação] atualizaria' if dry else 'Atualizando'} item: {title}")
                 if not dry:
-                    call("PUT", f"/api/events/{event_id}/items/{current['id']}", json={"content": content})
+                    call("PUT", f"/api/events/{event_id}/items/{current['id']}", json={"content": content, "keywords": keywords})
             else:
                 print(f"Item já atualizado: {title}")
 

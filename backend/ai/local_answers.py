@@ -70,7 +70,7 @@ _RULES: tuple[tuple[str, "str | list[str] | KbText"], ...] = (
     (r"(voce|vc) e (um |uma )?(humano|humana|pessoa|gente|funcionario|funcionaria|atendente|pessoa de verdade|ser humano)( de verdade)?|tem alguem (ai|ai atras) falando",
      "Não, sou o assistente virtual do Senac, um robô. Não sou uma pessoa nem um funcionário, mas adoro ajudar com informações públicas sobre o Senac!"),
     (r"(voce|vc) e (um )?(robo|maquina)( de verdade)?",
-     "Sim, sou um robô! Por enquanto, um robô virtual: existo na tela, converso e simulo movimentos. No futuro, poderei ganhar um corpo com peças LEGO."),
+     "Sim, sou um robô! Por enquanto, um robô virtual: existo na tela, converso e simulo movimentos. Ainda sem corpo físico, mas com bastante curiosidade!"),
     (r"como (voce|vc) funciona|como funciona (o )?senac bot",
      "Você fala ou escreve e eu procuro uma resposta pronta. Se não tiver, posso consultar uma inteligência artificial online. Sem internet, uso só respostas locais. A IA nunca comanda meus motores."),
     (r"(me )?(conte|conta|diga) (uma )?piada|piada|quero uma piada", JOKES),
@@ -80,6 +80,16 @@ _RULES: tuple[tuple[str, "str | list[str] | KbText"], ...] = (
      "Por nada! Foi um prazer conversar com você. Se surgir outra curiosidade, é só chamar!"),
     (r"tchau|ate (logo|mais|breve)|adeus",
      "Tchau! Foi muito bom conversar com você. Continue curioso e volte sempre!"),
+    (r"(voce|vc) (consegue|pode) pensar|(voce|vc) pensa|(voce|vc) (tem|possui) (consciencia|sentimentos)|(voce|vc) sente( alguma coisa)?",
+     KbText("faq-ia-pensar", "Eu não penso como uma pessoa. Sou um programa que reconhece padrões e escolhe respostas com base no que sei. Não tenho consciência nem sentimentos, mas posso conversar sobre isso com você!")),
+    (r"como (funciona|que funciona) (a )?(inteligencia artificial|ia)",
+     KbText("faq-ia-como-funciona", "Uma inteligência artificial aprende com muitos exemplos, encontra padrões neles e usa esses padrões para prever, classificar ou gerar respostas. Ela não entende o mundo como uma pessoa.")),
+    (r"(quais|que) profissoes (usam|utilizam|trabalham com) (a )?(inteligencia artificial|ia)",
+     KbText("faq-ia-profissoes", "Muitas profissões usam inteligência artificial: tecnologia da informação, saúde, comércio, logística, educação, design e atendimento ao público.")),
+    (r"como (eu )?(posso )?(comecar a )?(aprender|estudar) (robotica|programacao)|como (eu )?(posso )?comecar (a )?(estudar|aprender|em|na) (programacao|robotica)",
+     KbText("faq-comecar-robotica-programacao", "Para começar, aprenda lógica de programação com uma linguagem simples, como Python ou Scratch, e pratique com projetos pequenos, sensores e motores. O Senac tem cursos na área de tecnologia.")),
+    (r"quem (te |lhe )?(criou|desenvolveu|fez|programou|construiu)( voce| vc)?|quem e (o )?(seu )?(criador|desenvolvedor)",
+     KbText("faq-senac-bot", "Eu sou um robô educacional virtual, criado para o evento Robótica 2026 do Senac Paraíba.")),
     (r"tudo bem( com (voce|vc))?|como (voce|vc) esta",
      "Tudo ótimo por aqui, ainda mais falando de tecnologia! E você, como está?"),
     (r"o que e (a )?tecnologia", KbText("faq-tecnologia", "Tecnologia é o uso de conhecimentos e ferramentas para resolver problemas e atender necessidades, de uma simples roda a um robô.")),
@@ -88,7 +98,7 @@ _RULES: tuple[tuple[str, "str | list[str] | KbText"], ...] = (
 )
 _INTENTS = (
     "info", "info", "info", "info", "info", "info", "info", "info",
-    "joke", "question", "challenge", "thanks", "farewell", "info", "info", "info",
+    "joke", "question", "challenge", "thanks", "farewell", "info", "info", "info", "info", "info", "info", "info", "info",
 )
 assert len(_INTENTS) == len(_RULES)
 _COMPILED = tuple(

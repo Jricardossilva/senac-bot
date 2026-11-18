@@ -106,6 +106,172 @@
       "kind": "ativacao",
       "summary": "Evento ativado.",
       "details": {}
+    },
+    {
+      "at": "2026-11-18T13:54:18+00:00",
+      "kind": "edicao",
+      "summary": "Cadastro do evento editado.",
+      "details": {}
+    },
+    {
+      "at": "2026-11-18T13:54:18+00:00",
+      "kind": "validacao",
+      "summary": "Robótica 2026: confirmed → confirmed",
+      "details": {
+        "item": "it-13c7488593"
+      }
+    },
+    {
+      "at": "2026-11-18T13:54:18+00:00",
+      "kind": "validacao",
+      "summary": "Datas do evento: confirmed → confirmed",
+      "details": {
+        "item": "it-2e2d11bc57"
+      }
+    },
+    {
+      "at": "2026-11-18T13:54:18+00:00",
+      "kind": "validacao",
+      "summary": "Local do evento: confirmed → confirmed",
+      "details": {
+        "item": "it-9cf86ec428"
+      }
+    },
+    {
+      "at": "2026-11-18T13:54:18+00:00",
+      "kind": "validacao",
+      "summary": "Organização: confirmed → confirmed",
+      "details": {
+        "item": "it-1dd645ada0"
+      }
+    },
+    {
+      "at": "2026-11-18T13:54:18+00:00",
+      "kind": "validacao",
+      "summary": "Informação adicionada: Participação do Senac Paraíba",
+      "details": {}
+    },
+    {
+      "at": "2026-11-18T13:54:18+00:00",
+      "kind": "validacao",
+      "summary": "Informação adicionada: Entrada e visitação",
+      "details": {}
+    },
+    {
+      "at": "2026-11-18T13:54:19+00:00",
+      "kind": "validacao",
+      "summary": "Informação adicionada: Competições",
+      "details": {}
+    },
+    {
+      "at": "2026-11-18T13:54:19+00:00",
+      "kind": "validacao",
+      "summary": "Informação adicionada: Siglas do evento",
+      "details": {}
+    },
+    {
+      "at": "2026-11-18T13:54:19+00:00",
+      "kind": "validacao",
+      "summary": "Informação adicionada: Programação",
+      "details": {}
+    },
+    {
+      "at": "2026-11-18T13:54:19+00:00",
+      "kind": "fonte",
+      "summary": "Fonte adicionada (official): https://robotica.robocup.org.br/",
+      "details": {}
+    },
+    {
+      "at": "2026-11-18T13:54:19+00:00",
+      "kind": "fonte",
+      "summary": "Fonte adicionada (official): https://cbr.robocup.org.br/index.php/cronograma/",
+      "details": {}
+    },
+    {
+      "at": "2026-11-18T13:54:19+00:00",
+      "kind": "fonte",
+      "summary": "Fonte adicionada (official): https://cbr.robocup.org.br/index.php/cronograma/programacao/",
+      "details": {}
+    },
+    {
+      "at": "2026-11-18T13:54:19+00:00",
+      "kind": "fonte",
+      "summary": "Fonte removida: src-b0bd694b3f",
+      "details": {}
+    },
+    {
+      "at": "2026-11-18T13:54:43+00:00",
+      "kind": "edicao",
+      "summary": "Cadastro do evento editado.",
+      "details": {}
+    },
+    {
+      "at": "2026-11-18T13:54:43+00:00",
+      "kind": "validacao",
+      "summary": "Local do evento: confirmed → confirmed",
+      "details": {
+        "item": "it-9cf86ec428"
+      }
+    },
+    {
+      "at": "2026-11-18T13:54:43+00:00",
+      "kind": "validacao",
+      "summary": "Entrada e visitação: confirmed → confirmed",
+      "details": {
+        "item": "it-176ac28de6"
+      }
+    },
+    {
+      "at": "2026-11-18T13:54:43+00:00",
+      "kind": "validacao",
+      "summary": "Siglas do evento: confirmed → confirmed",
+      "details": {
+        "item": "it-680645c05e"
+      }
+    },
+    {
+      "at": "2026-11-18T13:54:43+00:00",
+      "kind": "validacao",
+      "summary": "Programação: confirmed → confirmed",
+      "details": {
+        "item": "it-1cb188c6cb"
+      }
+    },
+    {
+      "at": "2026-11-18T13:55:21+00:00",
+      "kind": "edicao",
+      "summary": "Cadastro do evento editado.",
+      "details": {}
+    },
+    {
+      "at": "2026-11-18T13:55:21+00:00",
+      "kind": "validacao",
+      "summary": "Entrada e visitação: confirmed → confirmed",
+      "details": {
+        "item": "it-176ac28de6"
+      }
+    },
+    {
+      "at": "2026-11-18T13:55:21+00:00",
+      "kind": "validacao",
+      "summary": "Programação: confirmed → confirmed",
+      "details": {
+        "item": "it-1cb188c6cb"
+      }
+    },
+    {
+      "at": "2026-11-18T13:55:44+00:00",
+      "kind": "edicao",
+      "summary": "Cadastro do evento editado.",
+      "details": {}
+    },
+    {
+      "at": "2026-11-18T13:55:44+00:00",
+      "kind": "validacao",
+      "summary": "Entrada e visitação: confirmed → confirmed",
+      "details": {
+        "item": "it-176ac28de6"
+      }
     }
   ]
 }

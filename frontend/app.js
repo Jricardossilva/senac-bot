@@ -15,6 +15,8 @@ import { runDemo } from "/assets/demo.js";
 import { initEvents } from "/assets/events.js";
 import { authFetch } from "/assets/auth.js";
 import { initKnowledgePanel } from "/assets/knowledge.js";
+import { PresenceCamera } from "/assets/presence.js";
+import { GazeSmoother, PresenceTracker } from "/assets/presence-logic.js";
 
 const $ = (selector) => document.querySelector(selector);
 
@@ -427,6 +429,7 @@ function updateStatus(status) {
     eventList.append(item);
   });
   applyRobot(status);
+  emergencyActive = Boolean(status.emergency_stop);
   if (status.emergency_stop) {
     speechOutput.cancel();
     setVisitorState("Erro", "Parada de emergência acionada");
@@ -801,6 +804,8 @@ function clearVisitorScreen() {
   conversationCommand("neutral");
 }
 function resetExperience() {
+  greetingToken += 1; // uma saudação de início automático em andamento deixa de abrir o microfone
+  greeting = false;
   if (conversation.active) conversation.stop("operator");
   speechOutput.cancel();
   window.setTimeout(clearVisitorScreen, 300);
@@ -815,7 +820,12 @@ let experienceChannel = null;
 try {
   experienceChannel = new BroadcastChannel("senac-bot-experience");
   experienceChannel.addEventListener("message", (event) => {
-    if (event.data === "reset-experience") resetExperience();
+    const message = event.data;
+    if (message === "reset-experience") resetExperience();
+    else if (message && message.type === "presence" && exposicaoMode) setPresenceEnabled(Boolean(message.enabled));
+    else if (message && message.type === "presence-query" && exposicaoMode) announcePresence();
+    else if (message && message.type === "presence-status") renderPresenceStatus(message);
+    else if (message && message.type === "presence-face") renderPresenceFace(message);
   });
 } catch {
   experienceChannel = null; // sem BroadcastChannel: a tela do estande se limpa sozinha ao fim de cada conversa
@@ -831,6 +841,168 @@ $("#reset-experience").addEventListener("click", async () => {
   resetExperience();
   if (!feedback.classList.contains("error")) setFeedback(feedback, "Experiência reiniciada: conversa encerrada e legendas limpas.");
 });
+
+/* ---------- Câmera de presença e início automático (só no modo exposição) ---------- */
+
+// A câmera só percebe se há um rosto próximo (sem identificar, gravar ou enviar imagem) e move o olhar do avatar. Quem fica
+// perto por ~1,5 s recebe uma saudação falada e só DEPOIS dela o microfone abre (com o indicador de "ouvindo"); sem resposta
+// em 20 s a conversa se encerra e o microfone é liberado. Quem já foi atendido só é atendido de novo depois de sair.
+const AUTO_GREETING = "Olá! Eu sou o SENAC BOT. Quer conversar? Pode falar assim que eu terminar.";
+const testHooks = window.__SENAC_TEST_HOOKS__ || {}; // só os testes de interface definem (tempos curtos e leituras de rosto)
+const AUTO_START_IDLE_MS = testHooks.autoStartIdleMs ?? 20000;
+const gateEl = $("#station-gate");
+const cameraIndicator = $("#camera-indicator");
+const visitorRobot = $("#visitor-robot");
+const proximityParam = Number(new URLSearchParams(location.search).get("proximidade"));
+const presenceTracker = new PresenceTracker({
+  ...(proximityParam >= 0.05 && proximityParam <= 0.5 ? { nearRatio: proximityParam } : {}),
+  ...(testHooks.presence || {})
+});
+const gazeSmoother = new GazeSmoother();
+let stationRunning = false;
+let presenceEnabled = true;
+let greeting = false;
+let greetingToken = 0;
+let emergencyActive = false;
+let cameraStatus = "off";
+
+function canStartByPresence() {
+  return stationRunning && presenceEnabled && !greeting && !conversation.active && conversation.state !== STATES.REQUESTING &&
+    !demoRunning && !emergencyActive && !speechOutput.speaking;
+}
+
+function startByPresence() {
+  const token = ++greetingToken;
+  greeting = true;
+  conversationCommand("happy");
+  conversationCommand("wave");
+  setVisitorState("Falando", "Olá! Já vou te ouvir...");
+  const proceed = () => {
+    if (token !== greetingToken) return; // reinício, emergência ou nova saudação: não abre o microfone
+    greeting = false;
+    if (!stationRunning || !presenceEnabled || emergencyActive || conversation.active) {
+      clearVisitorScreen();
+      return;
+    }
+    conversation.start({ firstIdleMs: AUTO_START_IDLE_MS });
+  };
+  const spoken = speechOutput.speak(AUTO_GREETING, { onStart: () => conversationCommand("speaking"), onEnd: proceed });
+  if (!spoken) proceed();
+}
+
+function onPresenceSample(face, now) {
+  const gazeValue = gazeSmoother.update(face ? face.centerX : null, now);
+  visitorRobot.style.setProperty("--gaze", gazeValue.toFixed(3));
+  const near = Boolean(face) && face.ratio >= presenceTracker.config.nearRatio;
+  reportFace(face, near, now, gazeValue);
+  if (presenceTracker.update(near, now, canStartByPresence()) === "start") startByPresence();
+}
+
+// Leitura ao vivo para o painel do operador ajustar a distância (uns 2 envios por segundo; só números, nenhuma imagem).
+let lastFaceReportAt = 0;
+function reportFace(face, near, now, gaze) {
+  if (now - lastFaceReportAt < 500) return;
+  lastFaceReportAt = now;
+  try {
+    experienceChannel?.postMessage({ type: "presence-face", present: Boolean(face), ratio: face ? face.ratio : 0, near, needed: presenceTracker.config.nearRatio, gaze, x: face ? face.centerX : null });
+  } catch {
+    // sem canal entre abas
+  }
+}
+
+function announcePresence() {
+  try {
+    experienceChannel?.postMessage({ type: "presence-status", status: cameraStatus, enabled: presenceEnabled, running: stationRunning });
+  } catch {
+    // o painel do operador só mostra o estado da câmera quando está no mesmo navegador
+  }
+}
+
+// Gancho só dos testes de interface (como __SENAC_VOICE_TIMINGS__): injeta leituras de rosto sem depender de uma pessoa diante da câmera.
+if (window.__SENAC_TEST_HOOKS__) window.__SENAC_TEST_HOOKS__.presenceSample = onPresenceSample;
+
+const presenceCamera = new PresenceCamera({
+  onSample: (face, now) => {
+    if (!testHooks.ignoreCameraSamples) onPresenceSample(face, now); // os testes injetam as leituras (a câmera de teste do Edge "vê" rostos falsos)
+  },
+  onStatus: (status) => {
+    cameraStatus = status;
+    cameraIndicator.hidden = status !== "on";
+    if (status !== "on") visitorRobot.style.setProperty("--gaze", "0");
+    announcePresence();
+  }
+});
+
+function setPresenceEnabled(enabled) {
+  presenceEnabled = enabled;
+  if (!stationRunning) {
+    announcePresence();
+    return;
+  }
+  if (enabled) presenceCamera.start();
+  else {
+    presenceCamera.stop();
+    presenceTracker.reset();
+    greetingToken += 1;
+    greeting = false;
+  }
+  announcePresence();
+}
+
+async function startStation(withCamera) {
+  gateEl.hidden = true;
+  stationRunning = true;
+  presenceEnabled = withCamera && presenceEnabled;
+  try {
+    document.documentElement.requestFullscreen?.().catch(() => {}); // precisa estar dentro do toque do operador
+  } catch {
+    // tela cheia é opcional
+  }
+  await requestMicrophoneAccess(); // o pedido de permissão aparece agora, na preparação, e não diante do visitante
+  if (presenceEnabled) await presenceCamera.start();
+  announcePresence();
+}
+
+const PRESENCE_LABELS = {
+  on: "ativa", starting: "iniciando...", off: "desligada", denied: "sem permissão (libere a câmera no navegador do estande)",
+  "no-device": "nenhuma câmera encontrada", error: "indisponível neste navegador"
+};
+function renderPresenceStatus(message) {
+  const label = $("#presence-status");
+  const toggle = $("#toggle-presence");
+  if (toggle && document.activeElement !== toggle) toggle.checked = Boolean(message.enabled);
+  label.textContent = message.running
+    ? `Câmera do estande: ${message.enabled ? PRESENCE_LABELS[message.status] || message.status : "desligada pelo operador"}.`
+    : "Câmera do estande: aguardando a estação iniciar.";
+}
+
+function renderPresenceFace(message) {
+  const label = $("#presence-face");
+  if (!label) return;
+  label.textContent = message.present
+    ? `Rosto detectado: largura ${Math.round(message.ratio * 100)}% da imagem (precisa de ${Math.round(message.needed * 100)}% para iniciar). ${message.near ? "Próximo o bastante." : "Aproxime-se um pouco."} Posição ${Math.round(message.x * 100)}% (50% = centro) · olhar ${message.gaze.toFixed(2)} (-1 a 1).`
+    : "Nenhum rosto detectado agora.";
+}
+
+$("#toggle-presence").addEventListener("change", (event) => {
+  try {
+    experienceChannel?.postMessage({ type: "presence", enabled: event.target.checked });
+  } catch {
+    // sem canal entre abas: o controle só funciona no mesmo navegador do estande
+  }
+});
+
+if (exposicaoMode) {
+  gateEl.hidden = false;
+  $("#station-start").addEventListener("click", () => startStation(PresenceCamera.supported));
+  $("#station-start-manual").addEventListener("click", () => startStation(false));
+} else {
+  try {
+    experienceChannel?.postMessage({ type: "presence-query" }); // pergunta à tela do estande, se houver, como está a câmera
+  } catch {
+    // sem canal entre abas
+  }
+}
 
 /* ---------- Painel do operador e simulador ---------- */
 

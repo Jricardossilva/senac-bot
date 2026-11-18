@@ -23,6 +23,21 @@ MIN_MANUAL_GAP_SECONDS = 30  # evita pesquisas repetidas em sequência sobre o m
 MIN_SCHEDULE_HOURS = 1
 
 
+MAX_ITEM_KEYWORDS = 30
+
+
+def _clean_keywords(value: Any) -> list[str]:
+    """Palavras e expressões que o operador associa ao item (sinônimos de como o visitante pergunta): limpas e limitadas."""
+    if not isinstance(value, (list, tuple)):
+        return []
+    clean: list[str] = []
+    for word in value:
+        text = " ".join(str(word).split())[:40]
+        if text and text.lower() not in (c.lower() for c in clean):
+            clean.append(text)
+    return clean[:MAX_ITEM_KEYWORDS]
+
+
 class EventManager:
     def __init__(
         self,
@@ -187,7 +202,8 @@ class EventManager:
             item.note = f"Rejeitada pelo operador. {reason}".strip()
         return self._decide(event_id, item_id, change)
 
-    def edit_item(self, event_id: str, item_id: str, content: str | None = None, title: str | None = None, category: str | None = None) -> dict[str, Any]:
+    def edit_item(self, event_id: str, item_id: str, content: str | None = None, title: str | None = None, category: str | None = None,
+                  keywords: list[str] | None = None) -> dict[str, Any]:
         def change(item: EventItem, items: list[EventItem]) -> None:
             if content is not None:
                 text = " ".join(content.split())
@@ -204,10 +220,12 @@ class EventManager:
                 if category not in CATEGORIES:
                     raise EventStoreError("Categoria inválida.")
                 item.category = category
+            if keywords is not None:
+                item.keywords = _clean_keywords(keywords)
             item.status, item.approved_by = "confirmed", "operator"
         return self._decide(event_id, item_id, change)
 
-    def add_item(self, event_id: str, category: str, title: str, content: str) -> dict[str, Any]:
+    def add_item(self, event_id: str, category: str, title: str, content: str, keywords: list[str] | None = None) -> dict[str, Any]:
         """Informação digitada pelo operador (confirmada por ele)."""
         event = self.store.get(event_id)
         text = " ".join(content.split())
@@ -221,7 +239,7 @@ class EventManager:
             items = self.store.items(event_id)
             stamp = now_iso()
             item = EventItem(id=_item_id_unique("operador", title, text, {i.id for i in items}), category=category, title=title.strip()[:120], content=text,
-                             status="confirmed", approved_by="operator", found_at=stamp, updated_at=stamp, valid_until=event.end_date,
+                             keywords=_clean_keywords(keywords or []), status="confirmed", approved_by="operator", found_at=stamp, updated_at=stamp, valid_until=event.end_date,
                              note="Digitada pelo operador.", edited=True, history=[{"at": stamp, "change": "adicionada pelo operador", "to": text}])
             items.append(item)
             self.store.save_items(event_id, items)

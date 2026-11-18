@@ -1,17 +1,45 @@
 {
   "sources": [
     {
-      "id": "src-b0bd694b3f",
-      "url": "https://robotica2026.example.org/",
+      "id": "src-705e945233",
+      "url": "https://robotica.robocup.org.br/",
       "kind": "site",
       "trust": "official",
       "origin": "operator",
       "title": "",
-      "last_checked": "2026-11-08T00:14:07+00:00",
+      "last_checked": null,
       "last_ok": null,
-      "error": "endereço não permitido: https://robotica2026.example.org/",
+      "error": null,
       "hash": null,
-      "failures": 2,
+      "failures": 0,
+      "note": ""
+    },
+    {
+      "id": "src-2ac7da676f",
+      "url": "https://cbr.robocup.org.br/index.php/cronograma/",
+      "kind": "site",
+      "trust": "official",
+      "origin": "operator",
+      "title": "",
+      "last_checked": null,
+      "last_ok": null,
+      "error": null,
+      "hash": null,
+      "failures": 0,
+      "note": ""
+    },
+    {
+      "id": "src-a2d8f172d0",
+      "url": "https://cbr.robocup.org.br/index.php/cronograma/programacao/",
+      "kind": "program",
+      "trust": "official",
+      "origin": "operator",
+      "title": "",
+      "last_checked": null,
+      "last_ok": null,
+      "error": null,
+      "hash": null,
+      "failures": 0,
       "note": ""
     }
   ]
