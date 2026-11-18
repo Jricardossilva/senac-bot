@@ -185,4 +185,4 @@ def test_chat_endpoint_returns_links_and_policy_source(monkeypatch) -> None:
 
 def test_the_configured_api_key_is_registered_as_a_protected_secret() -> None:
     key = main.settings.gemini_api_key
-    assert key is None or key in main.chat_service._policy._secrets  # noqa: SLF001 - verifica a ligação em main.py
+    assert not key or key in main.chat_service._policy._secrets  # noqa: SLF001 - verifica a ligação em main.py

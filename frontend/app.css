@@ -149,6 +149,11 @@ body.show-source .message-source { display: block; }
 .chip-button:disabled { opacity: 0.4; cursor: default; }
 @keyframes listening-pulse { 0%, 100% { box-shadow: 0 0 0 0 #f5822066; } 50% { box-shadow: 0 0 0 12px #f5822000; } }
 .voice-hint { margin: 0; padding: 0.2rem 1.2rem 0.9rem; color: var(--muted); font-size: 0.76rem; line-height: 1.5; }
+.privacy-note { margin: 0; padding: 0 1.2rem 0.9rem; color: var(--muted); font-size: 0.72rem; line-height: 1.5; }
+.privacy-note strong { color: var(--blue-700); }
+/* Modo exposição (?modo=exposicao): só a tela do visitante, sem navegação para painel, simulador e diagnóstico. */
+body[data-mode="exposicao"] .mode-nav { display: none; }
+body[data-mode="exposicao"] .view:not(.visitor-view) { display: none !important; }
 
 /* Descubra o Senac / desafios */
 .footer { min-height: 62px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.76rem; font-weight: 500; }

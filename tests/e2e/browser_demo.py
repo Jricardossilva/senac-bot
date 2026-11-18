@@ -37,7 +37,7 @@ try:
     b.click("[data-hardware-mode=physical]")
     b.wait_for("document.querySelector('#hardware-feedback').classList.contains('error')", 5)
     R.check("modo físico: mensagem clara", "ainda não está disponível" in b.js("document.querySelector('#hardware-feedback').textContent"), True)
-    R.check("modo físico: simulador segue ativo", b.js("document.querySelector('#hardware-state').textContent"), "Simulador local")
+    R.check("modo físico: simulador segue ativo", b.js("document.querySelector('#hardware-state').textContent"), "Simulador virtual")
     b.click("[data-hardware-mode=simulation]")
     b.wait_for("!document.querySelector('#hardware-feedback').classList.contains('error')", 5)
     R.check("ativar simulador limpa o erro", b.js("document.querySelector('[data-hardware-mode=simulation]').classList.contains('selected')"), True)

@@ -142,6 +142,8 @@ let lastConversationState = null;
 let conversationStartedAt = 0;
 
 const IDLE_LABEL = "Toque em INICIAR CONVERSA para falar comigo";
+const EXPOSICAO_CLEAR_MS = 10000; // modo exposição: tempo para o visitante ler antes de a tela voltar ao início
+const exposicaoMode = new URLSearchParams(location.search).get("modo") !== null && isExposicaoMode();
 const DEFAULT_WELCOME = "Olá! Eu sou o SENAC BOT. Toque em INICIAR CONVERSA e me pergunte o que quiser.";
 let WELCOME = DEFAULT_WELCOME; // muda com o evento ativo (somente o que o servidor publica para o visitante)
 
@@ -380,12 +382,15 @@ function updateStatus(status) {
     document.createElement("i"),
     document.createTextNode(status.application === "online" ? "Online" : "Offline")
   );
+  const envName = { production: "produção", development: "local" }[status.app_env] || status.app_env || "local";
+  $("#application-env").textContent = `API FastAPI · ${envName}`;
+  $("#operator-env-label").textContent = `CONTROLE DO OPERADOR · ${envName.toUpperCase()}`;
   const [aiLabel, aiDetail] = aiStatusInfo[status.ai_status] || aiStatusInfo.unavailable;
   $("#gemini-state").textContent = aiLabel;
   $("#gemini-detail").textContent = aiDetail;
   $("#check-ai").disabled = status.ai_status === "not_configured";
   $("#audio-state").textContent = speechOutput.supported ? "Disponível" : "Indisponível";
-  $("#hardware-state").textContent = status.hardware_mode === "simulation" ? "Simulador local" : "Físico (LEGO)";
+  $("#hardware-state").textContent = status.hardware_mode === "simulation" ? "Simulador virtual" : "Físico (LEGO)";
   $("#hardware-detail").textContent = status.hardware_error
     ? "Físico indisponível: simulador ativo"
     : status.hardware_mode === "simulation"
@@ -579,7 +584,7 @@ const ENDED_TEXT = {
 };
 const HINT_TEXT = {
   active: "Fale normalmente, sem precisar tocar de novo a cada pergunta. Para parar, toque em ENCERRAR CONVERSA.",
-  idle: "Converse por voz: não precisa tocar de novo a cada pergunta. Sua voz não é gravada."
+  idle: "Converse por voz: não precisa tocar de novo a cada pergunta."
 };
 // Expressão do avatar em cada estado (sempre pelo controlador, como os demais comandos).
 const STATE_EXPRESSION = {
@@ -656,6 +661,12 @@ function onConversationState(state, detail = {}) {
     window.setTimeout(() => {
       if (lastConversationState === STATES.ENDED) conversationCommand("neutral");
     }, 2800);
+    // Estande: a tela compartilhada não pode mostrar a conversa do visitante anterior ao próximo.
+    if (exposicaoMode) {
+      window.setTimeout(() => {
+        if (lastConversationState === STATES.ENDED) clearVisitorScreen();
+      }, EXPOSICAO_CLEAR_MS);
+    }
   }
 }
 
@@ -775,6 +786,51 @@ if (document.fullscreenEnabled) {
 } else {
   fullscreenButton.hidden = true;
 }
+
+/* ---------- Modo exposição (estande) e reinício da experiência ---------- */
+
+// Endereço com ?modo=exposicao: só a tela do visitante (sem painel, simulador e diagnóstico), para o público.
+// O operador abre outra aba, sem o parâmetro. Isto só esconde as telas; as APIs do operador seguem protegidas pelo código.
+function isExposicaoMode() {
+  const value = new URLSearchParams(location.search).get("modo") || "";
+  return value.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase() === "exposicao";
+}
+function clearVisitorScreen() {
+  resetCaptions();
+  setVisitorState("Aguardando", IDLE_LABEL);
+  conversationCommand("neutral");
+}
+function resetExperience() {
+  if (conversation.active) conversation.stop("operator");
+  speechOutput.cancel();
+  window.setTimeout(clearVisitorScreen, 300);
+}
+if (exposicaoMode) {
+  document.body.dataset.mode = "exposicao";
+  document.title = "SENAC BOT · Robótica 2026";
+  showView("visitor");
+}
+// Mesmo navegador: o botão do operador reinicia a tela do estande na hora (outra aba, mesma origem).
+let experienceChannel = null;
+try {
+  experienceChannel = new BroadcastChannel("senac-bot-experience");
+  experienceChannel.addEventListener("message", (event) => {
+    if (event.data === "reset-experience") resetExperience();
+  });
+} catch {
+  experienceChannel = null; // sem BroadcastChannel: a tela do estande se limpa sozinha ao fim de cada conversa
+}
+$("#reset-experience").addEventListener("click", async () => {
+  const feedback = $("#operator-feedback");
+  await performControl("/api/session/stop", feedback);
+  try {
+    experienceChannel?.postMessage("reset-experience");
+  } catch {
+    // a limpeza automática da tela do estande cobre este caso
+  }
+  resetExperience();
+  if (!feedback.classList.contains("error")) setFeedback(feedback, "Experiência reiniciada: conversa encerrada e legendas limpas.");
+});
 
 /* ---------- Painel do operador e simulador ---------- */
 

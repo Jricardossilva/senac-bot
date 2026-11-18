@@ -122,6 +122,7 @@
                 <button id="demo-skip" class="chip-button" type="button" hidden>Continuar demonstração</button>
               </div>
               <p id="voice-hint" class="voice-hint">Converse por voz: não precisa tocar de novo a cada pergunta. Sua voz não é gravada.</p>
+              <p id="privacy-note" class="privacy-note"><strong>Privacidade:</strong> o SENAC BOT não grava a sua voz nem guarda a conversa. Para reconhecer a fala, o navegador (Chrome ou Edge) envia o áudio ao serviço de voz dele, e o texto da pergunta é enviado a um serviço de inteligência artificial para gerar a resposta.</p>
             </div>
           </div>
         </div>
@@ -140,11 +141,11 @@
       </section>
 
       <section id="operator" class="view dashboard-view" aria-labelledby="operator-title" hidden>
-        <div class="page-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> CONTROLE LOCAL</div><h1 id="operator-title">Painel do <span>operador.</span></h1><p>Acompanhe a aplicação e controle a sessão simulada.</p></div><span class="simulated-badge"><span></span> MODO SIMULADOR</span></div>
+        <div class="page-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> <span id="operator-env-label">CONTROLE DO OPERADOR</span></div><h1 id="operator-title">Painel do <span>operador.</span></h1><p>Acompanhe a aplicação e controle a sessão simulada.</p></div><span class="simulated-badge"><span></span> MODO SIMULADOR</span></div>
         <div class="operator-layout">
           <div class="operator-main">
             <div class="metrics-grid">
-              <article class="metric-card panel"><span class="metric-label">APLICAÇÃO</span><strong id="application-state" class="metric-value"><i></i>Conectando</strong><small>API FastAPI local</small></article>
+              <article class="metric-card panel"><span class="metric-label">APLICAÇÃO</span><strong id="application-state" class="metric-value"><i></i>Conectando</strong><small id="application-env">API FastAPI</small></article>
               <article class="metric-card panel"><span class="metric-label">GEMINI</span><strong id="gemini-state" class="metric-value">Verificando</strong><small id="gemini-detail">Verificando disponibilidade</small></article>
               <article class="metric-card panel"><span class="metric-label">MICROFONE</span><strong id="microphone-state" class="metric-value">Navegador</strong><small id="microphone-detail">Aguardando permissão</small></article>
               <article class="metric-card panel"><span class="metric-label">SAÍDA DE ÁUDIO</span><strong id="audio-state" class="metric-value">Navegador</strong><small>Áudio não armazenado</small></article>
@@ -153,7 +154,7 @@
             </div>
             <article class="panel operator-controls">
               <div><span class="metric-label">CONTROLES DA SESSÃO</span><p>Inicie o atendimento ou encerre-o com segurança.</p></div>
-              <div class="control-actions"><button id="start-demo" class="button-primary" type="button">Iniciar demonstração</button><button id="stop-demo" class="button-secondary" type="button" disabled>Encerrar demonstração</button><button id="start-session" class="button-secondary" type="button">Iniciar sessão</button><button id="stop-session" class="button-secondary" type="button">Encerrar sessão</button><button id="check-ai" class="button-secondary" type="button">Verificar Gemini</button><button id="emergency-button" class="button-danger" type="button">Parada de emergência</button></div>
+              <div class="control-actions"><button id="start-demo" class="button-primary" type="button">Iniciar demonstração</button><button id="stop-demo" class="button-secondary" type="button" disabled>Encerrar demonstração</button><button id="start-session" class="button-secondary" type="button">Iniciar sessão</button><button id="stop-session" class="button-secondary" type="button">Encerrar sessão</button><button id="reset-experience" class="button-primary" type="button">Reiniciar experiência</button><button id="check-ai" class="button-secondary" type="button">Verificar Gemini</button><button id="emergency-button" class="button-danger" type="button">Parada de emergência</button></div>
               <label class="toggle-row source-toggle"><input id="toggle-source" type="checkbox"> Exibir a origem das respostas na conversa (uso técnico do operador)</label>
               <p id="operator-feedback" class="control-feedback" role="status" aria-live="polite"></p>
             </article>
@@ -254,7 +255,7 @@
             </dialog>
             <article class="panel event-card"><div class="card-heading"><div><span class="metric-label">ATIVIDADE</span><h2>Eventos recentes</h2></div><span class="event-live"><i></i> AO VIVO</span></div><ol id="event-list" class="event-list"><li class="empty-event">Aguardando eventos da aplicação.</li></ol></article>
           </div>
-          <aside class="panel operator-aside"><div class="aside-orb" aria-hidden="true"></div><span class="metric-label">AMBIENTE ATIVO</span><h2>Simulador local</h2><p>No modo simulado, os comandos movimentam o avatar na tela. O modo físico (LEGO SPIKE Prime) ainda não está disponível.</p><button class="button-primary full-button" data-view="simulator" type="button">Acessar simulador <span>→</span></button><button id="emergency-release" class="button-secondary full-button" type="button" hidden>Liberar parada de emergência</button></aside>
+          <aside class="panel operator-aside"><div class="aside-orb" aria-hidden="true"></div><span class="metric-label">AMBIENTE ATIVO</span><h2>Simulador virtual</h2><p>No modo simulado, os comandos movimentam o avatar na tela. O modo físico (LEGO SPIKE Prime) ainda não está disponível.</p><button class="button-primary full-button" data-view="simulator" type="button">Acessar simulador <span>→</span></button><button id="emergency-release" class="button-secondary full-button" type="button" hidden>Liberar parada de emergência</button></aside>
         </div>
       </section>
 
